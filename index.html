@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인창고 - 교육과 업무 효율을 위한 아카이브</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7587676721583907" crossorigin="anonymous"></script>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <style>
+        /* --- [1] Design System --- */
+        :root {
+            --bg-color: #f8f8fa;
+            --text-main: #111;
+            --text-sub: #555;
+            --text-desc: #666;
+            
+            /* Category Colors */
+            --color-prod: #3b82f6;   /* Productivity (Blue) */
+            --color-hand: #10b981;   /* Handmade (Emerald) */
+            --color-gpt: #8b5cf6;    /* ChatGPT (Violet) */
+            --color-etc: #f59e0b;    /* ETC (Amber) */
+
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --card-border: rgba(255, 255, 255, 0.8);
+            --font-main: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+
+        /* --- [2] Background Effects (Fixed Error) --- */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 15% 25%, rgba(59, 130, 246, 0.08), transparent 40%),
+                radial-gradient(circle at 85% 65%, rgba(139, 92, 246, 0.12), transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.08), transparent 50%);
+            filter: blur(80px);
+        }
+
+        /* 오류 수정: 노이즈 코드를 안정적인 버전으로 교체 */
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.06;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- [3] Animation Utility --- */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        /* --- [4] Header & Marquee Section --- */
+        .header-top-spacer {
+            width: 100%;
+            height: 80px; /* 상자의 높이 (여백 크기) */
+            background: rgba(255, 255, 255, 0.0); /* 완전 투명 */
+            
+            /* 옵션: 스크롤해도 상단에 고정되어 내용을 살짝 가리고 싶다면 아래 주석 해제 */
+            /* position: fixed; top: 0; z-index: 90; backdrop-filter: blur(5px); */
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        header {
+            /* 상단 여백을 260px로 주어 답답함 해소 */
+            padding: 260px 0 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            
+            /* 텍스트 그라디언트 */
+            background: linear-gradient(135deg, #111 30%, #555 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        h1 .subtitle {
+            display: block;
+            margin-top: 10px;
+            font-size: 1.6rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-sub);
+            letter-spacing: 0;
+            -webkit-text-fill-color: var(--text-sub); /* 그라디언트 해제 */
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--text-desc);
+            max-width: 600px;
+            margin: 0 auto 60px; /* 띠와의 간격 확보 */
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        /* 사선 텍스트 띠 (Marquee) */
+        .marquee-wrap {
+            width: 102%; /* 회전 시 여백 커버를 위해 약간 넓게 */
+            left: -1%;
+            overflow: hidden;
+            white-space: nowrap;
+            background: #111;
+            color: #fff;
+            padding: 16px 0;
+            transform: rotate(-1.5deg); /* 사선 효과 */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-bottom: 80px; /* 네비게이션과 간격 */
+            position: relative;
+            z-index: 10;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 40s linear infinite;
+        }
+
+        .marquee-content span {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.9;
+        }
+        
+        .marquee-content i { color: var(--color-prod); }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- [5] Sticky Navigation --- */
+        .nav-wrapper {
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 80px;
+            padding: 0 20px;
+        }
+
+        .nav-pills {
+            display: inline-flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 8px;
+            border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .nav-pill {
+            padding: 12px 28px;
+            border-radius: 100px;
+            text-decoration: none;
+            color: var(--text-sub);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .nav-pill:hover {
+            color: #111;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transform: translateY(-1px);
+        }
+        
+        /* Active Hover Colors */
+        .nav-pill[href="#productivity"]:hover { color: var(--color-prod); }
+        .nav-pill[href="#handmade"]:hover { color: var(--color-hand); }
+        .nav-pill[href="#chat-gpt"]:hover { color: var(--color-gpt); }
+        .nav-pill[href="#etc"]:hover { color: var(--color-etc); }
+
+        /* --- [6] Bento Grid & Cards --- */
+        .category-section {
+            padding: 60px 0;
+            scroll-margin-top: 120px;
+        }
+
+        .section-header {
+            margin-bottom: 32px;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .section-title { font-size: 2rem; font-weight: 800; color: #111; }
+        .section-badge {
+            font-size: 0.9rem; font-weight: 600; padding: 4px 12px;
+            border-radius: 20px; background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(0,0,0,0.05); color: var(--text-sub);
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 28px;
+            backdrop-filter: blur(20px);
+            display: flex; flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative; text-decoration: none; height: 100%; cursor: pointer;
+        }
+
+        .card-header {
+            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;
+        }
+        .card-icon {
+            width: 48px; height: 48px; border-radius: 14px; background: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            transition: all 0.3s ease; color: #333;
+        }
+        .card h3 { font-size: 1.25rem; font-weight: 700; color: #111; margin-bottom: 10px; line-height: 1.3; }
+        .card p { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 24px; flex-grow: 1; line-height: 1.5; }
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+        .tag {
+            font-size: 0.75rem; font-weight: 600; padding: 5px 10px; border-radius: 8px;
+            background: rgba(255,255,255,0.6); color: #666; border: 1px solid rgba(0,0,0,0.05);
+        }
+        .tag.hot { background: rgba(239, 68, 68, 0.08); color: #ef4444; border-color: rgba(239, 68, 68, 0.1); }
+        .btn-link {
+            width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.03);
+            display: flex; align-items: center; justify-content: center; color: #111;
+            transition: all 0.3s; opacity: 0.6;
+        }
+
+        /* Hover Effects */
+        #productivity .card:hover { border-color: rgba(59, 130, 246, 0.3); box-shadow: 0 15px 35px rgba(59, 130, 246, 0.12); transform: translateY(-6px); }
+        #productivity .card:hover .card-icon { background: var(--color-prod); color: #fff; }
+        
+        #handmade .card:hover { border-color: rgba(16, 185, 129, 0.3); box-shadow: 0 15px 35px rgba(16, 185, 129, 0.12); transform: translateY(-6px); }
+        #handmade .card:hover .card-icon { background: var(--color-hand); color: #fff; }
+        
+        #chat-gpt .card:hover { border-color: rgba(139, 92, 246, 0.3); box-shadow: 0 15px 35px rgba(139, 92, 246, 0.12); transform: translateY(-6px); }
+        #chat-gpt .card:hover .card-icon { background: var(--color-gpt); color: #fff; }
+        
+        #etc .card:hover { border-color: rgba(245, 158, 11, 0.3); box-shadow: 0 15px 35px rgba(245, 158, 11, 0.12); transform: translateY(-6px); }
+        #etc .card:hover .card-icon { background: var(--color-etc); color: #fff; }
+        
+        .card:hover .btn-link { background: #111; color: #fff; opacity: 1; }
+
+        /* --- [7] Footer --- */
+        footer { padding: 80px 0 60px; text-align: center; border-top: 1px solid rgba(0,0,0,0.05); margin-top: 40px; }
+        .footer-logo { font-size: 1.5rem; font-weight: 800; color: #111; margin-bottom: 20px; }
+        .contact-list { display: flex; justify-content: center; gap: 24px; margin-bottom: 24px; color: var(--text-sub); }
+        .contact-list a { color: inherit; text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
+        .contact-list a:hover { color: var(--color-prod); }
+
+        /* --- [8] Modal --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(8px);
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.3s;
+        }
+        .modal-overlay.open { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: #fff; width: 90%; max-width: 800px; max-height: 85vh; border-radius: 24px;
+            padding: 40px; box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            transform: scale(0.95) translateY(20px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto;
+        }
+        .modal-overlay.open .modal-content { transform: scale(1) translateY(0); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f0; }
+        .modal-title { font-size: 1.5rem; font-weight: 700; color: #111; }
+        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .modal-close:hover { background: #f5f5f5; color: #111; }
+        .modal-body pre { background: #f8f9fa; padding: 24px; border-radius: 16px; font-family: 'Pretendard', sans-serif; white-space: pre-wrap; line-height: 1.7; color: #333; font-size: 0.95rem; border: 1px solid #eee; overflow-x: auto; }
+
+        @media (max-width: 768px) {
+            header { padding: 180px 0 60px; }
+            h1 { font-size: 3rem; }
+            h1 .subtitle { font-size: 1.2rem; }
+            .nav-wrapper { top: 10px; margin-bottom: 40px; padding: 0 10px; }
+            .nav-pills { gap: 4px; padding: 6px; border-radius: 50px; }
+            .nav-pill { padding: 8px 16px; font-size: 0.85rem; }
+            .bento-grid { grid-template-columns: 1fr; gap: 16px; }
+            .card { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg"></div>
+    <div class="noise-overlay"></div>
+
+    <header class="container reveal-up">
+        <div class="header-top-spacer"></div>
+        <h1>
+            개인창고
+            <span class="subtitle">Smart Archive for Education</span>
+        </h1>
+        <p>안녕하세요. 김영대의 개인 창고입니다.<br>수업과 업무에 필요한 도구들을 한곳에 모았습니다.</p>
+    </header>
+
+    <div class="marquee-wrap reveal-up">
+        <div class="marquee-content">
+            <span><i class="ri-flashlight-fill"></i>Productivity Tools</span>
+            <span><i class="ri-edit-circle-fill"></i>Handmade Resources</span>
+            <span><i class="ri-openai-fill"></i>Chat GPT Prompts</span>
+            <span><i class="ri-archive-fill"></i>Education Archive</span>
+            <span><i class="ri-flashlight-fill"></i>Productivity Tools</span>
+            <span><i class="ri-edit-circle-fill"></i>Handmade Resources</span>
+            <span><i class="ri-openai-fill"></i>Chat GPT Prompts</span>
+            <span><i class="ri-archive-fill"></i>Education Archive</span>
+            <span><i class="ri-flashlight-fill"></i>Productivity Tools</span>
+            <span><i class="ri-edit-circle-fill"></i>Handmade Resources</span>
+        </div>
+    </div>
+
+    <div class="nav-wrapper reveal-up">
+        <nav class="nav-pills">
+            <a href="#productivity" class="nav-pill">Productivity</a>
+            <a href="#handmade" class="nav-pill">Handmade</a>
+            <a href="#chat-gpt" class="nav-pill">Chat GPT</a>
+            <a href="#etc" class="nav-pill">ETC</a>
+        </nav>
+    </div>
+
+    <section id="productivity" class="container category-section">
+        <div class="section-header reveal-up">
+            <h2 class="section-title">Productivity</h2>
+            <span class="section-badge" style="color: var(--color-prod); background: rgba(59, 130, 246, 0.1);">24 apps</span>
+        </div>
+        <div class="bento-grid">
+            <a href="https://www.wrks.ai/chat" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-robot-2-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Wrks AI</h3><p>서울시교육청 교직원을 위한 GPT. 교직원 인증으로 무료 이용 가능.</p>
+                <div class="tags"><span class="tag hot">Hot!!</span><span class="tag">SenGPT</span></div>
+            </a>
+            <a href="https://sites.google.com/sonline20.sen.go.kr/ai-eduservice/홈?authuser=0" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-government-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>서울시교육청 AI</h3><p>서울시교육청 교직원이 무료로 사용할 수 있는 인공지능 서비스 모음.</p>
+                <div class="tags"><span class="tag hot">Hot</span><span class="tag">교육청</span></div>
+            </a>
+            <a href="https://brave.com/ko/download/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-shield-check-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Brave</h3><p>사이트 자체에서 광고 트래픽을 차단해주는 웹 브라우저.</p>
+                <div class="tags"><span class="tag hot">Hot</span><span class="tag">광고제거</span></div>
+            </a>
+            <a href="https://www.snipaste.com/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-screenshot-2-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Snipaste</h3><p>화면 캡처 및 화면 고정(Pinning) 기능을 제공하는 필수 도구.</p>
+                <div class="tags"><span class="tag hot">Hot</span><span class="tag">캡처</span></div>
+            </a>
+            <a href="https://learn.microsoft.com/ko-kr/sysinternals/downloads/zoomit" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-zoom-in-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Zoomit</h3><p>화면 확대, 그리기 등 수업 중 시연에 최적화된 도구.</p>
+                <div class="tags"><span class="tag hot">Hot</span><span class="tag">확대</span></div>
+            </a>
+            <a href="https://kinfolksoft.com/스팟-마우스/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-cursor-fill"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>스팟 마우스</h3><p>마우스 커서를 강조하여 학생들의 시선을 집중시킵니다.</p>
+                <div class="tags"><span class="tag">커서강조</span></div>
+            </a>
+            <a href="https://www.canva.com/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-palette-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Canva</h3><p>교육용 요금제를 제공하는 올인원 디자인 플랫폼.</p>
+                <div class="tags"><span class="tag hot">Hot</span><span class="tag">디자인</span></div>
+            </a>
+            <a href="https://www.napkin.ai/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-mind-map"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Napkin AI</h3><p>텍스트를 시각화 자료(다이어그램)로 자동 변환해줍니다.</p>
+                <div class="tags"><span class="tag hot">Hot</span><span class="tag">시각화</span></div>
+            </a>
+            <a href="https://notebooklm.google.com/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-book-read-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>NotebookLM</h3><p>업로드한 자료만을 근거로 답변을 생성하는 구글의 AI.</p>
+                <div class="tags"><span class="tag hot">Hot</span><span class="tag">RAG</span></div>
+            </a>
+            <a href="https://snorkl.app/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-bubble-chart-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Snorkl</h3><p>자동 채점 및 피드백을 제공하는 AI 학습 도구.</p>
+                <div class="tags"><span class="tag hot">Hot</span><span class="tag">피드백</span></div>
+            </a>
+            <a href="https://www.questbook.io/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-book-open-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Questbook</h3><p>AI 기반 교육 콘텐츠 저작 플랫폼.</p>
+                <div class="tags"><span class="tag hot">Hot</span><span class="tag">저작</span></div>
+            </a>
+            <a href="https://www.kamiapp.com/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-edit-box-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>KAMI</h3><p>PDF 위 필기, 실시간 상호작용 및 문제 생성.</p>
+                <div class="tags"><span class="tag">상호작용</span></div>
+            </a>
+            <a href="https://123apps.com/ko/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-tools-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>123apps</h3><p>PDF, 비디오, 오디오 변환/편집을 위한 무료 웹 툴 모음.</p>
+                <div class="tags"><span class="tag hot">Hot</span><span class="tag">웹앱</span></div>
+            </a>
+            <a href="https://www.briskteaching.com/ko" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-chrome-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Brisk Teaching</h3><p>교사를 위한 크롬 확장 프로그램. AI 피드백 및 자료 생성.</p>
+                <div class="tags"><span class="tag hot">Hot!!</span><span class="tag">확장프로그램</span></div>
+            </a>
+            <a href="https://dsen.seamspace.me/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-heart-pulse-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>AI마음일기</h3><p>학생들의 감정을 분석하고 이해를 돕는 AI 툴.</p>
+                <div class="tags"><span class="tag hot">Hot</span><span class="tag">감정분석</span></div>
+            </a>
+            <a href="https://ai.google.dev/aistudio?hl=ko" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-google-fill"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Google AI Studio</h3><p>구글의 다양한 생성형 AI 서비스를 테스트할 수 있는 스튜디오.</p>
+                <div class="tags"><span class="tag">Gemini</span></div>
+            </a>
+            <a href="https://gamma.app/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-slideshow-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Gamma</h3><p>프롬프트를 입력하면 자동으로 고품질 PPT를 생성.</p>
+                <div class="tags"><span class="tag">PPT생성</span></div>
+            </a>
+            <a href="https://felo.ai/search" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-search-eye-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Felo AI</h3><p>검색 내용을 정리하여 보고서와 PPT로 작성해주는 AI.</p>
+                <div class="tags"><span class="tag">생성형AI</span></div>
+            </a>
+            <a href="https://www.perplexity.ai/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-question-answer-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Perplexity</h3><p>실시간 검색 결과를 바탕으로 답변하는 대화형 AI.</p>
+                <div class="tags"><span class="tag">실시간검색</span></div>
+            </a>
+            <a href="https://mizou.com/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-chat-settings-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Mizou</h3><p>교육용 맞춤형 챗봇을 코딩 없이 제작.</p>
+                <div class="tags"><span class="tag">챗봇제작</span></div>
+            </a>
+            <a href="https://suno.com/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-music-2-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Suno</h3><p>텍스트 입력만으로 노래를 작곡해주는 AI.</p>
+                <div class="tags"><span class="tag">음악생성</span></div>
+            </a>
+            <a href="https://class-sna.streamlit.app/#bbe50352" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-group-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>학급관계분석</h3><p>학급 교우관계를 분석하고 시각화해주는 사이트.</p>
+                <div class="tags"><span class="tag">관계분석</span></div>
+            </a>
+            <a href="https://www.flaticon.com/kr/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-image-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Flaticon</h3><p>학습 자료 제작에 유용한 무료 아이콘 다운로드.</p>
+                <div class="tags"><span class="tag">아이콘</span></div>
+            </a>
+            <a href="https://app.diffit.me/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-file-list-3-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Diffit</h3><p>수준별 학습지와 자료를 자동으로 제작해주는 AI.</p>
+                <div class="tags"><span class="tag">학습지</span></div>
+            </a>
+        </div>
+    </section>
+
+    <section id="handmade" class="container category-section">
+        <div class="section-header reveal-up">
+            <h2 class="section-title">Handmade</h2>
+            <span class="section-badge" style="color: var(--color-hand); background: rgba(16, 185, 129, 0.1);">9 apps</span>
+        </div>
+        <div class="bento-grid">
+            <a href="https://docs.google.com/presentation/d/1-qd0sHNxXlq8GqWm7Crzc7ee5tXQ8mGpupUB9LESIgg/edit?usp=sharing" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-layout-grid-fill"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>모둠배치</h3><p>원하는 설정(성적, 성별)에 따라 모둠을 배치하는 스프레드시트.</p>
+                <div class="tags"><span class="tag">구글시트</span><span class="tag">모둠배치</span></div>
+            </a>
+            <a href="https://docs.google.com/presentation/d/10ghDZ7GZ3ISJt-LMWaxhvMUXd8sFDpHiAThSWrR4S0/edit?usp=sharing" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-team-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>모둠활동</h3><p>모둠 활동 상황을 한눈에 확인할 수 있는 웹앱.</p>
+                <div class="tags"><span class="tag">웹앱</span><span class="tag">모둠활동</span></div>
+            </a>
+            <a href="https://docs.google.com/presentation/d/1H8n3D7LDQUso8iYOCiw87yCGKykNc8BYa4KwCWHWfkg/edit?usp=sharing" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-check-double-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>응답확인웹앱</h3><p>학생 응답 확인 및 정답/오답/검토 처리 도구.</p>
+                <div class="tags"><span class="tag">평가</span><span class="tag">응답확인</span></div>
+            </a>
+            <a href="https://docs.google.com/presentation/d/1pegDBZrseWomU4Ctq9p3RmB_7HESEHMBDJagiEw3CB4/edit?usp=sharing" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-survey-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>학생기초조사</h3><p>학기 초 기초 조사 및 개별 상담 내용 기록 시트.</p>
+                <div class="tags"><span class="tag">상담</span><span class="tag">기초조사</span></div>
+            </a>
+            <a href="https://docs.google.com/presentation/d/1VmoeAMU1WVWgWnFIP4G3T934XMpYaKkvRmr2bR_GPFg/edit?usp=sharing" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-file-paper-2-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>근로계약서 작성</h3><p>학생들과 근로계약서 작성 활동을 할 수 있는 웹앱.</p>
+                <div class="tags"><span class="tag">수업자료</span><span class="tag">계약서</span></div>
+            </a>
+            <a href="https://docs.google.com/presentation/d/1vJPSgMKa4PFjxsVH4avgqodtLneu_7m-Ilue52sNazE/edit?usp=sharing" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-pencil-ruler-2-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>서술형 웹앱</h3><p>부정행위 방지 기능이 있는 서술형 평가 웹앱.</p>
+                <div class="tags"><span class="tag">평가</span><span class="tag">서술형</span></div>
+            </a>
+            <a href="https://docs.google.com/spreadsheets/d/1m8tPehWEIFnWUyh2HOYDLHCrtTb24f9sI4DsKPZXSFs/copy?gid=55896980#gid=55896980" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-openai-fill"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>과세특/행발 (GPT)</h3><p>GPT를 활용해 시트에서 생기부 초안 생성.</p>
+                <div class="tags"><span class="tag">API</span><span class="tag">생기부</span></div>
+            </a>
+            <a href="https://docs.google.com/spreadsheets/d/18jSZ1YavUEAe1h6kAp1zeYaxiSjCgxA4GGbUGJmQKg8/copy?gid=0#gid=0" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-google-fill"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>과세특/행발 (GEMINI)</h3><p>Gemini를 활용해 시트에서 생기부 초안 생성.</p>
+                <div class="tags"><span class="tag">API</span><span class="tag">생기부</span></div>
+            </a>
+            <a href="https://futuristic-haddock-b65.notion.site/2b6cf466808280d48b71f0df95fff5d6?source=copy_link" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-draft-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>생기부 초안 작성기</h3><p>자율, 과세특, 행발 입력을 돕는 작성기.</p>
+                <div class="tags"><span class="tag">노션</span><span class="tag">생기부</span></div>
+            </a>
+        </div>
+    </section>
+
+    <section id="chat-gpt" class="container category-section">
+        <div class="section-header reveal-up">
+            <h2 class="section-title">Chat GPT</h2>
+            <span class="section-badge" style="color: var(--color-gpt); background: rgba(139, 92, 246, 0.1);">5 apps</span>
+        </div>
+        <div class="bento-grid">
+            <div class="card reveal-up" onclick="openModal('gpt1')">
+                <div class="card-header"><div class="card-icon"><i class="ri-settings-4-line"></i></div><div class="btn-link"><i class="ri-eye-line"></i></div></div>
+                <h3>GPT 맞춤형 지침</h3><p>GPT를 교육 전문가로 설정하는 맞춤형 지침 예시.</p>
+                <div class="tags"><span class="tag">프롬프트</span><span class="tag">설정</span></div>
+            </div>
+            <div class="card reveal-up" onclick="openModal('gpt2')">
+                <div class="card-header"><div class="card-icon"><i class="ri-user-star-line"></i></div><div class="btn-link"><i class="ri-eye-line"></i></div></div>
+                <h3>자율활동 작성 GPTs</h3><p>참여 데이터를 기반으로 자율활동 문구 생성.</p>
+                <div class="tags"><span class="tag">생기부</span><span class="tag">자율활동</span></div>
+            </div>
+            <div class="card reveal-up" onclick="openModal('gpt3')">
+                <div class="card-header"><div class="card-icon"><i class="ri-user-smile-line"></i></div><div class="btn-link"><i class="ri-eye-line"></i></div></div>
+                <h3>행발 작성 GPTs</h3><p>학생 특징 키워드를 종합의견으로 변환.</p>
+                <div class="tags"><span class="tag">생기부</span><span class="tag">행동발달</span></div>
+            </div>
+            <div class="card reveal-up" onclick="openModal('gpt4')">
+                <div class="card-header"><div class="card-icon"><i class="ri-book-open-fill"></i></div><div class="btn-link"><i class="ri-eye-line"></i></div></div>
+                <h3>과세특 작성 GPTs</h3><p>성취 기준과 활동을 매칭하여 세특 작성.</p>
+                <div class="tags"><span class="tag">생기부</span><span class="tag">과세특</span></div>
+            </div>
+            <div class="card reveal-up" onclick="openModal('gpt5')">
+                <div class="card-header"><div class="card-icon"><i class="ri-folder-reduce-line"></i></div><div class="btn-link"><i class="ri-eye-line"></i></div></div>
+                <h3>인수인계 자료 정리</h3><p>파일명 규칙 일괄 변경 및 분류 프롬프트.</p>
+                <div class="tags"><span class="tag">업무효율</span><span class="tag">파일정리</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="etc" class="container category-section">
+        <div class="section-header reveal-up">
+            <h2 class="section-title">ETC</h2>
+            <span class="section-badge" style="color: var(--color-etc); background: rgba(245, 158, 11, 0.1);">9 apps</span>
+        </div>
+        <div class="bento-grid">
+            <a href="https://gptable.net/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-table-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>gptable</h3><p>다양한 GPT 프롬프트를 공유하는 커뮤니티.</p>
+                <div class="tags"><span class="tag">프롬프트</span></div>
+            </a>
+            <a href="https://noonnu.cc/index?locale=ko&category_use_ids=4&order_by=pd" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-font-size-2"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>눈누</h3><p>상업적 이용 가능한 무료 한글 폰트 사이트.</p>
+                <div class="tags"><span class="tag">폰트</span></div>
+            </a>
+            <a href="https://shots.so/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-macbook-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Shots</h3><p>스크린샷을 깔끔한 디바이스 목업으로 변환.</p>
+                <div class="tags"><span class="tag">목업</span></div>
+            </a>
+            <a href="https://www.magicpattern.design/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-pattern-map-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>매직패턴</h3><p>감각적인 패턴 배경 생성기.</p>
+                <div class="tags"><span class="tag">디자인</span></div>
+            </a>
+            <a href="https://www.askedtech.com/home" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-search-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>AskedTech</h3><p>다양한 에듀테크 도구 큐레이션 사이트.</p>
+                <div class="tags"><span class="tag">에듀테크</span></div>
+            </a>
+            <a href="https://blog.naver.com/darkwalk77/223082595848" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-file-edit-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>배치네이머</h3><p>대량 파일 이름 및 확장자 일괄 변경 프로그램.</p>
+                <div class="tags"><span class="tag">업무효율</span></div>
+            </a>
+            <a href="https://readdy.ai/" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-layout-masonry-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Readdy AI</h3><p>AI가 빠르게 생성해주는 랜딩 페이지 제작 도구.</p>
+                <div class="tags"><span class="tag">웹제작</span></div>
+            </a>
+            <a href="https://labs.google/fx/tools/whisk" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-image-edit-line"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>Whisk AI</h3><p>구글 랩스의 커스텀 이미지 생성 도구.</p>
+                <div class="tags"><span class="tag">이미지</span></div>
+            </a>
+            <a href="https://script.google.com/macros/s/AKfycbyqFkv8_2ve-WCMqHsw1pIrJiNCakSo8VRkRh_c5Fnz8MZApFJ7nUx54nI-CRbW192ZSQ/exec" target="_blank" class="card reveal-up">
+                <div class="card-header"><div class="card-icon"><i class="ri-presentation-fill"></i></div><div class="btn-link"><i class="ri-arrow-right-up-line"></i></div></div>
+                <h3>연수</h3><p>교사 연수 진행을 위한 전용 페이지.</p>
+                <div class="tags"><span class="tag">연수자료</span></div>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">개인창고</div>
+            <div class="contact-list">
+                <span><i class="ri-user-line"></i> 김영대</span>
+                
+                <a href="tel:010-2403-1335"><i class="ri-phone-line"></i> 010-2403-1335</a>
+                
+                <a href="mailto:lsder1478@sen.go.kr"><i class="ri-mail-line"></i> lsder1478@sen.go.kr</a>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-sub);">&copy; 2026 Teachers Archive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="gpt1" class="modal-overlay" onclick="if(event.target === this) closeModal('gpt1')">
+        <div class="modal-content"><div class="modal-header"><h3 class="modal-title">Chat GPT 맞춤형 지침</h3><button class="modal-close" onclick="closeModal('gpt1')"><i class="ri-close-line"></i></button></div><div class="modal-body"><pre>NEVER mention that you're an AI...</pre></div></div>
+    </div>
+    <div id="gpt2" class="modal-overlay" onclick="if(event.target === this) closeModal('gpt2')">
+        <div class="modal-content"><div class="modal-header"><h3 class="modal-title">자율활동 작성 프롬프트</h3><button class="modal-close" onclick="closeModal('gpt2')"><i class="ri-close-line"></i></button></div><div class="modal-body"><pre>#Role 당신은 베테랑 교사로서...</pre></div></div>
+    </div>
+    <div id="gpt3" class="modal-overlay" onclick="if(event.target === this) closeModal('gpt3')">
+        <div class="modal-content"><div class="modal-header"><h3 class="modal-title">행동발달 및 종합의견 작성</h3><button class="modal-close" onclick="closeModal('gpt3')"><i class="ri-close-line"></i></button></div><div class="modal-body"><pre>#Role 당신은 20년 경력의 담임 선생님입니다...</pre></div></div>
+    </div>
+    <div id="gpt4" class="modal-overlay" onclick="if(event.target === this) closeModal('gpt4')">
+        <div class="modal-content"><div class="modal-header"><h3 class="modal-title">과목별세부특기사항 작성</h3><button class="modal-close" onclick="closeModal('gpt4')"><i class="ri-close-line"></i></button></div><div class="modal-body"><pre># 지시문 너는 대한민국의 고등학교 교사이다...</pre></div></div>
+    </div>
+    <div id="gpt5" class="modal-overlay" onclick="if(event.target === this) closeModal('gpt5')">
+        <div class="modal-content"><div class="modal-header"><h3 class="modal-title">파일 정리 자동화</h3><button class="modal-close" onclick="closeModal('gpt5')"><i class="ri-close-line"></i></button></div><div class="modal-body"><pre>1. 사용자가 제공한 압축 파일을 압축 해제합니다...</pre></div></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal-up");
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 100;
+                reveals.forEach((reveal) => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add("active");
+                    }
+                });
+            };
+            window.addEventListener("scroll", revealOnScroll);
+            revealOnScroll();
+        });
+
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.add("open");
+                document.body.style.overflow = "hidden";
+            }
+        }
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.remove("open");
+                document.body.style.overflow = "auto";
+            }
+        }
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape") {
+                document.querySelectorAll('.modal-overlay.open').forEach(modal => closeModal(modal.id));
+            }
+        });
+    </script>
+</body>
+</html>
