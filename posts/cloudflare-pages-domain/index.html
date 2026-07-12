@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7587676721583907" crossorigin="anonymous"></script>
+  <title>가비아 도메인을 Cloudflare Pages에 연결할 때 확인할 순서 | KYD 디지털 가이드</title>
+  <meta name="description" content="가비아에서 구매한 도메인을 Cloudflare Pages에 연결할 때 네임서버, 사용자 지정 도메인, HTTPS 상태를 확인하는 순서를 설명합니다.">
+  <link rel="canonical" href="https://www.kyd.kr/posts/cloudflare-pages-domain/">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a class="logo" href="/"><span class="logo-mark">KYD</span><span>디지털 가이드</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/">전체 글</a><a href="/about/">사이트 소개</a><a href="/contact/">문의</a></nav></div></header>
+  <main class="container article-layout">
+    <article class="article">
+      <p class="category">웹사이트 운영</p>
+      <h1>가비아 도메인을 Cloudflare Pages에 연결할 때 확인할 순서</h1>
+      <p class="article-meta">작성일: 2026년 7월 12일 · 예상 읽기 시간: 5분</p>
+      <p class="lead">도메인을 처음 구매한 뒤 Cloudflare Pages에 연결하면 “확인 중”이라는 상태가 오래 보일 수 있습니다. 대부분은 설정이 틀렸다기보다 네임서버 전파와 인증서 발급을 기다리는 과정입니다.</p>
+      <h2>1. 도메인과 호스팅을 구분하기</h2>
+      <p>가비아에서 도메인을 구매했다는 것은 인터넷 주소를 소유했다는 뜻입니다. 실제 웹페이지 파일을 보여주는 곳은 Cloudflare Pages입니다. 따라서 방문자는 도메인을 입력하지만, 웹페이지 파일은 Cloudflare Pages에서 제공됩니다.</p>
+      <p>이 구조에서는 가비아 웹호스팅을 따로 신청하지 않아도 됩니다. 도메인 등록 기관은 주소 소유와 갱신을 담당하고, Cloudflare는 DNS와 사이트 배포를 담당합니다.</p>
+      <h2>2. Cloudflare에 도메인 추가</h2>
+      <p>Cloudflare 대시보드에서 도메인을 추가할 때는 <code>www</code>나 <code>https://</code>를 붙이지 않고 루트 도메인만 입력합니다. 예를 들어 사이트 주소가 <code>www.kyd.kr</code>이라면 Cloudflare에는 <code>kyd.kr</code>만 추가합니다.</p>
+      <h2>3. 가비아 네임서버 변경</h2>
+      <p>Cloudflare가 안내하는 네임서버 두 개를 가비아 도메인 관리 화면에 입력합니다. 기존 가비아 네임서버가 남아 있으면 Cloudflare가 DNS를 관리하지 못할 수 있으므로, Cloudflare가 제시한 두 개만 남기는 것이 일반적입니다.</p>
+      <blockquote>네임서버 변경 후 바로 사이트가 열리지 않아도 정상입니다. 인터넷 전체에 변경 내용이 퍼지는 데 시간이 걸릴 수 있습니다.</blockquote>
+      <h2>4. Pages에서 사용자 지정 도메인 추가</h2>
+      <p>Cloudflare Pages 프로젝트의 사용자 지정 도메인 메뉴에서 먼저 <code>www.kyd.kr</code>을 추가합니다. 필요한 DNS 레코드는 Cloudflare가 자동으로 만들 수 있으므로, DNS 메뉴에서 CNAME을 먼저 수동으로 만드는 것보다 Pages 메뉴에서 연결하는 것이 안전합니다.</p>
+      <p>필요하다면 루트 도메인인 <code>kyd.kr</code>도 추가합니다. 이후 대표 주소를 <code>www.kyd.kr</code>로 정했다면 루트 도메인에서 www 주소로 이동시키는 리디렉션 규칙을 만들면 됩니다.</p>
+      <h2>5. 확인 중 상태에서 기다릴 것</h2>
+      <p>사용자 지정 도메인이 “확인 중”으로 표시될 때는 DNS 확인, 도메인 소유 확인, SSL 인증서 준비가 진행 중일 수 있습니다. 이때 DNS 레코드를 계속 지우고 다시 만들면 오히려 시간이 더 걸릴 수 있습니다.</p>
+      <h2>6. 접속 확인 방법</h2>
+      <p>상태가 활성으로 바뀌면 다음 주소를 차례대로 열어봅니다.</p>
+      <pre><code>https://www.kyd.kr
+https://kyd.kr
+http://www.kyd.kr</code></pre>
+      <p>대표 주소가 정해져 있다면 세 주소가 모두 최종 대표 주소로 이동하거나 같은 사이트를 보여야 합니다. HTTPS 자물쇠 표시가 정상적으로 보이는지도 확인합니다.</p>
+      <h2>정리</h2>
+      <p>도메인 연결은 한 번만 이해하면 어렵지 않습니다. 핵심은 도메인을 산 곳과 사이트 파일을 제공하는 곳이 다를 수 있다는 점입니다. 가비아는 도메인을 관리하고, Cloudflare Pages는 사이트를 보여줍니다.</p>
+    </article>
+    <aside class="sidebar"><h2>관련 글</h2><ul><li><a href="/posts/browser-cache-refresh/">예전 화면이 계속 보일 때</a></li><li><a href="/posts/google-account-security/">구글 계정 보안 점검</a></li><li><a href="/posts/">전체 글</a></li></ul></aside>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/privacy/">개인정보처리방침</a><a href="/contact/">문의</a></div></div></footer>
+</body>
+</html>

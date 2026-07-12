@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7587676721583907" crossorigin="anonymous"></script>
+  <title>웹페이지가 수정됐는데 예전 화면이 계속 보일 때 해결 방법 | KYD 디지털 가이드</title>
+  <meta name="description" content="웹사이트를 수정했는데 브라우저에 예전 화면이 계속 보일 때 캐시, 강력 새로고침, 시크릿 창, 배포 상태를 확인하는 방법입니다.">
+  <link rel="canonical" href="https://www.kyd.kr/posts/browser-cache-refresh/">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a class="logo" href="/"><span class="logo-mark">KYD</span><span>디지털 가이드</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/">전체 글</a><a href="/about/">사이트 소개</a><a href="/contact/">문의</a></nav></div></header>
+  <main class="container article-layout">
+    <article class="article">
+      <p class="category">브라우저 문제 해결</p>
+      <h1>웹페이지가 수정됐는데 예전 화면이 계속 보일 때 해결 방법</h1>
+      <p class="article-meta">작성일: 2026년 7월 12일 · 예상 읽기 시간: 4분</p>
+      <p class="lead">홈페이지 파일을 수정했는데도 브라우저에는 예전 화면이 계속 보일 때가 있습니다. 이때는 실제 수정이 안 된 것인지, 브라우저 캐시가 예전 파일을 보여주는 것인지 먼저 구분해야 합니다.</p>
+      <h2>1. 새로고침부터 다시 하기</h2>
+      <p>가장 먼저 일반 새로고침을 합니다. Windows에서는 보통 <code>F5</code> 또는 <code>Ctrl + R</code>을 누릅니다. 그래도 바뀌지 않으면 강력 새로고침을 시도합니다.</p>
+      <pre><code>Windows Chrome / Edge: Ctrl + F5
+Windows Chrome / Edge: Ctrl + Shift + R</code></pre>
+      <p>강력 새로고침은 브라우저가 저장해둔 일부 파일을 다시 받아오게 만드는 방법입니다.</p>
+      <h2>2. 시크릿 창에서 확인하기</h2>
+      <p>시크릿 창은 기존 로그인 정보와 캐시 영향을 덜 받습니다. Chrome이나 Edge에서 시크릿 창을 열고 같은 주소를 입력해봅니다. 시크릿 창에서는 새 화면이 보이는데 일반 창에서는 예전 화면이 보인다면 캐시 문제일 가능성이 큽니다.</p>
+      <h2>3. 주소가 정확한지 확인하기</h2>
+      <p>비슷한 주소를 여러 개 쓰는 경우가 있습니다. 예를 들어 <code>kyd.kr</code>과 <code>www.kyd.kr</code>, <code>pages.dev</code> 주소가 각각 다르게 보일 수 있습니다. 어느 주소를 대표 주소로 쓸지 정하고, 그 주소에서 확인해야 합니다.</p>
+      <h2>4. 배포가 끝났는지 확인하기</h2>
+      <p>Cloudflare Pages나 GitHub Pages처럼 자동 배포를 쓰는 경우, 파일을 저장했다고 바로 사이트에 반영되는 것은 아닙니다. 배포 작업이 끝나야 실제 페이지가 바뀝니다. Pages 대시보드에서 최근 배포가 성공 상태인지 확인합니다.</p>
+      <h2>5. CSS만 안 바뀌는 경우</h2>
+      <p>글 내용은 바뀌었는데 디자인만 그대로라면 CSS 파일 캐시가 남아 있을 수 있습니다. 이때도 강력 새로고침을 먼저 시도합니다. 개발 중이라면 CSS 파일 이름을 바꾸거나, 배포 도구가 파일 버전을 자동으로 붙이는 구조를 사용할 수도 있습니다.</p>
+      <h2>정리</h2>
+      <p>예전 화면이 계속 보일 때는 “수정 실패”라고 단정하지 말고 새로고침, 시크릿 창, 주소 확인, 배포 상태 확인 순서로 점검하는 것이 좋습니다. 이 순서만 지켜도 대부분의 혼란을 줄일 수 있습니다.</p>
+    </article>
+    <aside class="sidebar"><h2>관련 글</h2><ul><li><a href="/posts/cloudflare-pages-domain/">Cloudflare Pages 도메인 연결</a></li><li><a href="/posts/windows-file-extension/">Windows 파일 확장자 표시</a></li></ul></aside>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/privacy/">개인정보처리방침</a><a href="/contact/">문의</a></div></div></footer>
+</body>
+</html>
