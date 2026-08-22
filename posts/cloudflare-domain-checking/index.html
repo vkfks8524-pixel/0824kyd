@@ -8,25 +8,32 @@
   <title>Cloudflare에서 도메인이 확인 중으로 오래 남을 때 점검할 항목 | KYD 디지털 가이드</title>
   <meta name="description" content="Cloudflare Pages 사용자 지정 도메인이 확인 중으로 남을 때 네임서버, DNS 레코드, SSL 인증서, 리디렉션을 점검하는 방법입니다.">
   <link rel="canonical" href="https://www.kyd.kr/posts/cloudflare-domain-checking/">
+  <meta name="author" content="KYD 디지털 가이드 편집팀">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:site_name" content="KYD 디지털 가이드">
+  <meta property="og:title" content="Cloudflare에서 도메인이 확인 중으로 오래 남을 때 점검할 항목">
+  <meta property="og:description" content="Cloudflare Pages 사용자 지정 도메인이 확인 중으로 남을 때 네임서버, DNS 레코드, SSL 인증서, 리디렉션을 점검하는 방법입니다.">
+  <meta property="og:url" content="https://www.kyd.kr/posts/cloudflare-domain-checking/">
+  <meta property="article:published_time" content="2026-07-12">
+  <meta property="article:modified_time" content="2026-08-22">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Cloudflare에서 도메인이 확인 중으로 오래 남을 때 점검할 항목","description":"Cloudflare Pages 사용자 지정 도메인이 확인 중으로 남을 때 네임서버, DNS 레코드, SSL 인증서, 리디렉션을 점검하는 방법입니다.","inLanguage":"ko-KR","datePublished":"2026-07-12","dateModified":"2026-08-22","mainEntityOfPage":"https://www.kyd.kr/posts/cloudflare-domain-checking/","author":{"@type":"Organization","name":"KYD 디지털 가이드 편집팀","url":"https://www.kyd.kr/about/"},"publisher":{"@type":"Organization","name":"KYD 디지털 가이드","url":"https://www.kyd.kr/"}}</script>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">본문으로 바로가기</a>
   <header class="site-header">
     <div class="header-inner">
       <a class="logo" href="/"><span class="logo-mark">KYD</span><span>디지털 가이드</span></a>
-      <nav class="nav" aria-label="주요 메뉴">
-        <a href="/">홈</a>
-        <a href="/posts/">전체 글</a>
-        <a href="/about/">사이트 소개</a>
-        <a href="/contact/">문의</a>
-        <a href="/privacy/">개인정보처리방침</a>
-      </nav>
+      <nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/" aria-current="page">전체 글</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></nav>
     </div>
-  </header>  <main class="container article-layout">
+  </header>  <main id="main-content" class="container article-layout">
     <article class="article">
       <p class="category">웹사이트 운영</p>
       <h1>Cloudflare에서 도메인이 확인 중으로 오래 남을 때 점검할 항목</h1>
-      <p class="article-meta">작성일: 2026년 7월 12일 · 예상 읽기 시간: 8분</p>
+      <p class="article-meta">작성: KYD 디지털 가이드 편집팀 · 게시 <time datetime="2026-07-12">2026년 7월 12일</time> · 최종 검토 <time datetime="2026-08-22">2026년 8월 22일</time> · 예상 읽기 시간: 8분</p>
       <p class="lead">Cloudflare Pages에 도메인을 연결했는데 “확인 중” 상태가 오래 보이면 불안할 수 있습니다. 하지만 대부분은 네임서버 전파, DNS 레코드, SSL 인증서 확인 과정에서 생기는 정상 대기입니다.</p>
       <h2>1. 네임서버가 Cloudflare로 바뀌었는지 확인</h2>
       <p>도메인을 구매한 업체에서 Cloudflare가 안내한 네임서버 두 개를 정확히 입력했는지 확인합니다. 기존 네임서버가 함께 남아 있으면 확인이 늦어질 수 있습니다.</p>
@@ -45,7 +52,6 @@
 
       <h2>정리</h2>
       <p>확인 중 상태는 무조건 오류가 아닙니다. 네임서버, Pages 연결 위치, 루트와 www 구분, SSL 인증서, DNSSEC 순서로 차분히 확인하면 대부분 해결 방향을 찾을 수 있습니다.</p>
-      <!-- strengthened-content:start -->
       <h2>확인 중 상태의 의미</h2>
       <p>Cloudflare에서 도메인이 확인 중으로 표시되는 것은 보통 DNS 전파, SSL 인증서 발급, Pages 연결 확인이 아직 끝나지 않았다는 뜻입니다. 설정이 잘못되었을 수도 있지만, 설정 직후라면 단순 대기 상태인 경우가 더 많습니다.</p>
       <p>중요한 것은 기다리는 동안 같은 설정을 반복해서 지우고 다시 만드는 일을 피하는 것입니다. DNS는 전 세계 서버에 순차적으로 반영되기 때문에 중간에 계속 수정하면 오히려 확인 시간이 길어질 수 있습니다.</p>
@@ -55,15 +61,44 @@
       <h2>하루가 지나도 그대로일 때</h2>
       <p>24시간 이상 확인 중이면 DNSSEC 또는 DS 레코드가 남아 있는지 확인합니다. 도메인 구매처에서 DNSSEC가 켜져 있으면 Cloudflare 네임서버로 바꿔도 검증이 실패할 수 있습니다.</p>
       <p>또한 루트 도메인과 www 도메인을 동시에 연결했다면 각각의 상태를 따로 확인해야 합니다. 하나만 활성이고 다른 하나가 대기 중일 수 있습니다. 이때는 이미 활성화된 주소로 사이트가 열리는지 먼저 확인하고, 나머지 주소의 설정을 천천히 점검합니다.</p>
-      <!-- strengthened-content:end -->
-      <!-- extra-depth-content:start -->
+
       <h2>기다리는 동안 확인할 수 있는 것</h2>
       <p>도메인 상태가 확인 중이어도 Pages의 기본 주소는 이미 열릴 수 있습니다. 예를 들어 pages.dev 주소에서 사이트가 정상적으로 보인다면 사이트 파일 자체는 배포된 것이고, 남은 문제는 사용자 지정 도메인 연결 쪽으로 좁혀볼 수 있습니다.</p>
       <p>또한 DNS 레코드가 자동으로 만들어졌는지 확인할 수 있습니다. Pages 사용자 지정 도메인 화면에서 DNS 설정 완료가 보인다면 CNAME이나 라우팅 설정은 대체로 맞고, 네임서버 전파나 인증서 확인을 기다리는 단계일 가능성이 큽니다.</p>
       <h2>수정하면 안 되는 타이밍</h2>
       <p>설정 직후 10분이나 30분 정도 확인 중이라고 해서 도메인을 삭제하고 다시 추가하는 것은 좋지 않습니다. DNS 전파는 시간이 걸릴 수 있고, 중간에 설정을 바꾸면 확인 과정이 처음부터 다시 시작될 수 있습니다.</p>
       <p>대신 변경한 내용을 기록하고 일정 시간 뒤 다시 확인합니다. 네임서버가 맞고 DNSSEC 문제가 없다면 대개 시간이 지나며 활성화됩니다. 하루가 지나도 그대로일 때만 구매처 설정과 Cloudflare 설정을 다시 차분히 비교하는 것이 좋습니다.</p>
-      <!-- extra-depth-content:end -->
+      <!-- adsense-readiness:start -->
+      <section class="decision-section" aria-labelledby="quick-check-cloudflare-domain-checking">
+        <h2 id="quick-check-cloudflare-domain-checking">상황별 빠른 판단표</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">상황</th><th scope="col">먼저 할 일</th><th scope="col">주의할 점</th></tr></thead>
+            <tbody>
+          <tr><td>네임서버가 아직 이전 업체</td><td>등록기관에서 Cloudflare가 준 두 주소로 변경</td><td>전파 중 반복 변경 금지</td></tr>
+          <tr><td>Pages에는 도메인이 없고 DNS만 생성</td><td>Pages 프로젝트의 Custom domains에서 먼저 추가</td><td>수동 CNAME만으로는 연결이 끝나지 않을 수 있음</td></tr>
+          <tr><td>DNS는 정상인데 HTTPS 오류</td><td>인증서 발급 상태와 CAA 레코드 확인</td><td>활성화 전 프록시&#183;리디렉션을 계속 바꾸지 않기</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="editor-note"><strong>편집팀 메모:</strong> &quot;확인 중&quot;은 DNS, 도메인 연결, 인증서 중 어느 단계인지 구분해야 합니다. 설정 화면을 캡처할 때는 계정 ID와 API 토큰을 반드시 가리세요.</p>
+      </section>
+      <section class="sources" aria-labelledby="sources-cloudflare-domain-checking">
+        <h2 id="sources-cloudflare-domain-checking">공식 자료와 확인 기준</h2>
+        <p>아래 1차 자료의 현재 안내를 기준으로 핵심 절차와 주의사항을 교차 확인했습니다. 제품 버전이나 기기 제조사에 따라 메뉴 이름은 달라질 수 있습니다.</p>
+        <ul>
+        <li><a href="https://developers.cloudflare.com/pages/configuration/custom-domains/" rel="noopener noreferrer">Cloudflare Pages 사용자 지정 도메인</a> <span class="source-owner">(공식 자료)</span></li>
+        <li><a href="https://developers.cloudflare.com/pages/configuration/serving-pages/" rel="noopener noreferrer">Cloudflare Pages 배포&#183;경로 동작</a> <span class="source-owner">(공식 자료)</span></li>
+        </ul>
+        <p class="source-reviewed">자료 최종 확인일: <time datetime="2026-08-22">2026년 8월 22일</time></p>
+      </section>
+      <aside class="author-box" aria-label="작성자와 편집 기준">
+        <p class="author-label">작성·검토</p>
+        <h2>KYD 디지털 가이드 편집팀</h2>
+        <p>초보자가 안전하게 따라 할 수 있도록 공식 문서와 실제 화면에서 확인 가능한 메뉴를 기준으로 설명합니다. 사실 오류나 변경된 메뉴는 <a href="/contact/">오류 제보</a>로 알려주세요.</p>
+        <p><a href="/editorial-policy/">편집 원칙과 수정 정책 보기</a></p>
+      </aside>
+      <!-- adsense-readiness:end -->
     </article>
     <aside class="sidebar">
       <h2>관련 글</h2>
@@ -73,15 +108,6 @@
         <li><a href="/posts/">전체 글 보기</a></li>
       </ul>
     </aside>
-  </main>  <footer class="site-footer">
-    <div class="footer-inner">
-      <span>© 2026 KYD 디지털 가이드</span>
-      <div class="footer-links">
-        <a href="/about/">사이트 소개</a>
-        <a href="/contact/">문의</a>
-        <a href="/privacy/">개인정보처리방침</a>
-      </div>
-    </div>
-  </footer>
+  </main>  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></div></div></footer>
 </body>
 </html>
