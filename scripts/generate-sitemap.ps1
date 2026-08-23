@@ -3,6 +3,7 @@ $ErrorActionPreference = 'Stop'
 $entries = @(
   'https://www.kyd.kr/',
   'https://www.kyd.kr/posts/',
+  'https://www.kyd.kr/tools/',
   'https://www.kyd.kr/about/',
   'https://www.kyd.kr/editorial-policy/',
   'https://www.kyd.kr/updates/',
@@ -14,6 +15,11 @@ $postUrls = Get-ChildItem -LiteralPath 'posts' -Directory | Sort-Object Name | F
   "https://www.kyd.kr/posts/$($_.Name)/"
 }
 $entries += $postUrls
+
+$toolUrls = Get-ChildItem -LiteralPath 'tools' -Directory | Sort-Object Name | ForEach-Object {
+  "https://www.kyd.kr/tools/$($_.Name)/"
+}
+$entries += $toolUrls
 
 $lines = @('<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
 $lines += $entries | ForEach-Object { "  <url><loc>$_</loc><lastmod>2026-08-23</lastmod></url>" }

@@ -9,7 +9,8 @@ function Add-Warning([string]$message) { $warnings.Add($message) }
 $root = $PWD.Path
 $htmlFiles = @('index.html', 'about/index.html', 'editorial-policy/index.html', 'contact/index.html', 'privacy/index.html', 'updates/index.html', 'posts/index.html')
 $postFiles = Get-ChildItem -LiteralPath 'posts' -Directory | Sort-Object Name | ForEach-Object { "posts/$($_.Name)/index.html" }
-$htmlFiles += $postFiles
+$toolFiles = @('tools/index.html') + (Get-ChildItem -LiteralPath 'tools' -Directory | Sort-Object Name | ForEach-Object { "tools/$($_.Name)/index.html" })
+$htmlFiles += $postFiles + $toolFiles
 
 $canonicals = @{}
 foreach ($relative in $htmlFiles) {
@@ -49,7 +50,18 @@ foreach ($relative in $postFiles) {
   if ($charCount -lt 2200) { Add-Warning "$relative visible Korean/content character count is only $charCount" }
 }
 
-$nonContentPages = @('404.html', 'about/index.html', 'editorial-policy/index.html', 'contact/index.html', 'privacy/index.html', 'updates/index.html', 'posts/index.html')
+$toolApplicationFiles = $toolFiles | Where-Object { $_ -ne 'tools/index.html' }
+foreach ($relative in $toolApplicationFiles) {
+  $html = [IO.File]::ReadAllText((Join-Path $root $relative))
+  foreach ($required in @('meta name="author"', 'application/ld+json', '"@type":"WebApplication"', '/assets/tools.js', 'class="tool-shell"', 'class="sources"')) {
+    if (-not $html.Contains($required)) { Add-Error "$relative missing tool requirement: $required" }
+  }
+  if ([regex]::Matches($html, '<a href="https://[^\"]+" rel="noopener noreferrer">').Count -lt 2) { Add-Error "$relative needs at least two cited official links" }
+  $json = [regex]::Match($html, '<script type="application/ld\+json">(.*?)</script>', [Text.RegularExpressions.RegexOptions]::Singleline).Groups[1].Value
+  try { $null = $json | ConvertFrom-Json } catch { Add-Error "$relative has invalid JSON-LD: $($_.Exception.Message)" }
+}
+
+$nonContentPages = @('404.html', 'about/index.html', 'editorial-policy/index.html', 'contact/index.html', 'privacy/index.html', 'updates/index.html', 'posts/index.html') + $toolFiles
 foreach ($relative in $nonContentPages) {
   $html = [IO.File]::ReadAllText((Join-Path $root $relative))
   if ($html.Contains('pagead2.googlesyndication.com')) { Add-Error "Ad code should not load on utility page: $relative" }
@@ -78,7 +90,7 @@ foreach ($relative in $postFiles) {
   if (-not $html.Contains('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')) { Add-Error "Article is missing AdSense connection code: $relative" }
 }
 
-$mirrorRoots = @('about','contact','privacy','editorial-policy','updates','posts','assets')
+$mirrorRoots = @('about','contact','privacy','editorial-policy','updates','posts','tools','assets')
 $mirrorFiles = @('index.html','404.html','ads.txt','robots.txt','sitemap.xml')
 foreach ($relative in $mirrorFiles) {
   $rootHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $root $relative)).Hash
@@ -94,7 +106,7 @@ foreach ($directory in $mirrorRoots) {
   }
 }
 
-Write-Output "Validated $($htmlFiles.Count) indexable HTML pages, $($postFiles.Count) articles, and $($canonicals.Count) unique canonicals."
+Write-Output "Validated $($htmlFiles.Count) indexable HTML pages, $($postFiles.Count) articles, $($toolApplicationFiles.Count) tools, and $($canonicals.Count) unique canonicals."
 if ($warnings.Count) { Write-Output 'WARNINGS:'; $warnings | ForEach-Object { Write-Output "- $_" } }
 if ($errors.Count) { Write-Output 'ERRORS:'; $errors | ForEach-Object { Write-Output "- $_" }; exit 1 }
 Write-Output 'PASS: Site structure, trust signals, article requirements, crawl files, internal links, and public mirror are consistent.'

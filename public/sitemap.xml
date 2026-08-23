@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.kyd.kr/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://www.kyd.kr/posts/</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://www.kyd.kr/tools/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://www.kyd.kr/about/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://www.kyd.kr/editorial-policy/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://www.kyd.kr/updates/</loc><lastmod>2026-08-23</lastmod></url>
@@ -30,4 +31,8 @@
   <url><loc>https://www.kyd.kr/posts/used-phone-reset-check/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://www.kyd.kr/posts/windows-file-extension/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://www.kyd.kr/posts/windows-screenshot-methods/</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://www.kyd.kr/tools/account-security-check/</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://www.kyd.kr/tools/file-extension-check/</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://www.kyd.kr/tools/storage-planner/</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://www.kyd.kr/tools/url-structure-check/</loc><lastmod>2026-08-23</lastmod></url>
 </urlset>

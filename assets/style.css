@@ -303,6 +303,255 @@ h3 {
   margin-top: 0;
 }
 
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.tool-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.tool-card h2,
+.tool-card h3 {
+  margin-top: 0;
+}
+
+.tool-card p:last-child {
+  margin-bottom: 0;
+}
+
+.tool-privacy {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 8px 0 0;
+  color: #176338;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.tool-shell {
+  margin: 28px 0 40px;
+  padding: 26px;
+  border: 1px solid #abcfe9;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #f7fbff 0%, #eef7fd 100%);
+}
+
+.tool-shell h2 {
+  margin-top: 0;
+}
+
+.tool-form {
+  display: grid;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  gap: 7px;
+}
+
+.form-row label,
+.fieldset-label {
+  color: #17324d;
+  font-weight: 800;
+}
+
+.form-row input,
+.form-row select {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid #8da9bd;
+  border-radius: 7px;
+  color: var(--text);
+  background: #fff;
+  font: inherit;
+}
+
+.form-row input:focus,
+.form-row select:focus {
+  outline: 3px solid rgba(23, 102, 163, 0.24);
+  border-color: var(--brand);
+}
+
+.form-help,
+.form-error {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem !important;
+}
+
+.form-error {
+  color: #a21f2d;
+  font-weight: 800;
+}
+
+.tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tool-actions button {
+  min-height: 46px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 7px;
+  color: #fff;
+  background: var(--brand);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tool-actions button:hover,
+.tool-actions button:focus-visible {
+  background: var(--brand-dark);
+}
+
+.tool-actions .secondary-action {
+  border: 1px solid #8da9bd;
+  color: var(--brand-dark);
+  background: #fff;
+}
+
+.tool-result {
+  scroll-margin-top: 20px;
+  margin-top: 26px;
+  padding: 24px;
+  border: 1px solid #9ac7aa;
+  border-radius: 10px;
+  background: #f4fbf6;
+}
+
+.tool-result[hidden] {
+  display: none;
+}
+
+.tool-result h2,
+.tool-result h3 {
+  margin-top: 0;
+}
+
+.finding-list {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.finding {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border-left: 4px solid #6c8496;
+  background: #fff;
+}
+
+.finding span {
+  color: var(--muted);
+}
+
+.finding-ok {
+  border-left-color: #27804a;
+}
+
+.finding-note {
+  border-left-color: #d28a12;
+}
+
+.finding-danger {
+  border-left-color: #c73847;
+}
+
+.tool-facts {
+  margin: 18px 0;
+}
+
+.tool-facts div {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.3fr) 1fr;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid #cfe0d5;
+}
+
+.tool-facts dt {
+  font-weight: 800;
+}
+
+.tool-facts dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.checklist {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  border: 0;
+}
+
+.check-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.check-item input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+
+.check-item strong,
+.check-item span {
+  display: block;
+}
+
+.check-item span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.score-meter {
+  overflow: hidden;
+  height: 14px;
+  margin: 12px 0;
+  border-radius: 999px;
+  background: #dce8e0;
+}
+
+.score-meter span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #d28a12 0%, #27804a 100%);
+  transition: width 180ms ease-out;
+}
+
+.result-number {
+  margin: 6px 0;
+  color: var(--brand-dark);
+  font-size: 2rem !important;
+  font-weight: 900;
+}
+
 .article-layout {
   display: grid;
   grid-template-columns: minmax(0, 720px) minmax(240px, 1fr);
@@ -535,8 +784,15 @@ h3 {
   .grid,
   .post-list,
   .trust-strip,
-  .topic-nav {
+  .topic-nav,
+  .tool-grid {
     grid-template-columns: 1fr;
+  }
+
+  .tool-shell,
+  .tool-result,
+  .update-entry {
+    padding: 18px;
   }
 
   .hero {

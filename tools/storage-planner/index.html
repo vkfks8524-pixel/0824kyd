@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-7587676721583907">
+  <title>저장공간 정리 목표 계산기 | 필요한 용량 계산</title>
+  <meta name="description" content="전체 용량과 남은 용량을 입력해 목표 여유 공간, 필요한 정리 용량과 안전한 정리 우선순위를 계산합니다.">
+  <meta name="author" content="KYD 디지털 가이드 편집팀">
+  <link rel="canonical" href="https://www.kyd.kr/tools/storage-planner/">
+  <meta property="og:type" content="website"><meta property="og:locale" content="ko_KR"><meta property="og:site_name" content="KYD 디지털 가이드"><meta property="og:title" content="저장공간 정리 목표 계산기"><meta property="og:description" content="스마트폰·컴퓨터 저장공간에서 얼마나 정리해야 하는지 계산하세요."><meta property="og:url" content="https://www.kyd.kr/tools/storage-planner/"><meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"저장공간 정리 목표 계산기","url":"https://www.kyd.kr/tools/storage-planner/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"description":"전체 용량과 남은 용량으로 필요한 정리 용량을 계산하는 브라우저 도구","author":{"@type":"Organization","name":"KYD 디지털 가이드 편집팀","url":"https://www.kyd.kr/about/"}}</script>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script defer src="/assets/tools.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+  <header class="site-header"><div class="header-inner"><a class="logo" href="/"><span class="logo-mark">KYD</span><span>디지털 가이드</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/">전체 글</a><a href="/tools/" aria-current="page">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></nav></div></header>
+  <main id="main-content" class="container article-layout">
+    <article class="article">
+      <p class="category">무료 도구 · 용량 계획</p>
+      <h1>저장공간 정리 목표 계산기</h1>
+      <p class="article-meta">도구 및 설명 최종 검토: <time datetime="2026-08-23">2026년 8월 23일</time></p>
+      <p class="lead">스마트폰이나 컴퓨터의 전체 저장용량과 현재 남은 용량을 입력하면 선택한 목표까지 몇 GB를 정리해야 하는지 계산합니다. 파일을 읽거나 삭제하지 않으며 입력값도 저장하지 않습니다.</p>
+
+      <section class="tool-shell" aria-labelledby="storage-tool-heading">
+        <h2 id="storage-tool-heading">현재 저장공간 입력</h2>
+        <form id="storage-tool-form" class="tool-form">
+          <div class="form-row"><label for="storage-total">전체 저장용량</label><input id="storage-total" name="total" type="number" min="1" step="0.1" inputmode="decimal" placeholder="예: 128" required><p class="form-help">기기 설정에 표시된 전체 용량을 GB 단위로 입력하세요.</p></div>
+          <div class="form-row"><label for="storage-free">현재 남은 용량</label><input id="storage-free" name="free" type="number" min="0" step="0.1" inputmode="decimal" placeholder="예: 8.5" required></div>
+          <div class="form-row"><label for="storage-target">목표 여유 공간</label><select id="storage-target" name="target"><option value="10">전체의 10% · 최소 점검</option><option value="15" selected>전체의 15% · 일반적인 목표</option><option value="20">전체의 20% · 넉넉한 목표</option><option value="25">전체의 25% · 대용량 작업 대비</option></select><p class="form-help">제조사마다 권장 기준이 다르므로 이 비율은 계획용 목표입니다.</p></div>
+          <p id="storage-error" class="form-error" hidden></p>
+          <div class="tool-actions"><button type="submit">정리 목표 계산</button></div>
+        </form>
+        <div id="storage-result" class="tool-result" role="status" aria-live="polite" tabindex="-1" hidden>
+          <h2 id="storage-result-title">계산 결과</h2>
+          <div class="score-meter" aria-hidden="true"><span id="storage-meter-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></span></div>
+          <dl class="tool-facts"><div><dt>사용 중</dt><dd id="storage-used-value"></dd></div><div><dt>현재 여유</dt><dd id="storage-free-value"></dd></div><div><dt>목표 여유</dt><dd id="storage-target-value"></dd></div><div><dt>정리 목표</dt><dd id="storage-cleanup-value"></dd></div></dl>
+          <h3>권장 확인 순서</h3>
+          <ul id="storage-findings" class="finding-list"></ul>
+        </div>
+      </section>
+
+      <h2>정리 목표를 먼저 계산해야 하는 이유</h2>
+      <p>“용량이 부족하다”는 알림만 보고 사진이나 문서를 무작정 지우면 필요한 자료를 잃기 쉽습니다. 목표가 3GB인지 30GB인지에 따라 적절한 방법이 달라집니다. 작은 목표라면 휴지통과 다운로드 폴더만 확인해도 충분하지만, 큰 목표라면 사진·동영상 백업과 사용하지 않는 앱 정리가 필요합니다.</p>
+      <p>계산기는 전체 용량에 목표 비율을 곱해 필요한 여유 공간을 구하고 현재 남은 공간과의 차이를 정리 목표로 표시합니다. 제조사, 운영체제, 업데이트 크기와 사용 패턴이 다르므로 결과는 고정된 성능 보장 기준이 아니라 안전하게 계획을 세우기 위한 숫자입니다.</p>
+
+      <h2>저장용량과 메모리는 다릅니다</h2>
+      <p>저장용량은 사진, 동영상, 앱과 문서를 보관하는 공간입니다. 메모리 또는 RAM은 실행 중인 앱과 운영체제가 사용하는 작업 공간입니다. 앱이 자주 종료되거나 여러 앱을 동시에 쓰기 어려운 문제를 저장공간 정리만으로 해결할 수는 없습니다.</p>
+      <p>반대로 저장공간이 거의 가득 차면 새 앱과 업데이트를 설치하기 어렵고 사진 촬영이나 파일 저장이 실패할 수 있습니다. Android 공식 안내는 설정의 저장용량 메뉴에서 카테고리별 사용량을 확인하고, 백업된 사진·동영상이나 사용하지 않는 항목을 선택해 공간을 확보하도록 안내합니다.</p>
+
+      <h2>안전한 정리 우선순위</h2>
+      <ol>
+        <li><strong>휴지통과 다운로드:</strong> 다시 받을 수 있는 설치 파일, 오래된 PDF와 이미 삭제한 파일의 휴지통부터 확인합니다.</li>
+        <li><strong>오프라인 콘텐츠:</strong> 음악·영상 앱에 임시로 저장한 다운로드는 계정에서 다시 받을 수 있는지 확인한 뒤 정리합니다.</li>
+        <li><strong>사용하지 않는 앱:</strong> 앱 내부 데이터와 로그인 방법을 확인하고 제거합니다. 앱 캐시와 앱 데이터 삭제는 서로 다릅니다.</li>
+        <li><strong>메신저 미디어:</strong> 대화방의 동영상과 중복 파일을 용량순으로 확인합니다. 중요한 대화 자료는 별도로 백업합니다.</li>
+        <li><strong>사진과 동영상:</strong> 클라우드의 “백업 완료” 표시만 보지 말고 다른 기기나 웹에서 실제로 열리는지 확인한 뒤 정리합니다.</li>
+      </ol>
+
+      <h2>클라우드 용량과 기기 용량 구분하기</h2>
+      <p>Google Drive나 Google 포토의 클라우드 공간이 부족한 것과 스마트폰 내부 공간이 부족한 것은 다른 문제입니다. 기기에서 파일을 지우면 동기화 설정에 따라 클라우드에서도 삭제될 수 있고, 반대로 클라우드 파일만 정리해도 기기 공간이 바로 늘지 않을 수 있습니다. 삭제 버튼을 누르기 전에 동기화·백업 상태와 휴지통 보관 기간을 확인하세요.</p>
+
+      <h2>계산 결과의 한계</h2>
+      <p>실제 기기 파일 목록, 운영체제 예약 공간, SD 카드와 클라우드 상태를 읽지 않습니다. 입력한 전체 용량은 제조사 표기와 운영체제 표시가 조금 다를 수 있습니다. 계산 결과가 “추가 정리 불필요”여도 업데이트 오류나 손상된 앱처럼 다른 원인이 있을 수 있습니다.</p>
+      <p>구체적인 삭제 순서는 <a href="/posts/smartphone-storage-cleanup/">스마트폰 저장 공간이 부족할 때 먼저 확인할 것</a>, 사진 보호 방법은 <a href="/posts/smartphone-photo-backup/">스마트폰 사진 백업 기본 방법</a>, 클라우드 공간은 <a href="/posts/cloud-storage-cleanup/">클라우드 저장 공간 정리 우선순위</a>를 참고하세요.</p>
+
+      <section class="sources" aria-labelledby="storage-tool-sources">
+        <h2 id="storage-tool-sources">공식 자료와 기준</h2>
+        <ul>
+          <li><a href="https://support.google.com/android/answer/7431795?hl=ko" rel="noopener noreferrer">Android 기기 저장용량 확인과 여유 공간 확보</a> <span class="source-owner">(Google Android 공식 자료)</span></li>
+          <li><a href="https://support.google.com/photos/answer/6128843?hl=ko" rel="noopener noreferrer">Google 포토의 기기 저장공간 확보 방식</a> <span class="source-owner">(Google 포토 공식 자료)</span></li>
+          <li><a href="https://support.google.com/googleone/answer/6374270?hl=ko" rel="noopener noreferrer">Google 저장용량 사용 및 정리 안내</a> <span class="source-owner">(Google One 공식 자료)</span></li>
+        </ul>
+        <p class="source-reviewed">자료 최종 확인일: <time datetime="2026-08-23">2026년 8월 23일</time></p>
+      </section>
+    </article>
+    <aside class="sidebar"><h2>함께 사용하기</h2><ul><li><a href="/tools/account-security-check/">계정 보안 자가점검</a></li><li><a href="/posts/smartphone-photo-backup/">사진 백업 방법</a></li><li><a href="/posts/cloud-storage-cleanup/">클라우드 공간 정리</a></li><li><a href="/tools/">전체 무료 도구</a></li></ul></aside>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/updates/">업데이트 기록</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></div></div></footer>
+</body>
+</html>

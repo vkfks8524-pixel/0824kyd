@@ -8,9 +8,10 @@
 - 모든 글에 주제별 상황 판단표와 2개 이상의 공식 1차 자료를 추가했다.
 - 모든 글에 `Article` JSON-LD, canonical, description, Open Graph 정보를 제공한다.
 - 사이트 소개, 실제 오류 제보 창구, 편집 원칙·수정 정책, 개인정보처리방침을 갖췄다.
-- 404, 소개, 문의, 편집 정책, 업데이트 기록, 개인정보처리방침 및 글 목록에서는 광고 스크립트를 불러오지 않는다.
+- URL 구조·파일명·저장공간·계정 보안을 직접 점검하는 브라우저 기반 도구 4개와 충분한 설명·공식 출처를 제공한다.
+- 404, 소개, 문의, 편집 정책, 업데이트 기록, 개인정보처리방침, 글 목록 및 모든 도구 화면에서는 광고 스크립트를 불러오지 않는다.
 - 충분한 자체 콘텐츠가 있는 홈페이지와 23개 정보 글에서만 AdSense 사이트 코드를 불러온다.
-- `ads.txt`, `robots.txt`, 30개 canonical URL이 포함된 `sitemap.xml`을 제공한다.
+- `ads.txt`, `robots.txt`, 35개 canonical URL이 포함된 `sitemap.xml`을 제공한다.
 - 루트 배포 방식과 `public/` 배포 방식의 파일을 동일하게 유지한다.
 - 내부 링크, JSON-LD, 콘텐츠 요구사항과 39개 외부 공식 링크를 자동 검사했다.
 
@@ -18,6 +19,7 @@
 
 - <https://www.kyd.kr/>
 - <https://www.kyd.kr/posts/>
+- <https://www.kyd.kr/tools/>
 - <https://www.kyd.kr/about/>
 - <https://www.kyd.kr/editorial-policy/>
 - <https://www.kyd.kr/contact/>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-7587676721583907">
+  <title>계정 보안 자가점검 | 8가지 기본 항목 확인</title>
+  <meta name="description" content="비밀번호, 2단계 인증, 복구 수단, 로그인 기기, 업데이트와 백업 코드를 계정 정보 입력 없이 점검합니다.">
+  <meta name="author" content="KYD 디지털 가이드 편집팀">
+  <link rel="canonical" href="https://www.kyd.kr/tools/account-security-check/">
+  <meta property="og:type" content="website"><meta property="og:locale" content="ko_KR"><meta property="og:site_name" content="KYD 디지털 가이드"><meta property="og:title" content="계정 보안 자가점검"><meta property="og:description" content="계정 정보 입력 없이 8가지 기본 보안 항목과 보완 순서를 확인하세요."><meta property="og:url" content="https://www.kyd.kr/tools/account-security-check/"><meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"계정 보안 자가점검","url":"https://www.kyd.kr/tools/account-security-check/","applicationCategory":"SecurityApplication","operatingSystem":"Any","browserRequirements":"JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"description":"계정에 로그인하지 않고 기본 보안 설정의 준비 상태를 확인하는 체크리스트","author":{"@type":"Organization","name":"KYD 디지털 가이드 편집팀","url":"https://www.kyd.kr/about/"}}</script>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script defer src="/assets/tools.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+  <header class="site-header"><div class="header-inner"><a class="logo" href="/"><span class="logo-mark">KYD</span><span>디지털 가이드</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/">전체 글</a><a href="/tools/" aria-current="page">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></nav></div></header>
+  <main id="main-content" class="container article-layout">
+    <article class="article">
+      <p class="category">무료 도구 · 계정 보호</p>
+      <h1>계정 보안 자가점검</h1>
+      <p class="article-meta">도구 및 설명 최종 검토: <time datetime="2026-08-23">2026년 8월 23일</time></p>
+      <p class="lead">중요한 이메일·클라우드 계정을 기준으로 현재 완료한 보안 항목을 체크하세요. 이메일 주소, 비밀번호, 전화번호나 계정 이름은 입력하지 않으며 체크 상태도 저장하지 않습니다.</p>
+
+      <section class="tool-shell" aria-labelledby="account-tool-heading">
+        <h2 id="account-tool-heading">완료한 항목 선택</h2>
+        <form id="account-tool-form" class="tool-form">
+          <fieldset class="checklist">
+            <legend class="fieldset-label">중요한 계정 하나를 떠올리고 실제 설정을 확인한 항목만 선택하세요.</legend>
+            <div class="check-item"><input id="check-unique-password" type="checkbox" data-weight="20"><label for="check-unique-password" data-action="다른 사이트와 겹치지 않는 고유 비밀번호 또는 패스키를 설정하세요."><strong>고유 비밀번호 또는 패스키</strong><span>다른 사이트와 같은 비밀번호를 반복하지 않습니다.</span></label></div>
+            <div class="check-item"><input id="check-two-factor" type="checkbox" data-weight="20"><label for="check-two-factor" data-action="2단계 인증을 켜고 SMS 외에 인증 앱·보안 키·기기 알림 같은 방법을 검토하세요."><strong>2단계 인증</strong><span>비밀번호가 노출되어도 추가 확인 단계가 필요합니다.</span></label></div>
+            <div class="check-item"><input id="check-recovery" type="checkbox" data-weight="10"><label for="check-recovery" data-action="복구 이메일과 전화번호가 현재 본인이 사용하는 정보인지 확인하세요."><strong>복구 수단 최신 상태</strong><span>복구 이메일과 전화번호가 현재 사용 중인 정보입니다.</span></label></div>
+            <div class="check-item"><input id="check-devices" type="checkbox" data-weight="10"><label for="check-devices" data-action="로그인된 기기와 최근 보안 활동에서 모르는 기기를 로그아웃하세요."><strong>로그인 기기 검토</strong><span>최근 보안 활동과 연결된 기기에 모르는 항목이 없습니다.</span></label></div>
+            <div class="check-item"><input id="check-updates" type="checkbox" data-weight="10"><label for="check-updates" data-action="운영체제, 브라우저와 인증 앱을 최신 버전으로 업데이트하세요."><strong>기기와 앱 업데이트</strong><span>운영체제, 브라우저와 인증 앱이 최신 상태입니다.</span></label></div>
+            <div class="check-item"><input id="check-screen-lock" type="checkbox" data-weight="10"><label for="check-screen-lock" data-action="계정을 사용하는 스마트폰과 컴퓨터에 PIN·비밀번호·생체 잠금을 설정하세요."><strong>기기 화면 잠금</strong><span>계정을 사용하는 기기에 PIN, 비밀번호 또는 생체 잠금이 있습니다.</span></label></div>
+            <div class="check-item"><input id="check-phishing" type="checkbox" data-weight="10"><label for="check-phishing" data-action="문자·메일 링크 대신 공식 앱이나 저장한 주소에서 로그인하는 습관을 정하세요."><strong>피싱 링크 대응 습관</strong><span>문자나 메일 링크가 아니라 공식 앱·저장한 주소에서 로그인합니다.</span></label></div>
+            <div class="check-item"><input id="check-backup-codes" type="checkbox" data-weight="10"><label for="check-backup-codes" data-action="휴대전화를 잃었을 때 사용할 복구 코드나 예비 인증 방법을 안전한 곳에 준비하세요."><strong>예비 복구 방법</strong><span>복구 코드나 예비 인증 수단을 계정과 분리해 보관합니다.</span></label></div>
+          </fieldset>
+          <div class="tool-actions"><button type="submit">보완 순서 확인</button><button class="secondary-action" type="reset">선택 초기화</button></div>
+        </form>
+        <div id="account-result" class="tool-result" role="status" aria-live="polite" tabindex="-1" hidden>
+          <h2 id="account-result-title">점검 결과</h2>
+          <p id="account-score" class="result-number"></p>
+          <div class="score-meter"><span id="account-score-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="계정 보안 준비 점수"></span></div>
+          <p id="account-result-summary"></p>
+          <p id="account-complete" hidden><strong>모든 기본 항목을 선택했습니다.</strong> 정기적으로 최근 활동과 복구 수단을 다시 확인하세요.</p>
+          <div id="account-missing-wrap"><h3>먼저 보완할 항목</h3><ol id="account-missing"></ol></div>
+        </div>
+      </section>
+
+      <h2>점수보다 미완료 항목이 중요합니다</h2>
+      <p>이 점수는 실제 계정이나 침해 여부를 검사하지 않습니다. 각 항목에 단순한 가중치를 적용해 점검 순서를 보여주는 계획 도구입니다. 100점을 받아도 이미 비밀번호가 유출되었거나 복구 이메일이 탈취된 상황까지 판단할 수 없습니다.</p>
+      <p>반대로 낮은 점수는 계정이 현재 해킹되었다는 뜻이 아닙니다. 이메일처럼 다른 서비스의 비밀번호 재설정에 사용되는 핵심 계정부터 보완하세요. 고유 비밀번호와 2단계 인증은 가장 큰 비중으로 계산되며, 복구 수단과 로그인 기기 확인이 뒤를 잇습니다.</p>
+
+      <h2>우선순위 1: 고유 비밀번호와 패스키</h2>
+      <p>여러 사이트에서 같은 비밀번호를 사용하면 한 곳의 정보 유출이 다른 계정의 로그인 시도로 이어질 수 있습니다. 사이트마다 다른 긴 비밀번호를 사용하고 기억하기 어렵다면 신뢰할 수 있는 비밀번호 관리자를 이용합니다. 패스키를 지원하는 서비스에서는 피싱 페이지에 비밀번호를 입력할 가능성을 줄이는 선택지가 될 수 있습니다.</p>
+
+      <h2>우선순위 2: 2단계 인증과 복구 수단</h2>
+      <p>2단계 인증은 비밀번호 외에 한 번 더 본인임을 확인합니다. 인증 앱, 기기 알림, 보안 키와 패스키 등 서비스가 지원하는 방법을 비교하세요. 휴대전화를 잃어버렸을 때를 대비해 예비 인증 방법과 복구 코드를 준비하되, 비밀번호와 같은 장소에 보관하지 않습니다.</p>
+      <p>복구 전화번호와 이메일은 계정을 되찾는 열쇠가 될 수 있습니다. 오래된 회사 이메일이나 사용하지 않는 번호가 남아 있다면 현재 본인이 통제하는 정보로 갱신합니다. 복구 정보를 변경했다는 알림이 왔는데 본인이 한 행동이 아니라면 즉시 계정의 공식 보안 페이지에서 활동을 확인하세요.</p>
+
+      <h2>우선순위 3: 로그인 기기와 보안 활동</h2>
+      <p>비밀번호를 바꾼 뒤에도 기존 로그인 세션이 남을 수 있습니다. 최근 보안 활동과 로그인된 기기 목록에서 시간, 위치, 기기 종류를 확인하고 모르는 항목을 로그아웃합니다. 이메일 전달 규칙, 연결된 앱 권한과 결제 수단처럼 계정 내부에서 바뀔 수 있는 설정도 함께 확인하세요.</p>
+
+      <h2>도구가 요구하지 않는 정보</h2>
+      <p>계정 이름, 이메일 주소, 비밀번호, 복구 전화번호, 인증번호를 입력할 필요가 없습니다. 이러한 정보를 요구하는 자가점검 사이트는 이용하지 않는 편이 안전합니다. 실제 설정을 확인하려면 문자나 이메일의 링크가 아니라 서비스 공식 앱이나 주소를 직접 이용하세요.</p>
+
+      <h2>결과의 한계와 침해 의심 시 조치</h2>
+      <p>모르는 로그인, 본인이 요청하지 않은 인증번호, 변경된 복구 정보나 결제가 보인다면 자가점검보다 계정 복구와 피해 신고가 먼저입니다. 안전한 기기에서 공식 계정 페이지에 접속하고 서비스 제공자의 “계정이 도용됨” 절차를 이용하세요.</p>
+      <p>기본 설정 방법은 <a href="/posts/google-account-security/">구글 계정 보안 점검</a>, 비밀번호 관리 시작은 <a href="/posts/password-manager-start/">비밀번호 관리자를 처음 쓸 때</a>, 브라우저 저장 여부는 <a href="/posts/browser-password-save-safety/">브라우저 비밀번호 저장 기능 사용 기준</a>을 참고하세요.</p>
+
+      <section class="sources" aria-labelledby="account-tool-sources">
+        <h2 id="account-tool-sources">공식 자료와 기준</h2>
+        <ul>
+          <li><a href="https://support.google.com/accounts/answer/46526?hl=ko" rel="noopener noreferrer">계정 보안 강화와 보안 진단 안내</a> <span class="source-owner">(Google 계정 공식 자료)</span></li>
+          <li><a href="https://support.google.com/accounts/answer/6294825?hl=ko" rel="noopener noreferrer">해킹되거나 도용된 계정의 활동·기기 검토</a> <span class="source-owner">(Google 계정 공식 자료)</span></li>
+          <li><a href="https://support.google.com/accounts/answer/185834?hl=ko" rel="noopener noreferrer">2단계 인증의 예비 수단과 복구 코드 안내</a> <span class="source-owner">(Google 계정 공식 자료)</span></li>
+        </ul>
+        <p class="source-reviewed">자료 최종 확인일: <time datetime="2026-08-23">2026년 8월 23일</time></p>
+      </section>
+    </article>
+    <aside class="sidebar"><h2>함께 사용하기</h2><ul><li><a href="/tools/url-structure-check/">URL 구조 확인</a></li><li><a href="/posts/google-account-security/">구글 계정 보안 점검</a></li><li><a href="/posts/password-manager-start/">비밀번호 관리자 시작</a></li><li><a href="/tools/">전체 무료 도구</a></li></ul></aside>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/updates/">업데이트 기록</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></div></div></footer>
+</body>
+</html>

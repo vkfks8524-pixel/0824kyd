@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-7587676721583907">
+  <title>URL 구조 확인 도구 | 링크를 열기 전 주소 점검</title>
+  <meta name="description" content="URL을 외부로 전송하지 않고 호스트 이름, HTTPS, 단축 URL, 숫자 IP, 퓨니코드와 비표준 포트를 확인합니다.">
+  <meta name="author" content="KYD 디지털 가이드 편집팀">
+  <link rel="canonical" href="https://www.kyd.kr/tools/url-structure-check/">
+  <meta property="og:type" content="website"><meta property="og:locale" content="ko_KR"><meta property="og:site_name" content="KYD 디지털 가이드"><meta property="og:title" content="URL 구조 확인 도구"><meta property="og:description" content="링크를 열기 전에 실제 호스트와 주소 구조를 브라우저에서 확인하세요."><meta property="og:url" content="https://www.kyd.kr/tools/url-structure-check/"><meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"URL 구조 확인 도구","url":"https://www.kyd.kr/tools/url-structure-check/","applicationCategory":"SecurityApplication","operatingSystem":"Any","browserRequirements":"JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"description":"URL을 외부로 전송하지 않고 호스트 이름과 주의할 구조를 확인하는 도구","author":{"@type":"Organization","name":"KYD 디지털 가이드 편집팀","url":"https://www.kyd.kr/about/"}}</script>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script defer src="/assets/tools.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+  <header class="site-header"><div class="header-inner"><a class="logo" href="/"><span class="logo-mark">KYD</span><span>디지털 가이드</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/">전체 글</a><a href="/tools/" aria-current="page">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></nav></div></header>
+  <main id="main-content" class="container article-layout">
+    <article class="article">
+      <p class="category">무료 도구 · 링크 확인</p>
+      <h1>URL 구조 확인 도구</h1>
+      <p class="article-meta">도구 및 설명 최종 검토: <time datetime="2026-08-23">2026년 8월 23일</time></p>
+      <p class="lead">문자, QR코드, 이메일이나 PDF에서 발견한 링크를 열기 전에 실제 호스트 이름과 눈에 잘 띄지 않는 구조를 확인합니다. 주소는 현재 브라우저 안에서만 분석하며 KYD 서버나 외부 평판 서비스로 보내지 않습니다.</p>
+
+      <section class="tool-shell" aria-labelledby="url-tool-heading">
+        <h2 id="url-tool-heading">확인할 URL 입력</h2>
+        <form id="url-tool-form" class="tool-form" novalidate>
+          <div class="form-row">
+            <label for="url-input">웹주소</label>
+            <input id="url-input" name="url" type="text" inputmode="url" autocomplete="off" spellcheck="false" maxlength="2048" placeholder="예: https://accounts.example.com/login" aria-describedby="url-input-help">
+            <p class="form-help" id="url-input-help">비밀번호나 인증번호가 포함된 주소는 입력하지 마세요. 입력값은 네트워크로 전송하지 않습니다.</p>
+          </div>
+          <div class="tool-actions"><button type="submit">주소 구조 확인</button></div>
+        </form>
+        <div id="url-result" class="tool-result" role="status" aria-live="polite" tabindex="-1" hidden>
+          <h2 id="url-result-title">확인 결과</h2>
+          <p id="url-result-summary"></p>
+          <dl id="url-facts" class="tool-facts"></dl>
+          <h3>확인할 항목</h3>
+          <ul id="url-findings" class="finding-list"></ul>
+        </div>
+      </section>
+
+      <h2>이 도구가 확인하는 것</h2>
+      <p>URL은 프로토콜, 호스트 이름, 포트, 경로와 검색 조건으로 구성됩니다. 화면에 표시된 서비스 이름이나 문자 발신자가 익숙하더라도 실제 접속 위치는 호스트 이름으로 결정됩니다. 이 도구는 주소를 분해해 각각을 따로 보여주고, 다음과 같은 구조를 눈에 띄게 표시합니다.</p>
+      <ul>
+        <li>암호화되지 않은 HTTP 형식</li>
+        <li>숫자 IP 주소 또는 비표준 포트</li>
+        <li>최종 목적지가 가려진 단축 URL</li>
+        <li>다른 문자 체계를 표현하는 퓨니코드 호스트</li>
+        <li><code>@</code> 앞뒤를 혼동하게 만들 수 있는 사용자 정보</li>
+        <li>지나치게 많은 하위 도메인과 인코딩된 문자</li>
+      </ul>
+
+      <h2>결과를 읽는 방법</h2>
+      <p><strong>HTTPS 형식</strong>은 기기와 사이트 사이의 전송 구간을 암호화한다는 뜻입니다. 그러나 피싱 사이트도 HTTPS 인증서를 사용할 수 있으므로 자물쇠 표시만으로 운영자를 신뢰하면 안 됩니다. Chrome 공식 안내도 안전한 연결 표시가 있더라도 주소 표시줄의 사이트 이름을 확인하라고 설명합니다.</p>
+      <p><strong>퓨니코드</strong>는 국제화 도메인을 표현하는 정상 기술이지만, 유명 서비스와 비슷한 문자를 섞어 혼동시키는 데 악용될 수도 있습니다. 결과에 퓨니코드가 표시되면 문자나 메일로 받은 링크에서 바로 로그인하지 말고, 평소 사용하던 앱이나 즐겨찾기에서 공식 서비스를 여는 편이 안전합니다.</p>
+      <p><strong>단축 URL</strong>은 주소 길이를 줄이는 정상 용도로도 사용됩니다. 문제는 최종 목적지를 누르기 전에 확인하기 어렵다는 점입니다. 예상하지 못한 결제, 배송, 과태료, 부고 문자에 단축 링크가 있다면 발신자를 다른 수단으로 확인하세요.</p>
+
+      <h2>이 도구가 확인하지 못하는 것</h2>
+      <p>주소의 현재 콘텐츠, 도메인 소유자, 악성코드 배포 여부, 브라우저 세이프 브라우징 목록을 조회하지 않습니다. 구조상 주의 항목이 없더라도 새로 만들어진 피싱 사이트일 수 있고, 반대로 개발·업무용 주소는 비표준 포트를 정상적으로 사용할 수 있습니다. 결과를 “안전 판정”으로 사용하지 마세요.</p>
+      <p>Chrome에서 빨간 경고나 “가짜 사이트 주의” 화면이 표시되면 이 도구의 결과와 관계없이 진행하지 않는 것이 좋습니다. 링크를 이미 눌렀거나 정보를 입력했다면 <a href="/posts/smishing-link-response/">스미싱 의심 링크를 눌렀을 때 대응 순서</a>를 따라 실제 행동별로 조치하세요.</p>
+
+      <section class="sources" aria-labelledby="url-tool-sources">
+        <h2 id="url-tool-sources">공식 자료와 기준</h2>
+        <ul>
+          <li><a href="https://support.google.com/chrome/answer/99020?co=GENIE.Platform%3DDesktop&amp;hl=ko" rel="noopener noreferrer">안전하지 않은 사이트 경고와 유사 URL 안내</a> <span class="source-owner">(Google Chrome 공식 자료)</span></li>
+          <li><a href="https://support.google.com/chrome/answer/95617?co=GENIE.Platform%3DDesktop&amp;hl=ko" rel="noopener noreferrer">사이트 연결과 주소 표시줄 확인 방법</a> <span class="source-owner">(Google Chrome 공식 자료)</span></li>
+          <li><a href="https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&amp;categoryCode=&amp;menuNo=205021&amp;nttId=71936&amp;pageIndex=1&amp;searchCnd=&amp;searchWrd=" rel="noopener noreferrer">스미싱 문자 링크 피해 예방·대응 안내</a> <span class="source-owner">(한국인터넷진흥원)</span></li>
+        </ul>
+        <p class="source-reviewed">자료 최종 확인일: <time datetime="2026-08-23">2026년 8월 23일</time></p>
+      </section>
+    </article>
+    <aside class="sidebar"><h2>함께 사용하기</h2><ul><li><a href="/tools/file-extension-check/">파일명·확장자 확인</a></li><li><a href="/posts/qr-code-safety/">QR코드 안전 수칙</a></li><li><a href="/posts/pdf-link-safety/">PDF 링크 확인 방법</a></li><li><a href="/tools/">전체 무료 도구</a></li></ul></aside>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/updates/">업데이트 기록</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></div></div></footer>
+</body>
+</html>

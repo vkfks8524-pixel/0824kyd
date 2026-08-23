@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-7587676721583907">
+  <title>파일명·확장자 확인 도구 | 이중 확장자 점검</title>
+  <meta name="description" content="파일을 업로드하지 않고 파일 이름의 최종 확장자, 이중 확장자, 실행·매크로·바로가기 형식과 표시 방향 제어 문자를 확인합니다.">
+  <meta name="author" content="KYD 디지털 가이드 편집팀">
+  <link rel="canonical" href="https://www.kyd.kr/tools/file-extension-check/">
+  <meta property="og:type" content="website"><meta property="og:locale" content="ko_KR"><meta property="og:site_name" content="KYD 디지털 가이드"><meta property="og:title" content="파일명·확장자 확인 도구"><meta property="og:description" content="파일 업로드 없이 이름만으로 최종 확장자와 주의할 형식을 확인하세요."><meta property="og:url" content="https://www.kyd.kr/tools/file-extension-check/"><meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"파일명·확장자 확인 도구","url":"https://www.kyd.kr/tools/file-extension-check/","applicationCategory":"SecurityApplication","operatingSystem":"Any","browserRequirements":"JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"description":"파일을 업로드하지 않고 이름의 최종 확장자와 주의할 구조를 확인하는 도구","author":{"@type":"Organization","name":"KYD 디지털 가이드 편집팀","url":"https://www.kyd.kr/about/"}}</script>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script defer src="/assets/tools.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+  <header class="site-header"><div class="header-inner"><a class="logo" href="/"><span class="logo-mark">KYD</span><span>디지털 가이드</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/">전체 글</a><a href="/tools/" aria-current="page">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></nav></div></header>
+  <main id="main-content" class="container article-layout">
+    <article class="article">
+      <p class="category">무료 도구 · 파일 확인</p>
+      <h1>파일명·확장자 확인 도구</h1>
+      <p class="article-meta">도구 및 설명 최종 검토: <time datetime="2026-08-23">2026년 8월 23일</time></p>
+      <p class="lead">메일이나 메신저로 받은 파일을 열기 전에 이름의 마지막 확장자와 위장 가능성을 확인합니다. 파일 자체는 선택하거나 업로드하지 않으며 입력한 이름은 현재 브라우저에서만 처리합니다.</p>
+
+      <section class="tool-shell" aria-labelledby="file-tool-heading">
+        <h2 id="file-tool-heading">확인할 파일 이름 입력</h2>
+        <form id="file-tool-form" class="tool-form" novalidate>
+          <div class="form-row">
+            <label for="file-name-input">파일 이름</label>
+            <input id="file-name-input" name="file-name" type="text" autocomplete="off" spellcheck="false" maxlength="255" placeholder="예: 배송조회.pdf.exe" aria-describedby="file-input-help">
+            <p class="form-help" id="file-input-help">파일을 업로드하지 마세요. 탐색기나 다운로드 목록에 보이는 이름만 입력합니다.</p>
+          </div>
+          <div class="tool-actions"><button type="submit">확장자 확인</button></div>
+        </form>
+        <div id="file-result" class="tool-result" role="status" aria-live="polite" tabindex="-1" hidden>
+          <h2 id="file-result-title">확인 결과</h2>
+          <p id="file-result-summary"></p>
+          <dl class="tool-facts"><div><dt>입력한 파일명</dt><dd id="file-base-name"></dd></div><div><dt>최종 확장자</dt><dd id="file-extension"></dd></div></dl>
+          <h3>확인할 항목</h3>
+          <ul id="file-findings" class="finding-list"></ul>
+        </div>
+      </section>
+
+      <h2>마지막 확장자를 먼저 보는 이유</h2>
+      <p>Windows 파일 이름은 보통 이름과 확장자로 나뉘며 확장자는 파일을 여는 프로그램과 아이콘을 결정하는 단서가 됩니다. 예를 들어 <code>여행사진.jpg</code>의 최종 확장자는 <code>.jpg</code>지만, <code>여행사진.jpg.exe</code>의 최종 확장자는 <code>.exe</code>입니다. 확장자 숨김이 켜져 있으면 두 번째 파일이 사진처럼 보일 수 있습니다.</p>
+      <p>Microsoft는 파일 확장자를 바꿔도 실제 형식이 변환되는 것은 아니라고 설명합니다. 따라서 의심 파일의 이름을 <code>.txt</code>나 <code>.jpg</code>로 바꿨다고 안전해지는 것이 아닙니다. 실행하지 않은 상태에서 원래 출처와 디지털 서명, 운영체제 경고를 확인해야 합니다.</p>
+
+      <h2>도구가 구분하는 주요 형식</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">분류</th><th scope="col">예시</th><th scope="col">확인할 점</th></tr></thead>
+          <tbody>
+            <tr><td>실행·설치</td><td>.exe, .msi, .bat, .cmd, .ps1, .apk</td><td>프로그램이나 명령을 실행할 수 있으므로 공식 배포처와 서명을 확인</td></tr>
+            <tr><td>바로가기</td><td>.lnk, .url, .scf</td><td>문서처럼 보여도 다른 프로그램·명령·사이트를 열 수 있음</td></tr>
+            <tr><td>매크로 문서</td><td>.docm, .xlsm, .pptm</td><td>자동화 코드가 포함될 수 있으므로 예상하지 않은 매크로 허용 금지</td></tr>
+            <tr><td>압축·이미지</td><td>.zip, .rar, .7z, .iso</td><td>내부 파일의 최종 확장자를 다시 확인</td></tr>
+            <tr><td>일반 문서·미디어</td><td>.pdf, .docx, .jpg, .mp4</td><td>확장자만으로 안전을 보장할 수 없으며 출처와 경고 확인</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>문자 표시 방향 제어 기호란?</h2>
+      <p>일부 유니코드 문자는 화면에 보이는 문자 순서를 바꿀 수 있습니다. 이를 악용하면 실제 마지막 확장자와 화면에 보이는 문자열이 다르게 느껴질 수 있습니다. 이 도구는 대표적인 방향 제어 문자가 이름에 포함되었는지 표시하지만 모든 운영체제·앱의 렌더링 차이를 재현하지는 않습니다.</p>
+
+      <h2>Windows에서 실제 확장자 표시하기</h2>
+      <p>Windows 11과 10에서는 파일 탐색기를 열고 <strong>보기 → 표시 → 파일 확장명</strong>을 선택할 수 있습니다. 아이콘이나 미리보기보다 전체 파일 이름의 마지막 부분을 확인하세요. 다운로드 경고가 나타난 파일은 확장자가 익숙해 보여도 경고를 우회하지 않는 편이 안전합니다.</p>
+
+      <h2>분석 결과의 한계</h2>
+      <p>이 도구는 파일 내용, 해시, 전자서명이나 악성코드를 검사하지 않습니다. 정상 프로그램도 실행 확장자를 사용하고, 악성 콘텐츠가 PDF나 문서 파일 안에 포함될 수도 있습니다. “일반 미디어 형식” 결과는 파일이 안전하다는 뜻이 아니라 이름에서 확인되는 위험 범주가 다르다는 뜻입니다.</p>
+      <p>파일을 이미 실행했거나 프로그램이 설치되었다면 파일명만 확인하는 것으로 충분하지 않습니다. 네트워크 사용을 중단하고 운영체제 보안 검사와 계정 활동을 확인하세요. 자세한 판단 순서는 <a href="/posts/windows-file-extension/">Windows 파일 확장자를 표시해야 하는 이유</a>와 <a href="/posts/chrome-download-warning/">Chrome 다운로드 경고 판단 기준</a>에서 확인할 수 있습니다.</p>
+
+      <section class="sources" aria-labelledby="file-tool-sources">
+        <h2 id="file-tool-sources">공식 자료와 기준</h2>
+        <ul>
+          <li><a href="https://support.microsoft.com/en-US/Windows/Experience/Storage-FileManagement/common-file-name-extensions-in-windows" rel="noopener noreferrer">Windows의 일반적인 파일명 확장자와 표시 방법</a> <span class="source-owner">(Microsoft 공식 자료)</span></li>
+          <li><a href="https://support.microsoft.com/en-us/windows/protect-your-pc-from-potentially-unwanted-applications-c7668a25-174e-3b78-0191-faf0607f7a6e" rel="noopener noreferrer">사용자 동의 없이 설치될 수 있는 앱 보호</a> <span class="source-owner">(Microsoft 공식 자료)</span></li>
+          <li><a href="https://support.google.com/chrome/answer/6261569?hl=ko" rel="noopener noreferrer">Chrome의 위험한 다운로드 차단 안내</a> <span class="source-owner">(Google Chrome 공식 자료)</span></li>
+        </ul>
+        <p class="source-reviewed">자료 최종 확인일: <time datetime="2026-08-23">2026년 8월 23일</time></p>
+      </section>
+    </article>
+    <aside class="sidebar"><h2>함께 사용하기</h2><ul><li><a href="/tools/url-structure-check/">URL 구조 확인</a></li><li><a href="/posts/gmail-attachment-check/">메일 첨부파일 확인</a></li><li><a href="/posts/free-program-install-checkbox/">무료 프로그램 설치 점검</a></li><li><a href="/tools/">전체 무료 도구</a></li></ul></aside>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/updates/">업데이트 기록</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></div></div></footer>
+</body>
+</html>
