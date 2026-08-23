@@ -7,7 +7,7 @@ function Add-Error([string]$message) { $errors.Add($message) }
 function Add-Warning([string]$message) { $warnings.Add($message) }
 
 $root = $PWD.Path
-$htmlFiles = @('index.html', 'about/index.html', 'editorial-policy/index.html', 'contact/index.html', 'privacy/index.html', 'posts/index.html')
+$htmlFiles = @('index.html', 'about/index.html', 'editorial-policy/index.html', 'contact/index.html', 'privacy/index.html', 'updates/index.html', 'posts/index.html')
 $postFiles = Get-ChildItem -LiteralPath 'posts' -Directory | Sort-Object Name | ForEach-Object { "posts/$($_.Name)/index.html" }
 $htmlFiles += $postFiles
 
@@ -49,7 +49,7 @@ foreach ($relative in $postFiles) {
   if ($charCount -lt 2200) { Add-Warning "$relative visible Korean/content character count is only $charCount" }
 }
 
-$nonContentPages = @('404.html', 'about/index.html', 'editorial-policy/index.html', 'contact/index.html', 'privacy/index.html')
+$nonContentPages = @('404.html', 'about/index.html', 'editorial-policy/index.html', 'contact/index.html', 'privacy/index.html', 'updates/index.html', 'posts/index.html')
 foreach ($relative in $nonContentPages) {
   $html = [IO.File]::ReadAllText((Join-Path $root $relative))
   if ($html.Contains('pagead2.googlesyndication.com')) { Add-Error "Ad code should not load on utility page: $relative" }
@@ -68,10 +68,17 @@ foreach ($canonical in $canonicals.Keys) {
 if ([regex]::Matches($sitemap, '<url>').Count -ne $canonicals.Count) { Add-Error "Sitemap URL count does not match canonical page count ($([regex]::Matches($sitemap, '<url>').Count) vs $($canonicals.Count))" }
 
 $postIndex = [IO.File]::ReadAllText((Join-Path $root 'posts/index.html'))
-$listedPosts = [regex]::Matches($postIndex, '<article class="post-card">.*?<a href="(/posts/[^\"]+/)"', [Text.RegularExpressions.RegexOptions]::Singleline) | ForEach-Object { $_.Groups[1].Value }
-if ($listedPosts.Count -ne 22 -or ($listedPosts | Sort-Object -Unique).Count -ne 22) { Add-Error 'Posts index must list 22 unique article URLs' }
+$listedPosts = [regex]::Matches($postIndex, '<article class="[^"]*\bpost-card\b[^"]*">.*?<a href="(/posts/[^\"]+/)"', [Text.RegularExpressions.RegexOptions]::Singleline) | ForEach-Object { $_.Groups[1].Value }
+if ($listedPosts.Count -ne $postFiles.Count -or ($listedPosts | Sort-Object -Unique).Count -ne $postFiles.Count) { Add-Error "Posts index must list all $($postFiles.Count) unique article URLs" }
 
-$mirrorRoots = @('about','contact','privacy','editorial-policy','posts','assets')
+$homeHtml = [IO.File]::ReadAllText((Join-Path $root 'index.html'))
+if (-not $homeHtml.Contains('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')) { Add-Error 'Homepage must retain the AdSense connection code' }
+foreach ($relative in $postFiles) {
+  $html = [IO.File]::ReadAllText((Join-Path $root $relative))
+  if (-not $html.Contains('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')) { Add-Error "Article is missing AdSense connection code: $relative" }
+}
+
+$mirrorRoots = @('about','contact','privacy','editorial-policy','updates','posts','assets')
 $mirrorFiles = @('index.html','404.html','ads.txt','robots.txt','sitemap.xml')
 foreach ($relative in $mirrorFiles) {
   $rootHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $root $relative)).Hash
