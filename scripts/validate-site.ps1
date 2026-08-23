@@ -91,7 +91,7 @@ foreach ($relative in $postFiles) {
 }
 
 $mirrorRoots = @('about','contact','privacy','editorial-policy','updates','posts','tools','assets')
-$mirrorFiles = @('index.html','404.html','ads.txt','robots.txt','sitemap.xml')
+$mirrorFiles = @('index.html','404.html','ads.txt','robots.txt','sitemap.xml','google50fae352e2643cab.html')
 foreach ($relative in $mirrorFiles) {
   $rootHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $root $relative)).Hash
   $publicHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path (Join-Path $root 'public') $relative)).Hash
