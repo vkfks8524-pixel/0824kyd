@@ -1,0 +1,36 @@
+{
+  "version": "2026-09-06",
+  "scope": "KYD 도구의 문자열 분석과 계산 결과. 악성코드 탐지 성능, 실제 기기 설정 또는 계정 침해 여부를 검증하는 자료가 아닙니다.",
+  "url": [
+    {"input": "https://example.com/form.pdf", "host": "example.com", "contains": "HTTPS 형식"},
+    {"input": "https://example.com@files.example.org/form.pdf", "host": "files.example.org", "contains": "@ 앞의 사용자 정보"},
+    {"input": "https://example.com/user@name", "host": "example.com", "absent": "@ 앞의 사용자 정보"},
+    {"input": "https://example.com/?mail=a@b.example", "host": "example.com", "absent": "@ 앞의 사용자 정보"},
+    {"input": "http://192.0.2.1:8080/", "host": "192.0.2.1", "contains": "비표준 포트"},
+    {"input": "https://xn--bcher-kva.example/", "host": "xn--bcher-kva.example", "contains": "퓨니코드"},
+    {"input": "example.com/path", "host": "example.com", "contains": "프로토콜이 생략됨"},
+    {"input": "javascript:alert(1)", "rejected": true},
+    {"input": "mailto:user@example.com", "rejected": true},
+    {"input": "https:example.com", "rejected": true},
+    {"input": "https://exa mple.com", "rejected": true}
+  ],
+  "file": [
+    {"input": "안내문.pdf.exe", "extension": ".exe", "contains": "이중 확장자"},
+    {"input": "회의록.최종.docx", "extension": ".docx", "absent": "이중 확장자"},
+    {"input": "photo.jpg.lnk", "extension": ".lnk", "contains": "바로가기"},
+    {"input": "budget.xls", "extension": ".xls", "contains": "오래된 Office"},
+    {"input": "budget.xlsm", "extension": ".xlsm", "contains": "매크로 사용 문서"},
+    {"input": ".gitignore", "extension": "확장자 없음"},
+    {"input": "report.", "extension": "확장자 없음", "contains": "파일명 끝의 점"},
+    {"input": "report..exe", "extension": ".exe"},
+    {"input": "photo\u202Egpj.exe", "extension": ".exe", "contains": "문자 표시 방향"},
+    {"input": "<img src=x onerror=alert(1)>.pdf", "extension": ".pdf"}
+  ],
+  "storage": [
+    {"total": "128", "free": "8", "target": "15", "cleanup": "11.2 GB"},
+    {"total": "128", "free": "8", "target": "10", "cleanup": "4.8 GB"},
+    {"total": "128", "free": "8", "target": "20", "cleanup": "17.6 GB"},
+    {"total": "128", "free": "30", "target": "15", "cleanup": "추가 정리 불필요"},
+    {"total": "128", "free": "129", "target": "15", "invalid": true}
+  ]
+}

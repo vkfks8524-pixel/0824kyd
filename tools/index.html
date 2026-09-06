@@ -66,6 +66,17 @@
         </article>
       </div>
 
+      <section class="info-panel" id="verification">
+        <h2>입력과 결과를 대조해 보세요</h2>
+        <p>2026-09-06 개정에서는 주소 11개, 파일명 10개, 저장공간 계산 5개와 계정 체크·초기화 4개를 Chrome 152의 자동화된 브라우저 시험으로 확인했습니다. 이는 도구 동작 검사이며 악성 사이트·파일 탐지율이나 계정의 안전 점수를 측정한 실험이 아닙니다.</p>
+        <div class="table-wrap"><table><caption>직접 재현할 수 있는 대표 입력</caption><thead><tr><th scope="col">도구</th><th scope="col">입력</th><th scope="col">기대 결과</th></tr></thead><tbody>
+        <tr><td>URL</td><td><code>https://example.com@files.example.org/</code></td><td>호스트 files.example.org, 사용자 정보 주의</td></tr>
+        <tr><td>파일명</td><td><code>안내문.pdf.exe</code></td><td>.exe 및 이중 확장자 주의</td></tr>
+        <tr><td>저장공간</td><td>전체 128GB, 여유 8GB, 목표 15%</td><td>11.2GB 정리 목표</td></tr>
+        <tr><td>계정 점검</td><td>앞의 3개 항목만 선택</td><td>50/100, 미완료 5개. 보안 보장이 아님</td></tr>
+        </tbody></table></div>
+        <p><a href="/tools/test-cases.json">문자열·계산 테스트 입력과 예상 결과(JSON)</a>를 내려받아 비교할 수 있습니다. <a href="https://github.com/vkfks8524-pixel/0824kyd/blob/main/scripts/test-tools.cjs" rel="noopener noreferrer">공개 테스트 코드</a>에는 계정 선택·초기화와 모바일 배치 검사가 포함됩니다. 도구의 전체 분류 규칙을 망라하는 시험은 아니며 오류 제보에 따라 사례를 추가합니다.</p>
+      </section>
       <section class="info-panel">
         <h2>도구를 안전하게 사용하는 방법</h2>
         <ol>

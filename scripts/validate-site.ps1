@@ -47,7 +47,7 @@ foreach ($relative in $postFiles) {
   $plain = [regex]::Replace($html, '<script.*?</script>|<style.*?</style>|<[^>]+>', ' ', [Text.RegularExpressions.RegexOptions]::Singleline)
   $plain = [Net.WebUtility]::HtmlDecode($plain)
   $charCount = ($plain -replace '\s+', '').Length
-  if ($charCount -lt 2200) { Add-Warning "$relative visible Korean/content character count is only $charCount" }
+  # Content length is not an AdSense approval criterion; do not reward padding.
 }
 
 $toolApplicationFiles = $toolFiles | Where-Object { $_ -ne 'tools/index.html' }
@@ -91,7 +91,7 @@ foreach ($relative in $postFiles) {
 }
 
 $mirrorRoots = @('about','contact','privacy','editorial-policy','updates','posts','tools','assets')
-$mirrorFiles = @('index.html','404.html','ads.txt','robots.txt','sitemap.xml','google50fae352e2643cab.html')
+$mirrorFiles = @('index.html','404.html','ads.txt','robots.txt','sitemap.xml','google50fae352e2643cab.html','_redirects')
 foreach ($relative in $mirrorFiles) {
   $rootHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $root $relative)).Hash
   $publicHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path (Join-Path $root 'public') $relative)).Hash

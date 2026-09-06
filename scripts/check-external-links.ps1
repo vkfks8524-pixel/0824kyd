@@ -4,7 +4,7 @@ $urls = Get-ChildItem -LiteralPath . -Filter '*.html' -File -Recurse |
   Where-Object FullName -NotMatch '\\public\\' |
   ForEach-Object {
     $html = [IO.File]::ReadAllText($_.FullName)
-    [regex]::Matches($html, 'href="(https://[^"]+)"') | ForEach-Object { $_.Groups[1].Value }
+    [regex]::Matches($html, 'href="(https://[^"]+)"') | ForEach-Object { [Net.WebUtility]::HtmlDecode($_.Groups[1].Value) }
   } |
   Where-Object { $_ -notlike 'https://www.kyd.kr/*' } |
   Sort-Object -Unique

@@ -21,7 +21,7 @@
     <article class="article">
       <p class="category">무료 도구 · 링크 확인</p>
       <h1>URL 구조 확인 도구</h1>
-      <p class="article-meta">도구 및 설명 최종 검토: <time datetime="2026-08-23">2026년 8월 23일</time></p>
+      <p class="article-meta">도구 및 설명 최종 검토: <time datetime="2026-09-06">2026년 9월 6일</time></p>
       <p class="lead">문자, QR코드, 이메일이나 PDF에서 발견한 링크를 열기 전에 실제 호스트 이름과 눈에 잘 띄지 않는 구조를 확인합니다. 주소는 현재 브라우저 안에서만 분석하며 KYD 서버나 외부 평판 서비스로 보내지 않습니다.</p>
 
       <section class="tool-shell" aria-labelledby="url-tool-heading">
@@ -43,6 +43,14 @@
         </div>
       </section>
 
+      <h2>내 주소를 넣기 전에 예시로 비교하세요</h2>
+      <p>버튼을 누르면 교육용 주소를 입력칸에 넣고 분석합니다. 해당 주소를 열지 않습니다. 두 주소의 @가 같은 의미인지 호스트와 결과를 비교해보세요.</p>
+      <div class="tool-actions">
+        <button type="button" data-sample-for="url-input" data-sample="https://example.com@files.example.org/form.pdf">@ 앞에 기관처럼 보이는 이름</button>
+        <button type="button" data-sample-for="url-input" data-sample="https://example.com/user@name">경로에 @가 있는 주소</button>
+      </div>
+      <p>첫 예시의 호스트는 <code>files.example.org</code>이고 사용자 정보 주의가 표시됩니다. 두 번째의 호스트는 <code>example.com</code>이며 경로의 @를 사용자 정보로 오인하지 않습니다. <a href="/posts/pdf-link-safety/#url-examples">PDF 링크 주소 네 가지 비교</a>와 <a href="/tools/#verification">테스트 기준</a>에서 차이를 더 살펴보세요.</p>
+      <p><code>javascript:</code>, <code>mailto:</code>와 공백·역슬래시가 섞인 입력은 지원하지 않습니다. HTTPS가 없는 일반 도메인에는 분석을 위해 HTTPS를 가정하지만, 실제 접속이 암호화된다는 의미는 아닙니다. 포트까지 적을 때는 <code>https://</code> 또는 <code>http://</code>를 포함하세요.</p>
       <h2>이 도구가 확인하는 것</h2>
       <p>URL은 프로토콜, 호스트 이름, 포트, 경로와 검색 조건으로 구성됩니다. 화면에 표시된 서비스 이름이나 문자 발신자가 익숙하더라도 실제 접속 위치는 호스트 이름으로 결정됩니다. 이 도구는 주소를 분해해 각각을 따로 보여주고, 다음과 같은 구조를 눈에 띄게 표시합니다.</p>
       <ul>

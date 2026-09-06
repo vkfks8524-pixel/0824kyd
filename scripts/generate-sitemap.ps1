@@ -22,7 +22,15 @@ $toolUrls = Get-ChildItem -LiteralPath 'tools' -Directory | Sort-Object Name | F
 $entries += $toolUrls
 
 $lines = @('<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
-$lines += $entries | ForEach-Object { "  <url><loc>$_</loc><lastmod>2026-08-23</lastmod></url>" }
+$lines += $entries | ForEach-Object {
+  $url = $_
+  $relative = ([uri]$url).AbsolutePath.TrimStart('/')
+  $htmlPath = Join-Path $PWD ($relative + 'index.html')
+  $html = [IO.File]::ReadAllText($htmlPath)
+  $modified = [regex]::Match($html, '<meta property="article:modified_time" content="(\d{4}-\d{2}-\d{2})"').Groups[1].Value
+  if ($modified) { "  <url><loc>$url</loc><lastmod>$modified</lastmod></url>" }
+  else { "  <url><loc>$url</loc></url>" }
+}
 $lines += '</urlset>'
 
 [IO.File]::WriteAllText((Join-Path $PWD 'sitemap.xml'), ($lines -join "`n") + "`n", [Text.UTF8Encoding]::new($false))
