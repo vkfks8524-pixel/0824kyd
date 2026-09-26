@@ -93,7 +93,42 @@ const server = http.createServer((req, res) => {
     }
     assert.deepEqual(requests, [], 'Sample buttons must not send external requests');
     const screenshots = fs.mkdtempSync(path.join(os.tmpdir(), 'kyd-quality-'));
-    const routes = ['/', '/tools/', ...['url-structure-check','file-extension-check','storage-planner','account-security-check'].map(x=>'/tools/'+x+'/'), ...['windows-file-extension','pdf-link-safety','browser-cache-refresh','smartphone-storage-cleanup','cloudflare-pages-domain'].map(x=>'/posts/'+x+'/')];
+    await page.goto(origin + '/tools/phone-cost-comparator/');
+    await page.locator('#phone-cost-form button[type=submit]').click();
+    assert(await page.locator('#phone-cost-error').isVisible());
+    await page.locator('#phone-cost-example').click();
+    assert.equal(await page.locator('#phone-cost-summary').innerText(), 'A의 순비용이 750,000원 낮습니다.');
+    assert((await page.locator('#phone-cost-breakdown').innerText()).includes('2,190,000원'));
+    assert((await page.locator('#phone-cost-breakdown').innerText()).includes('2,940,000원'));
+    results.push('PHONE COST example and required inputs');
+    await page.locator('#b-device').fill('840000');
+    assert(!(await page.locator('#phone-cost-result').isVisible()), 'Stale results must be hidden');
+    await page.locator('#phone-cost-form button[type=submit]').click();
+    assert.equal(await page.locator('#phone-cost-summary').innerText(), '입력한 조건의 순비용이 같습니다.');
+    results.push('PHONE COST ties and stale results');
+    await page.locator('#b-device').fill('830000');
+    await page.locator('#phone-cost-form button[type=submit]').click();
+    assert.equal(await page.locator('#phone-cost-summary').innerText(), 'B의 순비용이 10,000원 낮습니다.');
+    results.push('PHONE COST B cheaper');
+    await page.locator('#a-initialMonths').fill('25');
+    await page.locator('#phone-cost-form button[type=submit]').click();
+    assert(await page.locator('#phone-cost-error').isVisible());
+    assert(!(await page.locator('#phone-cost-result').isVisible()));
+    results.push('PHONE COST invalid initial term');
+    await page.locator('#phone-cost-example').click();
+    await page.locator('#a-resale').fill('9000000');
+    await page.locator('#phone-cost-form button[type=submit]').click();
+    assert((await page.locator('#phone-cost-warning').innerText()).includes('판매 예상액이'));
+    results.push('PHONE COST excessive resale warning');
+    await page.locator('#phone-cost-form button[type=reset]').click();
+    assert(!(await page.locator('#phone-cost-result').isVisible()));
+    assert.equal(await page.locator('#a-device').inputValue(), '');
+    assert.equal(await page.locator('#cost-months').inputValue(), '24');
+    results.push('PHONE COST reset');
+    assert.deepEqual(requests, [], 'Purchase calculator must not send external requests');
+    const routes = ['/', '/posts/', '/tools/', '/about/', '/editorial-policy/', '/privacy/', '/updates/',
+      ...['url-structure-check','file-extension-check','storage-planner','account-security-check','phone-cost-comparator'].map(x=>'/tools/'+x+'/'),
+      ...['windows-file-extension','pdf-link-safety','browser-cache-refresh','smartphone-storage-cleanup','cloudflare-pages-domain','iphone-18-pro-buying-guide','iphone-storage-choice','phone-purchase-total-cost'].map(x=>'/posts/'+x+'/')];
     for (const width of [390,1280]) {
       await page.setViewportSize({width,height:844});
       for (const route of routes) {
@@ -105,6 +140,14 @@ const server = http.createServer((req, res) => {
       }
       await page.goto(origin+'/posts/windows-file-extension/');
       await page.screenshot({path:path.join(screenshots,'article-'+width+'.png'),fullPage:true});
+      await page.goto(origin+'/');
+      await page.screenshot({path:path.join(screenshots,'home-'+width+'.png'),fullPage:true});
+      await page.goto(origin+'/tools/phone-cost-comparator/');
+      await page.locator('#phone-cost-example').click();
+      assert(await page.locator('#phone-cost-result .table-wrap').evaluate(el=>el.scrollWidth <= el.clientWidth + 1), 'Cost comparison values must fit on mobile');
+      await page.locator('#phone-cost-result').screenshot({path:path.join(screenshots,'cost-result-'+width+'.png')});
+      await page.goto(origin+'/posts/iphone-18-pro-buying-guide/');
+      await page.screenshot({path:path.join(screenshots,'purchase-'+width+'.png'),fullPage:true});
     }
     assert.deepEqual(errors, []);
     console.log(JSON.stringify({passed:results.length,results,responsivePages:routes.length,resolutions:[390,1280],errors,screenshots,browser:await browser.version()},null,2));

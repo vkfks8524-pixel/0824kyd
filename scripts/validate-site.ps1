@@ -17,7 +17,7 @@ foreach ($relative in $htmlFiles) {
   $path = Join-Path $root $relative
   if (-not (Test-Path -LiteralPath $path)) { Add-Error "Missing HTML: $relative"; continue }
   $html = [IO.File]::ReadAllText($path)
-  foreach ($pattern in @('<title>[^<]+</title>', '<meta name="description" content="[^"]+">', '<h1[^>]*>[^<]+</h1>', '<link rel="canonical" href="[^"]+">')) {
+  foreach ($pattern in @('<title>[^<]+</title>', '<meta name="description" content="[^"]+">', '<h1(?:\s[^>]*)?>[\s\S]*?</h1>', '<link rel="canonical" href="[^"]+">')) {
     if ([regex]::Matches($html, $pattern).Count -ne 1) { Add-Error "$relative must contain exactly one $pattern" }
   }
   $canonical = [regex]::Match($html, '<link rel="canonical" href="([^"]+)">').Groups[1].Value

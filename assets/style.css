@@ -2,6 +2,24 @@
   box-sizing: border-box;
 }
 
+/* Purchase guides and local-only quote comparison. */
+.cost-article { max-width: 100%; }
+.cost-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.cost-grid fieldset { min-width: 0; margin: 0; padding: 20px; border: 1px solid var(--line); border-radius: 8px; }
+.cost-grid legend { padding: 0 8px; font-weight: 800; font-size: 1.2rem; }
+.cost-grid .form-row input { width: 100%; }
+#phone-cost-result table { min-width: 0; table-layout: fixed; }
+#phone-cost-result th, #phone-cost-result td { overflow-wrap: anywhere; }
+#phone-cost-result td { font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) {
+  #phone-cost-result th, #phone-cost-result td { padding: 8px 6px; font-size: 0.8rem; }
+  #phone-cost-result th:first-child { width: 34%; }
+}
+.purchase-home .hero { background: linear-gradient(140deg, #eef3ff, #fff7ed); }
+.purchase-home .hero-note { border-top: 4px solid #1261a6; }
+.price-highlight { display: block; font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; color: var(--brand-dark); }
+@media (max-width: 700px) { .cost-grid { grid-template-columns: 1fr; } }
+
 :root {
   --ink: #1f2933;
   --muted: #5b6673;

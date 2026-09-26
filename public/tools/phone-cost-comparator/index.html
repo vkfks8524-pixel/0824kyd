@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>휴대폰 총비용 비교기 · 자급제와 통신사 견적 비교 | KYD</title><meta name="description" content="기기 원금, 기간별 통신료, 부가서비스와 중고 판매액을 나눠 두 견적의 순비용을 계산합니다. 입력값은 저장하거나 전송하지 않습니다."><meta name="author" content="KYD 디지털 가이드">
+<link rel="canonical" href="https://www.kyd.kr/tools/phone-cost-comparator/"><meta property="og:type" content="website"><meta property="og:title" content="휴대폰 총비용 비교기 · 자급제와 통신사 견적 비교"><meta property="og:description" content="기기 원금, 기간별 통신료, 부가서비스와 중고 판매액을 나눠 두 견적의 순비용을 계산합니다. 입력값은 저장하거나 전송하지 않습니다."><meta property="og:url" content="https://www.kyd.kr/tools/phone-cost-comparator/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"휴대폰 총비용 비교기 · 자급제와 통신사 견적 비교","url":"https://www.kyd.kr/tools/phone-cost-comparator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"description":"기기 원금, 기간별 통신료, 부가서비스와 중고 판매액을 나눠 두 견적의 순비용을 계산합니다. 입력값은 저장하거나 전송하지 않습니다."}</script>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/style.css">
+<script defer src="/assets/tools.js"></script><script defer src="/assets/phone-cost.js"></script>
+</head><body><a class="skip-link" href="#main-content">본문으로 바로가기</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="/"><span class="logo-mark">KYD</span><span>디지털 가이드</span></a>
+      <nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/">전체 글</a><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></nav>
+    </div>
+  </header>
+<main id="main-content" class="container"><article class="article cost-article">
+<p class="category">무료 도구 · 구매 비용</p><h1>휴대폰 총비용 비교기 · 자급제와 통신사 견적 비교</h1>
+<p class="lead">월 납부액이 아니라 같은 기간의 전체 부담을 비교하세요. 두 견적의 기기 원금과 통신료를 나누어 입력하면 할인 때문에 놓치기 쉬운 비용을 확인할 수 있습니다.</p>
+<p class="tool-privacy">서버 전송·입력값 저장·광고 없음 · 2026-09-26 공개</p>
+<section class="tool-shell" aria-labelledby="cost-heading"><h2 id="cost-heading">두 견적 입력하기</h2>
+<p>모든 금액은 원 단위, 세금 포함 실제 부담액으로 입력하세요. 견적 A·B는 자급제·통신사에 고정되어 있지 않습니다. 값이 바뀌면 기존 결과는 숨겨집니다.</p>
+<noscript><p>계산에는 JavaScript가 필요합니다. <a href="/posts/phone-purchase-total-cost/">계산식과 손으로 대조할 예시</a>는 JavaScript 없이 읽을 수 있습니다.</p></noscript>
+<form id="phone-cost-form" class="tool-form" novalidate>
+<div class="form-row"><label for="cost-months">비교 기간 (개월)</label><input id="cost-months" type="number" min="1" max="60" step="1" value="24" required inputmode="numeric"><p class="form-help">1~60개월. 양쪽 모두 같은 기간으로 계산합니다.</p></div>
+<div class="cost-grid"><fieldset><legend>견적 A</legend><div class="form-row"><label for="a-device">A · 기기 원금 전체 (원)</label><input id="a-device" name="a-device" type="number" min="0" max="100000000" step="1" inputmode="numeric" required aria-describedby="a-device-help"><p class="form-help" id="a-device-help">선납금 + 남은 원금. 기기 할인은 반영하고 이자는 아래에 별도 입력합니다.</p></div>
+<div class="form-row"><label for="a-initialRate">A · 초기 월 통신료 (원)</label><input id="a-initialRate" name="a-initialRate" type="number" min="0" max="100000000" step="1" inputmode="numeric" value="0" required aria-describedby="a-initialRate-help"><p class="form-help" id="a-initialRate-help">기기 할부·부가서비스를 뺀 월 통신료입니다.</p></div>
+<div class="form-row"><label for="a-initialMonths">A · 초기 요금 유지 기간 (개월)</label><input id="a-initialMonths" name="a-initialMonths" type="number" min="0" max="60" step="1" inputmode="numeric" value="0" required aria-describedby="a-initialMonths-help"><p class="form-help" id="a-initialMonths-help">초기 구간이 없으면 0. 비교 기간보다 길게 입력할 수 없습니다.</p></div>
+<div class="form-row"><label for="a-laterRate">A · 이후 월 통신료 (원)</label><input id="a-laterRate" name="a-laterRate" type="number" min="0" max="100000000" step="1" inputmode="numeric" required aria-describedby="a-laterRate-help"><p class="form-help" id="a-laterRate-help">나머지 기간의 요금입니다. 한 가지 요금만 쓰면 여기에 입력하세요.</p></div>
+<div class="form-row"><label for="a-extras">A · 월 부가요금·보험 (원)</label><input id="a-extras" name="a-extras" type="number" min="0" max="100000000" step="1" inputmode="numeric" value="0" required aria-describedby="a-extras-help"><p class="form-help" id="a-extras-help">전체 기간 동안 매달 같은 금액인 항목만 입력합니다.</p></div>
+<div class="form-row"><label for="a-fees">A · 일회 비용·이자 총액 (원)</label><input id="a-fees" name="a-fees" type="number" min="0" max="100000000" step="1" inputmode="numeric" value="0" required aria-describedby="a-fees-help"><p class="form-help" id="a-fees-help">이자, 유심, 기간이 다른 부가서비스 등의 합계. 위와 중복 계산하지 마세요.</p></div>
+<div class="form-row"><label for="a-resale">A · 기존 폰 판매 예상액 (원)</label><input id="a-resale" name="a-resale" type="number" min="0" max="100000000" step="1" inputmode="numeric" value="0" required aria-describedby="a-resale-help"><p class="form-help" id="a-resale-help">기기값에 이미 보상판매를 반영했다면 0으로 둡니다.</p></div></fieldset><fieldset><legend>견적 B</legend><div class="form-row"><label for="b-device">B · 기기 원금 전체 (원)</label><input id="b-device" name="b-device" type="number" min="0" max="100000000" step="1" inputmode="numeric" required aria-describedby="b-device-help"><p class="form-help" id="b-device-help">선납금 + 남은 원금. 기기 할인은 반영하고 이자는 아래에 별도 입력합니다.</p></div>
+<div class="form-row"><label for="b-initialRate">B · 초기 월 통신료 (원)</label><input id="b-initialRate" name="b-initialRate" type="number" min="0" max="100000000" step="1" inputmode="numeric" value="0" required aria-describedby="b-initialRate-help"><p class="form-help" id="b-initialRate-help">기기 할부·부가서비스를 뺀 월 통신료입니다.</p></div>
+<div class="form-row"><label for="b-initialMonths">B · 초기 요금 유지 기간 (개월)</label><input id="b-initialMonths" name="b-initialMonths" type="number" min="0" max="60" step="1" inputmode="numeric" value="0" required aria-describedby="b-initialMonths-help"><p class="form-help" id="b-initialMonths-help">초기 구간이 없으면 0. 비교 기간보다 길게 입력할 수 없습니다.</p></div>
+<div class="form-row"><label for="b-laterRate">B · 이후 월 통신료 (원)</label><input id="b-laterRate" name="b-laterRate" type="number" min="0" max="100000000" step="1" inputmode="numeric" required aria-describedby="b-laterRate-help"><p class="form-help" id="b-laterRate-help">나머지 기간의 요금입니다. 한 가지 요금만 쓰면 여기에 입력하세요.</p></div>
+<div class="form-row"><label for="b-extras">B · 월 부가요금·보험 (원)</label><input id="b-extras" name="b-extras" type="number" min="0" max="100000000" step="1" inputmode="numeric" value="0" required aria-describedby="b-extras-help"><p class="form-help" id="b-extras-help">전체 기간 동안 매달 같은 금액인 항목만 입력합니다.</p></div>
+<div class="form-row"><label for="b-fees">B · 일회 비용·이자 총액 (원)</label><input id="b-fees" name="b-fees" type="number" min="0" max="100000000" step="1" inputmode="numeric" value="0" required aria-describedby="b-fees-help"><p class="form-help" id="b-fees-help">이자, 유심, 기간이 다른 부가서비스 등의 합계. 위와 중복 계산하지 마세요.</p></div>
+<div class="form-row"><label for="b-resale">B · 기존 폰 판매 예상액 (원)</label><input id="b-resale" name="b-resale" type="number" min="0" max="100000000" step="1" inputmode="numeric" value="0" required aria-describedby="b-resale-help"><p class="form-help" id="b-resale-help">기기값에 이미 보상판매를 반영했다면 0으로 둡니다.</p></div></fieldset></div>
+<p id="phone-cost-error" class="form-error" role="alert" hidden></p>
+<div class="tool-actions"><button type="submit">총비용 비교하기</button><button type="button" class="secondary-action" id="phone-cost-example">글의 가상 예시 불러오기</button><button type="reset" class="secondary-action">입력 초기화</button></div>
+</form>
+<section id="phone-cost-result" class="tool-result" tabindex="-1" aria-live="polite" hidden>
+<h2 id="phone-cost-summary"></h2><p id="phone-cost-period"></p>
+<div class="table-wrap"><table><caption>입력 조건별 비용 분해 · 월평균은 원 단위 반올림</caption><thead><tr><th scope="col">항목</th><th scope="col">견적 A</th><th scope="col">견적 B</th></tr></thead><tbody id="phone-cost-breakdown"></tbody></table></div>
+<p id="phone-cost-warning" class="editor-note"></p><p>자동 추천·현재 판매가 조회가 아닙니다. 입력한 가정으로 계산한 결과이며 실제 청구액이나 계약조건을 보장하지 않습니다.</p>
+</section></section>
+<h2>어떻게 계산하나요?</h2>
+<p><strong>순비용 = 기기 원금 전체 + 초기 통신료 × 초기 개월 + 이후 통신료 × 남은 개월 + 월 부가요금 × 전체 개월 + 일회 비용·이자 − 기존 폰 판매액</strong></p>
+<p>할부 원금 전액을 넣으므로, 비교 기간 뒤에 남는 할부 원금을 비용에서 숨기지 않습니다. 이는 현금흐름 계산이 아닙니다. 기기 할부가 포함된 ‘월 납부금’을 월 통신료에도 넣으면 기기값이 두 번 더해집니다.</p>
+<h2>기준 예시로 계산을 대조하세요</h2>
+<p>위 ‘가상 예시’ 버튼을 누르면 24개월 동안 A의 판매액 차감 전 합계는 2,590,000원, 순비용은 2,190,000원입니다. B의 합계는 3,340,000원, 순비용은 2,940,000원으로 차이는 750,000원입니다. <a href="/posts/phone-purchase-total-cost/">예시의 세부 조건과 직접 계산 과정</a>을 공개했습니다. 현재 통신사 상품이나 실제 고객의 견적이 아닙니다.</p>
+<h2>다음 조건은 별도로 확인하세요</h2>
+<ul><li>기기 반환형·렌탈 상품과 일반 소유 구매는 그대로 비교하지 마세요. 반환금·인수금 등 계약구조가 다릅니다.</li><li>중고폰을 판매하지 않거나 금액이 불확실하면 판매 예상액을 0으로 바꿔 결과를 비교하세요.</li><li>실적 조건부 카드 할인·가족 결합·중도 해지 반환금은 자동 반영하지 않습니다. 확정된 조건만 입력하고 지급·유지 조건을 따로 확인하세요.</li><li>요금이 세 번 이상 바뀌면 기간별 총액을 먼저 구해야 합니다. 전체 기간의 월평균을 임의로 추측해 넣지 마세요.</li><li>현재 폰의 남은 할부처럼 양쪽에 공통으로 발생하는 금액은 같은 방식으로 반영하거나 별도로 기록하세요.</li></ul>
+<h2>검증 범위</h2>
+<p>공개된 <a href="https://github.com/vkfks8524-pixel/0824kyd/blob/main/scripts/test-phone-cost.cjs" rel="noopener noreferrer">계산 테스트</a>는 예시, 동일 견적, 초기 기간 0·전체 기간, 판매액과 잘못된 입력을 검사합니다. 이 검사는 통신사 계약·실제 청구·현재 프로모션의 정확성을 확인하는 시험은 아닙니다.</p>
+<section class="sources"><h2>확인할 공식 안내</h2><ul>
+<li><a href="https://www.apple.com/kr/shop/buy-iphone/iphone-18-pro" rel="noopener noreferrer">Apple의 기기 가격·미개통 기기 안내</a></li>
+<li><a href="https://www.apple.com/kr/shop/help/payments" rel="noopener noreferrer">Apple의 결제·할부 안내</a></li></ul><p>공식 안내 확인일: 2026-09-26. 계산 모델은 KYD가 작성한 단순 합산 모델이며 Apple·통신사의 견적 서비스가 아닙니다.</p></section>
+<p><a href="/posts/iphone-18-pro-buying-guide/">아이폰 18 Pro·Pro Max 비교</a> · <a href="/posts/iphone-storage-choice/">256GB·512GB 선택법</a> · <a href="/contact/">계산 오류 제보</a></p>
+</article></main>  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/updates/">업데이트 기록</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></div></div></footer></body></html>
