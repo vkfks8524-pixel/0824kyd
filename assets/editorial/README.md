@@ -1,5 +1,7 @@
 # KYD editorial illustrations
 
+Archive only: these AI images are no longer referenced by the site. Current licensed photographs and credits are documented in PHOTOS.md. Retained for rollback.
+
 Created with the built-in image_gen tool. AI conceptual illustrations, not real product photos or official Apple imagery. Original composition is preserved; Sharp only encodes/resizes to responsive WebP. No source PNGs were deleted.
 
 ## phone-choice
