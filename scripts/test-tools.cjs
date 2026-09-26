@@ -14,7 +14,7 @@ const server = http.createServer((req, res) => {
   if (!file.startsWith(root + path.sep) && file !== root) { res.writeHead(403).end(); return; }
   if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, 'index.html');
   if (!fs.existsSync(file)) { res.writeHead(404).end(); return; }
-  const types = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.json':'application/json','.svg':'image/svg+xml'};
+  const types = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.json':'application/json','.svg':'image/svg+xml','.webp':'image/webp'};
   res.setHeader('Content-Type', types[path.extname(file)] || 'text/plain');
   res.end(fs.readFileSync(file));
 });
@@ -133,6 +133,18 @@ const server = http.createServer((req, res) => {
       await page.setViewportSize({width,height:844});
       for (const route of routes) {
         await page.goto(origin+route);
+        const illustrations = page.locator('img[src^="/assets/editorial/"]');
+        for (const illustration of await illustrations.all()) {
+          await illustration.scrollIntoViewIfNeeded();
+          await illustration.evaluate(img => img.decode());
+          assert(await illustration.evaluate(img=>img.naturalWidth > 0 && img.hasAttribute('width') && img.hasAttribute('height') && img.hasAttribute('alt')));
+        }
+        if (route === '/' || route === '/posts/') {
+          for (const slug of ['iphone-18-pro-buying-guide','iphone-storage-choice','phone-purchase-total-cost']) {
+            const card = page.locator('article.post-card').filter({has:page.locator('a[href="/posts/'+slug+'/"]')});
+            assert.equal(await card.locator('img').count(), 1, 'One relevant thumbnail per article');
+          }
+        }
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
         assert(!overflow, 'Horizontal overflow at '+width+' '+route);
         const broken = await page.locator('a[href^="#"]').evaluateAll(links=>links.map(a=>a.getAttribute('href').slice(1)).filter(id=>id && !document.getElementById(id)));
@@ -141,6 +153,11 @@ const server = http.createServer((req, res) => {
       await page.goto(origin+'/posts/windows-file-extension/');
       await page.screenshot({path:path.join(screenshots,'article-'+width+'.png'),fullPage:true});
       await page.goto(origin+'/');
+      for (const illustration of await page.locator('img').all()) {
+        await illustration.scrollIntoViewIfNeeded();
+        await illustration.evaluate(img=>img.decode());
+      }
+      await page.evaluate(()=>window.scrollTo(0,0));
       await page.screenshot({path:path.join(screenshots,'home-'+width+'.png'),fullPage:true});
       await page.goto(origin+'/tools/phone-cost-comparator/');
       await page.locator('#phone-cost-example').click();

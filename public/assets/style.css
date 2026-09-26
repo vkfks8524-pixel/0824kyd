@@ -3,6 +3,10 @@
 }
 
 /* Purchase guides and local-only quote comparison. */
+.hero-visual, .card-visual, .article-visual { margin: 0 0 20px; }
+.article-visual { margin: 24px 0; }
+.hero-visual img, .card-visual img, .article-visual img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 8px; background: #f5eee6; }
+.hero-visual figcaption, .card-visual figcaption, .article-visual figcaption { margin-top: 8px; color: #5b6673; font-size: 0.8rem; line-height: 1.5; }
 .cost-article { max-width: 100%; }
 .cost-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .cost-grid fieldset { min-width: 0; margin: 0; padding: 20px; border: 1px solid var(--line); border-radius: 8px; }
