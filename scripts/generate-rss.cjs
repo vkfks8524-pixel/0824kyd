@@ -26,6 +26,8 @@ const posts = fs.readdirSync(path.join(root, 'posts'), {withFileTypes:true}).fil
   const title = extract(html, /<h1[^>]*>([\s\S]*?)<\/h1>/, 'heading').replace(/<[^>]*>/g, '');
   let body = extract(html, /<article class="article">([\s\S]*?)<\/article>/, 'complete article');
   body = body.replace(/<details class="reading-toc">[\s\S]*?<\/details>/g,'')
+    .replace(/<section class="storage-calculator"[\s\S]*?<\/section>/g,
+      '<p>내 사용량 계산기는 <a href="' + canonical + '#storage-calculator">원문에서 사용할 수 있습니다</a>. 계산식과 가상 사례는 이 피드에서도 확인할 수 있습니다.</p>')
     .replace(/<nav\b[\s\S]*?<\/nav>/g,'')
     .replace(/<section class="next-reads">[\s\S]*?<\/section>/g,'')
     .replace(/<script\b[\s\S]*?<\/script>/g,'')
