@@ -128,7 +128,7 @@ const server = http.createServer((req, res) => {
     assert.deepEqual(requests, [], 'Purchase calculator must not send external requests');
     const routes = ['/', '/posts/', '/tools/', '/about/', '/editorial-policy/', '/privacy/', '/updates/',
       ...['url-structure-check','file-extension-check','storage-planner','account-security-check','phone-cost-comparator'].map(x=>'/tools/'+x+'/'),
-      ...['windows-file-extension','pdf-link-safety','browser-cache-refresh','smartphone-storage-cleanup','cloudflare-pages-domain','iphone-18-pro-buying-guide','iphone-storage-choice','phone-purchase-total-cost'].map(x=>'/posts/'+x+'/')];
+      ...['windows-file-extension','pdf-link-safety','browser-cache-refresh','smartphone-storage-cleanup','cloudflare-pages-domain','iphone-18-pro-buying-guide','iphone-storage-choice','phone-purchase-total-cost','asian-games-2026-09-29-results'].map(x=>'/posts/'+x+'/')];
     for (const width of [390,1280]) {
       await page.setViewportSize({width,height:844});
       for (const route of routes) {
@@ -150,6 +150,12 @@ const server = http.createServer((req, res) => {
         const broken = await page.locator('a[href^="#"]').evaluateAll(links=>links.map(a=>a.getAttribute('href').slice(1)).filter(id=>id && !document.getElementById(id)));
         assert.deepEqual(broken, []);
       }
+      await page.goto(origin+'/posts/asian-games-2026-09-29-results/');
+      assert((await page.locator('.editor-note').innerText()).includes('18:36'));
+      assert((await page.locator('.article-visual figcaption').innerText()).includes('2019'));
+      assert((await page.locator('.article-visual figcaption').innerText()).includes('CC BY-SA 4.0'));
+      await page.locator('.article-visual img').evaluate(img => img.decode());
+      await page.screenshot({path:path.join(screenshots,'sports-'+width+'.png'),fullPage:true});
       await page.goto(origin+'/posts/windows-file-extension/');
       await page.screenshot({path:path.join(screenshots,'article-'+width+'.png'),fullPage:true});
       await page.goto(origin+'/');
