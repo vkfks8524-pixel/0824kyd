@@ -165,6 +165,9 @@ const server = http.createServer((req, res) => {
       }
       await page.evaluate(()=>window.scrollTo(0,0));
       await page.screenshot({path:path.join(screenshots,'home-'+width+'.png'),fullPage:true});
+      await page.screenshot({path:path.join(screenshots,'home-preview-'+width+'.png'),fullPage:false});
+      await page.goto(origin+'/posts/');
+      await page.screenshot({path:path.join(screenshots,'library-'+width+'.png'),fullPage:false});
       await page.goto(origin+'/tools/phone-cost-comparator/');
       await page.locator('#phone-cost-example').click();
       assert(await page.locator('#phone-cost-result .table-wrap').evaluate(el=>el.scrollWidth <= el.clientWidth + 1), 'Cost comparison values must fit on mobile');
@@ -172,6 +175,64 @@ const server = http.createServer((req, res) => {
       await page.goto(origin+'/posts/iphone-18-pro-buying-guide/');
       await page.screenshot({path:path.join(screenshots,'purchase-'+width+'.png'),fullPage:true});
     }
+    // Library is fully crawlable without scripting; filtering is only an enhancement.
+    await page.goto(origin + '/posts/');
+    const visibleCards = page.locator('#article-library .post-card:visible');
+    assert.equal(await visibleCards.count(), 27);
+    await page.locator('#article-search').fill('아이폰 용량');
+    assert.equal(await visibleCards.count(), 2);
+    await page.locator('#article-search').fill('존재하지않는검색어');
+    assert.equal(await visibleCards.count(), 0);
+    assert(await page.locator('#search-empty').isVisible());
+    await page.locator('#empty-reset').click();
+    assert.equal(await visibleCards.count(), 27);
+    await page.locator('.library-filters a[href="#sports"]').click();
+    assert.equal(await visibleCards.count(), 1);
+    assert((await page.locator('#search-status').innerText()).includes('스포츠'));
+    await page.locator('.library-filters a[href="#buying"]').click();
+    assert.equal(await visibleCards.count(), 3);
+    await page.goBack();
+    assert.equal(await visibleCards.count(), 1);
+    await page.reload();
+    assert.equal(await visibleCards.count(), 1);
+    await page.locator('#search-reset').click();
+    assert.equal(await visibleCards.count(), 27);
+    await page.locator('#article-search').fill('IPHONE'); // English is matched case-insensitively where present.
+    await page.locator('#search-reset').click();
+    await page.goto(origin + '/posts/#legacy-guides');
+    assert.equal(await visibleCards.count(), 23);
+    results.push('LIBRARY search, empty state, reset, category, history and deep links');
+    const noJsContext = await browser.newContext({javaScriptEnabled:false});
+    const noJsPage = await noJsContext.newPage();
+    await noJsPage.route('**/*', route => route.request().url().startsWith(origin + '/') ? route.continue() : route.abort());
+    await noJsPage.goto(origin + '/posts/');
+    assert.equal(await noJsPage.locator('.post-card:visible').count(), 27);
+    assert(!(await noJsPage.locator('.library-search').isVisible()));
+    await noJsContext.close();
+    results.push('LIBRARY all 27 article links available without JavaScript');
+    // Check every article, not just the representative responsive routes.
+    for (const slug of fs.readdirSync(path.join(root,'posts')).filter(slug=>fs.statSync(path.join(root,'posts',slug)).isDirectory())) {
+      await page.goto(origin + '/posts/' + slug + '/');
+      assert.equal(await page.locator('.reading-toc').count(), 1);
+      assert.equal(await page.locator('.breadcrumb').count(), 1);
+      assert.equal(await page.locator('.next-reads').count(), 1);
+      const ids = await page.locator('[id]').evaluateAll(elements=>elements.map(el=>el.id));
+      assert.equal(ids.length, new Set(ids).size, 'Duplicate IDs: ' + slug);
+      const broken = await page.locator('a[href^="#"]').evaluateAll(links=>links.map(a=>a.hash.slice(1)).filter(id=>id && !document.getElementById(id)));
+      assert.deepEqual(broken, [], 'Broken section anchor: ' + slug);
+      const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
+      ld.forEach(json=>assert.doesNotThrow(()=>JSON.parse(json)));
+      assert(ld.some(json=>JSON.parse(json)['@type']==='BreadcrumbList'));
+    }
+    results.push('EDITORIAL all 27 articles: breadcrumbs, contents, related links, IDs, JSON-LD');
+    for (const width of [360,768,1024,1440]) {
+      await page.setViewportSize({width,height:900});
+      for (const route of ['/', '/posts/', '/posts/iphone-storage-choice/']) {
+        await page.goto(origin + route);
+        assert(!(await page.evaluate(()=>document.documentElement.scrollWidth > innerWidth)), 'Additional viewport overflow: ' + width + ' ' + route);
+      }
+    }
+    results.push('EDITORIAL additional 360/768/1024/1440px viewport checks');
     assert.deepEqual(errors, []);
     console.log(JSON.stringify({passed:results.length,results,responsivePages:routes.length,resolutions:[390,1280],errors,screenshots,browser:await browser.version()},null,2));
   } finally { await browser.close(); }

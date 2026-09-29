@@ -21,19 +21,23 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Cloudflare Pages 도메인 연결과 중복 경로 점검","description":"Cloudflare Pages 도메인 연결 뒤 배포 폴더와 중복 주소를 점검하는 방법을 KYD의 실제 HTTP 응답과 리디렉션 사례로 설명합니다.","inLanguage":"ko-KR","datePublished":"2026-07-12","dateModified":"2026-09-07","mainEntityOfPage":"https://www.kyd.kr/posts/cloudflare-pages-domain/","author":{"@type":"Organization","name":"KYD 디지털 가이드 편집팀","url":"https://www.kyd.kr/about/"},"publisher":{"@type":"Organization","name":"KYD 디지털 가이드","url":"https://www.kyd.kr/"}}</script>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://www.kyd.kr/"},{"@type":"ListItem","position":2,"name":"전체 글","item":"https://www.kyd.kr/posts/"},{"@type":"ListItem","position":3,"name":"Cloudflare Pages 도메인 연결과 중복 경로 점검","item":"https://www.kyd.kr/posts/cloudflare-pages-domain/"}]}</script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">본문으로 바로가기</a>
-  <header class="site-header"><div class="header-inner"><a class="logo" href="/"><span class="logo-mark">KYD</span><span>디지털 가이드</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/" aria-current="page">전체 글</a><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></nav></div></header>
+  <header class="site-header"><div class="header-inner"><a class="logo" href="/" aria-label="KYD 디지털 가이드 홈"><span class="logo-mark">KYD</span><span class="logo-caption">디지털 가이드<br>생활을 읽는 기준</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/#buying">구매·생활비</a><a href="/posts/#sports">스포츠</a><a href="/tools/">무료 도구</a><a href="/posts/" class="nav-search">전체 글·검색</a></nav></div></header>
   <main id="main-content" class="container article-layout">
     <article class="article">
+<nav class="breadcrumb" aria-label="현재 위치"><a href="/">홈</a><span aria-hidden="true">/</span><a href="/posts/#website">웹사이트 운영</a><span aria-hidden="true">/</span><span aria-current="page">Cloudflare Pages 도메인 연결과 중복 경로 점검</span></nav>
       <p class="category">웹사이트 운영</p>
       <h1>Cloudflare Pages 도메인 연결과 중복 경로 점검</h1>
       <p class="article-meta">작성: KYD 디지털 가이드 편집팀 · 게시 <time datetime="2026-07-12">2026년 7월 12일</time> · 최종 검토 <time datetime="2026-09-07">2026년 9월 7일</time></p>
 
       <p class="lead">Cloudflare Pages에 도메인을 연결할 때는 도메인 등록, DNS, Pages 프로젝트, 실제 배포 파일을 구분해야 합니다. 연결 성공 표시만으로 모든 경로가 원하는 파일을 제공하는지는 알 수 없습니다. 이 글에는 KYD에서 확인한 중복 경로 사례와 직접 비교할 주소를 담았습니다.</p>
       <nav class="article-toc" aria-label="이 글의 목차"><a href="#domain-order">연결 순서</a> · <a href="#deployment-case">실제 배포 사례</a> · <a href="#route-checks">주소별 확인</a></nav>
-      <h2 id="domain-order">등록기관에서 바꾸는 것과 Pages에서 바꾸는 것</h2>
+<details class="reading-toc"><summary>이 글에서 확인할 내용 (5)</summary><nav aria-label="본문 목차"><ol><li><a href="#domain-order">등록기관에서 바꾸는 것과 Pages에서 바꾸는 것</a></li><li><a href="#read-section-1">리디렉션 규칙은 배포되는 폴더 안에 둡니다</a></li><li><a href="#route-checks">연결 후 여섯 가지를 각각 확인하세요</a></li><li><a href="#read-section-2">새 배포가 반영되지 않는다면</a></li><li><a href="#sources-cloudflare-pages-domain">공식 자료와 검토 범위</a></li></ol></nav></details>
+<h2 id="domain-order">등록기관에서 바꾸는 것과 Pages에서 바꾸는 것</h2>
       <p>가비아 같은 등록기관은 도메인 소유와 갱신을 관리합니다. 권한 있는 DNS는 호스트가 어디로 연결되는지를 관리합니다. Pages 프로젝트는 어떤 저장소·브랜치·출력 폴더의 파일을 배포할지 관리합니다. 도메인 구매와 파일 게시를 같은 작업으로 생각하면 원인을 찾기 어렵습니다.</p>
       <ol><li>Pages의 배포 주소에서 의도한 페이지가 열리는지 먼저 확인합니다. 실패했다면 사용자 지정 도메인보다 빌드·파일 문제를 먼저 해결합니다.</li><li>프로젝트의 Custom domains에 사용할 호스트를 추가합니다. 예를 들어 www와 루트 도메인은 서로 다른 호스트입니다.</li><li>Cloudflare 문서에 따라 DNS를 연결합니다. 루트 도메인은 Cloudflare 영역과 네임서버 설정이 필요하고, 외부 DNS를 사용하는 하위 도메인은 CNAME 방식 등 해당 조건을 확인합니다.</li><li>기존 메일·다른 서비스의 DNS 레코드를 보존합니다. 네임서버 변경 전에 현재 레코드 목록을 확인하세요.</li><li>도메인·인증서가 준비되면 HTTPS와 대표 주소 이동을 실제 요청으로 검사합니다.</li></ol>
       <p>이 사이트 운영자의 등록기관이 가비아라고 확인한 것은 아닙니다. 가비아는 등록기관 역할을 설명하는 예시입니다. 특정 대기 시간만으로 연결 성공·실패를 판단하지 말고 대시보드 오류와 실제 DNS 응답을 함께 확인하세요.</p>
@@ -42,7 +46,7 @@
       <div class="table-wrap"><table><caption>수정 전 확인한 응답과 의도한 주소</caption><thead><tr><th scope="col">요청 경로</th><th scope="col">수정 전 관찰</th><th scope="col">운영 의도</th></tr></thead><tbody><tr><td><code>/</code></td><td>홈페이지 200</td><td>대표 홈페이지</td></tr><tr><td><code>/public/</code></td><td>같은 홈페이지 200</td><td>루트로 영구 이동</td></tr><tr><td><code>/posts/windows-file-extension/</code></td><td>정보 글 200</td><td>글의 대표 주소</td></tr><tr><td><code>/public/posts/windows-file-extension/</code></td><td>같은 정보 글 200</td><td>public 없는 글 주소로 영구 이동</td></tr></tbody></table></div>
       <p class="editor-note"><strong>2026년 9월 7일 배포 후 확인:</strong> <code>/public/</code>은 <code>/</code>로, <code>/public/posts/windows-file-extension/</code>은 <code>/posts/windows-file-extension/</code>로 301을 반환했습니다. 이동한 목적지는 각각 200이었습니다. <code>/blog</code>는 <code>/posts/</code>로 301 이동하고, 존재하지 않는 임의 주소는 404를 반환했습니다. 수정 전후 같은 경로를 비교해 규칙의 실제 적용을 확인했습니다.</p>
       <p>저장소에는 루트와 public 양쪽에 같은 배포 파일이 있었습니다. 루트를 게시하면 public도 웹 경로로 노출될 수 있습니다. 따라서 출력 폴더를 확인하는 것과 함께, 이미 공개된 중복 경로를 대표 주소로 보내는 처리가 필요했습니다. 일반적으로는 실제 게시할 폴더 하나를 명확히 정하는 편이 관리하기 쉽습니다.</p>
-      <h2>리디렉션 규칙은 배포되는 폴더 안에 둡니다</h2>
+      <h2 id="read-section-1">리디렉션 규칙은 배포되는 폴더 안에 둡니다</h2>
       <p>정적 Pages 프로젝트에서 <code>_redirects</code> 파일은 배포 산출물에 포함돼야 합니다. 다음은 KYD의 public 접두 경로를 정리하기 위한 규칙 예시입니다. 파일이 없는 로컬 HTTP 서버에서는 Cloudflare 규칙이 실행되지 않습니다.</p>
       <pre><code>/public / 301
 /public/* /:splat 301</code></pre>
@@ -50,16 +54,16 @@
       <h2 id="route-checks">연결 후 여섯 가지를 각각 확인하세요</h2>
       <ol><li><strong>HTTP와 HTTPS:</strong> HTTP 요청이 의도한 HTTPS 대표 주소로 이동하는지 확인합니다.</li><li><strong>www와 루트:</strong> 최종 주소가 한쪽으로 모이는지 봅니다.</li><li><strong>글 직접 접속:</strong> 홈페이지를 거치지 않고 글 URL을 열고 새로고침합니다.</li><li><strong>없는 페이지:</strong> 존재하지 않는 경로는 오류 페이지와 실제 404 상태를 제공해야 합니다. 겉모습만 오류인 200 응답과 다릅니다.</li><li><strong>크롤링 파일:</strong> robots.txt, sitemap.xml과 소유권 확인 파일이 HTML 홈페이지로 대체되지 않았는지 확인합니다.</li><li><strong>중복 경로:</strong> 공개 폴더 접두어·이전 주소·HTML 확장자 변형을 검사하고 canonical과 최종 주소를 비교합니다.</li></ol>
       <p>canonical은 검색엔진에 대표 URL을 알리는 표시이고, 301은 요청한 방문자를 다른 URL로 이동시키는 응답입니다. canonical이 있다는 이유만으로 불필요한 경로의 공개가 없어지지는 않습니다.</p>
-      <h2>새 배포가 반영되지 않는다면</h2>
+      <h2 id="read-section-2">새 배포가 반영되지 않는다면</h2>
       <p>GitHub 커밋, Pages 운영 배포가 참조하는 커밋, 공개 HTML의 수정 문장을 비교합니다. 배포 성공을 확인하지 않고 DNS를 반복 변경하면 문제를 더 늘릴 수 있습니다. <a href="/posts/browser-cache-refresh/">예전 화면이 보일 때의 응답 비교 방법</a>으로 배포와 캐시를 구분하세요.</p>
       <section class="sources" aria-labelledby="sources-cloudflare-pages-domain"><h2 id="sources-cloudflare-pages-domain">공식 자료와 검토 범위</h2><p>도메인 연결 조건과 리디렉션 문법은 아래 공식 문서를 참고했습니다. KYD 사례는 공개 사이트의 HTTP 상태와 Location 응답을 직접 비교한 기록입니다. 이 결과를 다른 프로젝트의 설정이나 모든 Cloudflare 기능의 시험 결과로 일반화하지 않습니다.</p><ul><li><a href="https://developers.cloudflare.com/pages/configuration/custom-domains/" rel="noopener noreferrer">루트·하위 도메인 연결 조건</a></li><li><a href="https://developers.cloudflare.com/pages/configuration/redirects/" rel="noopener noreferrer">Pages 리디렉션 규칙과 적용 범위</a></li></ul><p class="source-reviewed">자료 및 본문 최종 검토: <time datetime="2026-09-07">2026년 9월 7일</time></p></section>
       <aside class="author-box" aria-label="작성자와 편집 기준">
         <p class="author-label">작성·검토</p>
-        <h2>KYD 디지털 가이드 편집팀</h2>
+        <h2 id="read-section-3">KYD 디지털 가이드 편집팀</h2>
         <p>초보자가 안전하게 따라 할 수 있도록 공식 문서와 실제 화면에서 확인 가능한 메뉴를 기준으로 설명합니다. 사실 오류나 변경된 메뉴는 <a href="/contact/">오류 제보</a>로 알려주세요.</p>
         <p><a href="/editorial-policy/">편집 원칙과 수정 정책 보기</a></p>
       </aside>
-    </article>
+    <section class="next-reads"><h2>이어서 확인하기</h2><ul><li><a href="/posts/cloudflare-domain-checking/">Cloudflare에서 도메인이 확인 중으로 오래 남을 때 점검할 항목</a></li><li><a href="/tools/url-structure-check/">URL 구조 점검 도구</a></li></ul><a class="text-link" href="/posts/">전체 글에서 다른 주제 찾기 →</a></section></article>
     <aside class="sidebar"><h2>관련 글</h2><ul><li><a href="/posts/browser-cache-refresh/">예전 화면이 계속 보일 때</a></li><li><a href="/posts/google-account-security/">구글 계정 보안 점검</a></li><li><a href="/posts/">전체 글</a></li></ul></aside>
   </main>
   <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/updates/">업데이트 기록</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></div></div></footer>

@@ -21,19 +21,23 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"웹페이지가 수정됐는데 예전 화면이 계속 보일 때 해결 방법","description":"웹사이트를 수정했는데 브라우저에 예전 화면이 계속 보일 때 캐시, 강력 새로고침, 시크릿 창, 배포 상태를 확인하는 방법입니다.","inLanguage":"ko-KR","datePublished":"2026-07-12","dateModified":"2026-09-06","mainEntityOfPage":"https://www.kyd.kr/posts/browser-cache-refresh/","author":{"@type":"Organization","name":"KYD 디지털 가이드 편집팀","url":"https://www.kyd.kr/about/"},"publisher":{"@type":"Organization","name":"KYD 디지털 가이드","url":"https://www.kyd.kr/"}}</script>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://www.kyd.kr/"},{"@type":"ListItem","position":2,"name":"전체 글","item":"https://www.kyd.kr/posts/"},{"@type":"ListItem","position":3,"name":"웹페이지가 수정됐는데 예전 화면이 계속 보일 때 해결 방법","item":"https://www.kyd.kr/posts/browser-cache-refresh/"}]}</script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">본문으로 바로가기</a>
-  <header class="site-header"><div class="header-inner"><a class="logo" href="/"><span class="logo-mark">KYD</span><span>디지털 가이드</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/" aria-current="page">전체 글</a><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></nav></div></header>
+  <header class="site-header"><div class="header-inner"><a class="logo" href="/" aria-label="KYD 디지털 가이드 홈"><span class="logo-mark">KYD</span><span class="logo-caption">디지털 가이드<br>생활을 읽는 기준</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/#buying">구매·생활비</a><a href="/posts/#sports">스포츠</a><a href="/tools/">무료 도구</a><a href="/posts/" class="nav-search">전체 글·검색</a></nav></div></header>
   <main id="main-content" class="container article-layout">
     <article class="article">
+<nav class="breadcrumb" aria-label="현재 위치"><a href="/">홈</a><span aria-hidden="true">/</span><a href="/posts/#computer">컴퓨터</a><span aria-hidden="true">/</span><span aria-current="page">웹페이지가 수정됐는데 예전 화면이 계속 보일 때 해결 방법</span></nav>
       <p class="category">브라우저 문제 해결</p>
       <h1>웹페이지가 수정됐는데 예전 화면이 계속 보일 때 해결 방법</h1>
       <p class="article-meta">작성: KYD 디지털 가이드 편집팀 · 게시 <time datetime="2026-07-12">2026년 7월 12일</time> · 최종 검토 <time datetime="2026-09-06">2026년 9월 6일</time></p>
 
       <p class="lead">수정한 화면이 보이지 않을 때는 브라우저, 배포된 파일, 접속 주소를 나눠 확인해야 합니다. 캐시를 지우기 전에 어떤 증거를 비교할지 정하면 로그인 정보나 저장된 데이터를 불필요하게 지우는 일을 줄일 수 있습니다.</p>
       <nav class="article-toc" aria-label="이 글의 목차"><a href="#cache-compare">증상 비교</a> · <a href="#cache-observe">개발자 도구 확인</a> · <a href="#cache-case">KYD 사례</a></nav>
-      <h2 id="cache-compare">먼저 같은 주소와 같은 내용을 비교하세요</h2>
+<details class="reading-toc"><summary>이 글에서 확인할 내용 (6)</summary><nav aria-label="본문 목차"><ol><li><a href="#cache-compare">먼저 같은 주소와 같은 내용을 비교하세요</a></li><li><a href="#read-section-1">새로고침과 데이터 삭제는 구분합니다</a></li><li><a href="#cache-observe">운영자는 Network에서 응답 자체를 봅니다</a></li><li><a href="#read-section-2">CSS 파일 버전과 쿼리 문자열의 한계</a></li><li><a href="#read-section-3">해결됐다고 판단할 증거</a></li><li><a href="#sources-browser-cache-refresh">공식 자료와 검토 범위</a></li></ol></nav></details>
+<h2 id="cache-compare">먼저 같은 주소와 같은 내용을 비교하세요</h2>
       <p>주소 표시줄의 전체 URL을 복사해 비교합니다. www 유무, 경로, 로그인 계정, 언어 설정이 다르면 화면도 달라질 수 있습니다. “화면이 다르다”는 인상 대신 새로 수정한 문장 한 줄이나 버튼 이름 하나를 비교 대상으로 정하세요.</p>
       <div class="table-wrap"><table><caption>관찰 결과에서 다음 점검으로 넘어가기</caption><thead><tr><th scope="col">관찰</th><th scope="col">다음 점검</th><th scope="col">아직 확정할 수 없는 것</th></tr></thead><tbody>
       <tr><td>일반 창만 예전 화면</td><td>캐시, 확장 기능, 로그인별 콘텐츠, 서비스 워커 확인</td><td>시크릿 창이 다르다는 사실만으로 캐시 오류 확정</td></tr>
@@ -41,7 +45,7 @@
       <tr><td>문장은 새것, 색·간격은 예전 것</td><td>HTML이 참조하는 CSS URL과 응답 내용 확인</td><td>CSS 캐시인지 선택자 우선순위 문제인지 여부</td></tr>
       <tr><td>프리뷰 주소만 새 화면</td><td>운영 배포 브랜치와 운영 도메인의 대상 확인</td><td>프리뷰 성공이 운영 배포 성공이라는 결론</td></tr>
       </tbody></table></div>
-      <h2>새로고침과 데이터 삭제는 구분합니다</h2>
+      <h2 id="read-section-1">새로고침과 데이터 삭제는 구분합니다</h2>
       <p>Windows의 Chrome·Edge에서 일반 새로고침 뒤 <code>Ctrl + Shift + R</code>로 다시 요청해봅니다. 시크릿 창도 비교에 쓸 수 있지만 로그인과 확장 기능 조건이 달라진다는 점을 기록합니다. 시크릿 창이 CDN이나 서버 캐시까지 비우는 것은 아닙니다.</p>
       <p>캐시 삭제가 필요하다면 브라우저의 삭제 대화상자에서 <strong>캐시된 이미지 및 파일</strong>만 선택했는지 확인합니다. 쿠키·사이트 데이터·저장된 비밀번호는 별개입니다. 특히 웹앱의 오프라인 초안이 있다면 사이트 데이터를 지우기 전에 내보내기나 저장 여부를 확인하세요.</p>
       <h2 id="cache-observe">운영자는 Network에서 응답 자체를 봅니다</h2>
@@ -50,19 +54,19 @@
       <h2 id="cache-case">KYD에서 확인한 실제 주소 중복 사례</h2>
       <p>2026년 9월 6일 KYD 공개 사이트를 점검했을 때 <code>/</code>와 <code>/public/</code>가 모두 200을 반환하며 같은 제목의 홈페이지를 제공했습니다. <code>/public/posts/windows-file-extension/</code>에서도 원래 글과 같은 콘텐츠가 열렸습니다. 이는 브라우저 캐시 때문이 아니라 배포된 폴더가 두 주소로 노출된 사례입니다.</p>
       <p>같은 파일을 루트와 public 폴더에 유지하는 저장소 구조가 원인이었고, 해결은 <code>/public/*</code>를 원래 경로로 보내는 리디렉션을 배포하는 것입니다. 이 사례에서 브라우저 데이터를 지우는 일은 중복 URL을 해결하지 못합니다. <a href="/posts/cloudflare-pages-domain/">도메인·출력 폴더·대표 주소 점검</a>에서 확인 항목을 이어볼 수 있습니다.</p>
-      <h2>CSS 파일 버전과 쿼리 문자열의 한계</h2>
+      <h2 id="read-section-2">CSS 파일 버전과 쿼리 문자열의 한계</h2>
       <p>배포할 때 내용 해시가 들어간 파일명(예: <code>style.a1b2.css</code>)을 사용하면 새 HTML이 새 CSS를 요청하도록 만들 수 있습니다. 파일명은 예시입니다. 파일만 바꾸고 HTML 참조를 바꾸지 않으면 적용되지 않습니다.</p>
       <p><code>?v=2</code> 같은 검색 조건을 덧붙이는 방법은 서버·CDN의 캐시 키 설정에 따라 효과가 다릅니다. 강제 우회가 보장되는 기법으로 취급하지 마세요. CDN 캐시 삭제가 필요한 경우 운영자의 공식 대시보드에서 해당 URL 범위를 먼저 검토합니다.</p>
-      <h2>해결됐다고 판단할 증거</h2>
+      <h2 id="read-section-3">해결됐다고 판단할 증거</h2>
       <p>운영 도메인에서 수정 문장이 들어 있는 HTML과 의도한 CSS를 받았고, 새 브라우저 세션에서도 같은 내용이 보이면 해결 증거로 남길 수 있습니다. 문의할 때에는 전체 URL, 확인 시각, 기대한 문장, 실제 문장, 배포 커밋을 함께 전달하세요. 로그인 쿠키가 포함될 수 있는 네트워크 기록은 그대로 공개하지 않습니다.</p>
       <section class="sources" aria-labelledby="sources-browser-cache-refresh"><h2 id="sources-browser-cache-refresh">공식 자료와 검토 범위</h2><p>메뉴·기능 설명은 아래 자료를 참고했습니다. 본문의 계산과 주소·파일명 비교는 KYD가 구성한 예시이며, 별도 표시가 없는 실제 기기 시험이나 피해 사례를 주장하지 않습니다.</p><ul><li><a href="https://support.google.com/chrome/answer/2392709?hl=ko" rel="noopener noreferrer">캐시·쿠키·저장 데이터 삭제 범위</a></li><li><a href="https://developers.cloudflare.com/pages/configuration/serving-pages/" rel="noopener noreferrer">Pages 파일 제공과 캐시 동작</a></li></ul><p class="source-reviewed">자료 및 본문 최종 검토: <time datetime="2026-09-06">2026년 9월 6일</time></p></section>
       <aside class="author-box" aria-label="작성자와 편집 기준">
         <p class="author-label">작성·검토</p>
-        <h2>KYD 디지털 가이드 편집팀</h2>
+        <h2 id="read-section-4">KYD 디지털 가이드 편집팀</h2>
         <p>초보자가 안전하게 따라 할 수 있도록 공식 문서와 실제 화면에서 확인 가능한 메뉴를 기준으로 설명합니다. 사실 오류나 변경된 메뉴는 <a href="/contact/">오류 제보</a>로 알려주세요.</p>
         <p><a href="/editorial-policy/">편집 원칙과 수정 정책 보기</a></p>
       </aside>
-    </article>
+    <section class="next-reads"><h2>이어서 확인하기</h2><ul><li><a href="/posts/free-program-install-checkbox/">무료 프로그램 설치할 때 체크박스를 조심해야 하는 이유</a></li><li><a href="/posts/chrome-download-warning/">Chrome 다운로드 경고가 나올 때 무시해도 되는지 판단하는 기준</a></li><li><a href="/tools/url-structure-check/">URL 구조 점검 도구</a></li></ul><a class="text-link" href="/posts/">전체 글에서 다른 주제 찾기 →</a></section></article>
     <aside class="sidebar"><h2>관련 글</h2><ul><li><a href="/posts/cloudflare-pages-domain/">Cloudflare Pages 도메인 연결</a></li><li><a href="/posts/windows-file-extension/">Windows 파일 확장자 표시</a></li></ul></aside>
   </main>
   <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/updates/">업데이트 기록</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></div></div></footer>
