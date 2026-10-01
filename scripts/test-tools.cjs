@@ -178,25 +178,25 @@ const server = http.createServer((req, res) => {
     // Library is fully crawlable without scripting; filtering is only an enhancement.
     await page.goto(origin + '/posts/');
     const visibleCards = page.locator('#article-library .post-card:visible');
-    assert.equal(await visibleCards.count(), 27);
+    assert.equal(await visibleCards.count(), 28);
     await page.locator('#article-search').fill('아이폰 용량');
     assert.equal(await visibleCards.count(), 2);
     await page.locator('#article-search').fill('존재하지않는검색어');
     assert.equal(await visibleCards.count(), 0);
     assert(await page.locator('#search-empty').isVisible());
     await page.locator('#empty-reset').click();
-    assert.equal(await visibleCards.count(), 27);
+    assert.equal(await visibleCards.count(), 28);
     await page.locator('.library-filters a[href="#sports"]').click();
-    assert.equal(await visibleCards.count(), 1);
+    assert.equal(await visibleCards.count(), 2);
     assert((await page.locator('#search-status').innerText()).includes('스포츠'));
     await page.locator('.library-filters a[href="#buying"]').click();
     assert.equal(await visibleCards.count(), 3);
     await page.goBack();
-    assert.equal(await visibleCards.count(), 1);
+    assert.equal(await visibleCards.count(), 2);
     await page.reload();
-    assert.equal(await visibleCards.count(), 1);
+    assert.equal(await visibleCards.count(), 2);
     await page.locator('#search-reset').click();
-    assert.equal(await visibleCards.count(), 27);
+    assert.equal(await visibleCards.count(), 28);
     await page.locator('#article-search').fill('IPHONE'); // English is matched case-insensitively where present.
     await page.locator('#search-reset').click();
     await page.goto(origin + '/posts/#legacy-guides');
@@ -206,10 +206,10 @@ const server = http.createServer((req, res) => {
     const noJsPage = await noJsContext.newPage();
     await noJsPage.route('**/*', route => route.request().url().startsWith(origin + '/') ? route.continue() : route.abort());
     await noJsPage.goto(origin + '/posts/');
-    assert.equal(await noJsPage.locator('.post-card:visible').count(), 27);
+    assert.equal(await noJsPage.locator('.post-card:visible').count(), 28);
     assert(!(await noJsPage.locator('.library-search').isVisible()));
     await noJsContext.close();
-    results.push('LIBRARY all 27 article links available without JavaScript');
+    results.push('LIBRARY all 28 article links available without JavaScript');
     // Check every article, not just the representative responsive routes.
     for (const slug of fs.readdirSync(path.join(root,'posts')).filter(slug=>fs.statSync(path.join(root,'posts',slug)).isDirectory())) {
       await page.goto(origin + '/posts/' + slug + '/');
@@ -224,7 +224,7 @@ const server = http.createServer((req, res) => {
       ld.forEach(json=>assert.doesNotThrow(()=>JSON.parse(json)));
       assert(ld.some(json=>JSON.parse(json)['@type']==='BreadcrumbList'));
     }
-    results.push('EDITORIAL all 27 articles: breadcrumbs, contents, related links, IDs, JSON-LD');
+    results.push('EDITORIAL all 28 articles: breadcrumbs, contents, related links, IDs, JSON-LD');
     for (const width of [360,768,1024,1440]) {
       await page.setViewportSize({width,height:900});
       for (const route of ['/', '/posts/', '/posts/iphone-storage-choice/']) {
