@@ -8,6 +8,8 @@ const os = require('node:os');
 const root = path.resolve(__dirname, '..');
 const cases = JSON.parse(fs.readFileSync(path.join(root, 'tools/test-cases.json'), 'utf8'));
 const results = [];
+const articleSlugs = fs.readdirSync(path.join(root, 'posts')).filter(slug => fs.statSync(path.join(root, 'posts', slug)).isDirectory());
+const sportsArticleCount = articleSlugs.filter(slug => slug.startsWith('asian-games-')).length;
 const server = http.createServer((req, res) => {
   const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
   let file = path.resolve(root, '.' + pathname);
@@ -178,25 +180,25 @@ const server = http.createServer((req, res) => {
     // Library is fully crawlable without scripting; filtering is only an enhancement.
     await page.goto(origin + '/posts/');
     const visibleCards = page.locator('#article-library .post-card:visible');
-    assert.equal(await visibleCards.count(), 28);
+    assert.equal(await visibleCards.count(), articleSlugs.length);
     await page.locator('#article-search').fill('아이폰 용량');
     assert.equal(await visibleCards.count(), 2);
     await page.locator('#article-search').fill('존재하지않는검색어');
     assert.equal(await visibleCards.count(), 0);
     assert(await page.locator('#search-empty').isVisible());
     await page.locator('#empty-reset').click();
-    assert.equal(await visibleCards.count(), 28);
+    assert.equal(await visibleCards.count(), articleSlugs.length);
     await page.locator('.library-filters a[href="#sports"]').click();
-    assert.equal(await visibleCards.count(), 2);
+    assert.equal(await visibleCards.count(), sportsArticleCount);
     assert((await page.locator('#search-status').innerText()).includes('스포츠'));
     await page.locator('.library-filters a[href="#buying"]').click();
     assert.equal(await visibleCards.count(), 3);
     await page.goBack();
-    assert.equal(await visibleCards.count(), 2);
+    assert.equal(await visibleCards.count(), sportsArticleCount);
     await page.reload();
-    assert.equal(await visibleCards.count(), 2);
+    assert.equal(await visibleCards.count(), sportsArticleCount);
     await page.locator('#search-reset').click();
-    assert.equal(await visibleCards.count(), 28);
+    assert.equal(await visibleCards.count(), articleSlugs.length);
     await page.locator('#article-search').fill('IPHONE'); // English is matched case-insensitively where present.
     await page.locator('#search-reset').click();
     await page.goto(origin + '/posts/#legacy-guides');
@@ -206,12 +208,12 @@ const server = http.createServer((req, res) => {
     const noJsPage = await noJsContext.newPage();
     await noJsPage.route('**/*', route => route.request().url().startsWith(origin + '/') ? route.continue() : route.abort());
     await noJsPage.goto(origin + '/posts/');
-    assert.equal(await noJsPage.locator('.post-card:visible').count(), 28);
+    assert.equal(await noJsPage.locator('.post-card:visible').count(), articleSlugs.length);
     assert(!(await noJsPage.locator('.library-search').isVisible()));
     await noJsContext.close();
-    results.push('LIBRARY all 28 article links available without JavaScript');
+    results.push(`LIBRARY all ${articleSlugs.length} article links available without JavaScript`);
     // Check every article, not just the representative responsive routes.
-    for (const slug of fs.readdirSync(path.join(root,'posts')).filter(slug=>fs.statSync(path.join(root,'posts',slug)).isDirectory())) {
+    for (const slug of articleSlugs) {
       await page.goto(origin + '/posts/' + slug + '/');
       assert.equal(await page.locator('.reading-toc').count(), 1);
       assert.equal(await page.locator('.breadcrumb').count(), 1);
@@ -224,7 +226,7 @@ const server = http.createServer((req, res) => {
       ld.forEach(json=>assert.doesNotThrow(()=>JSON.parse(json)));
       assert(ld.some(json=>JSON.parse(json)['@type']==='BreadcrumbList'));
     }
-    results.push('EDITORIAL all 28 articles: breadcrumbs, contents, related links, IDs, JSON-LD');
+    results.push(`EDITORIAL all ${articleSlugs.length} articles: breadcrumbs, contents, related links, IDs, JSON-LD`);
     for (const width of [360,768,1024,1440]) {
       await page.setViewportSize({width,height:900});
       for (const route of ['/', '/posts/', '/posts/iphone-storage-choice/']) {

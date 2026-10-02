@@ -34,8 +34,10 @@ foreach ($item in $items) {
   $null = [DateTimeOffset]::Parse([string]$item.pubDate, [Globalization.CultureInfo]::InvariantCulture)
   if ($url -like '*asian-games-2026-09-29-results*' -and (-not $body.Contains('CC BY-SA 4.0') -or -not $body.Contains('2019'))) { throw 'RSS lost photo attribution or archival caveat' }
 }
-$latestSports = $items | Where-Object { [string]$_.link -eq 'https://www.kyd.kr/posts/asian-games-2026-10-01-results/' }
-if (-not $latestSports -or -not $latestSports.description.InnerText.Contains('CC0 1.0') -or -not $latestSports.description.InnerText.Contains('2025년 7월 27일') -or -not $latestSports.description.InnerText.Contains('Tokumeigakarinoaoshima') -or -not $latestSports.description.InnerText.Contains('경기·시상식 현장 사진이 아닙니다')) { throw 'RSS lost new sports photo credit or archival caveat' }
+foreach ($sportsUrl in @('https://www.kyd.kr/posts/asian-games-2026-10-01-results/', 'https://www.kyd.kr/posts/asian-games-2026-10-02-results/')) {
+  $sportsItem = $items | Where-Object { [string]$_.link -eq $sportsUrl }
+  if (-not $sportsItem -or -not $sportsItem.description.InnerText.Contains('CC0 1.0') -or -not $sportsItem.description.InnerText.Contains('2025년 7월 27일') -or -not $sportsItem.description.InnerText.Contains('Tokumeigakarinoaoshima') -or -not $sportsItem.description.InnerText.Contains('경기·시상식 현장 사진이 아닙니다')) { throw "RSS lost sports photo credit or archival caveat: $sportsUrl" }
+}
 if ((Get-Item 'rss.xml').Length -ge 10MB) { throw 'RSS too large for Naver' }
 $homeHtml = [IO.File]::ReadAllText((Join-Path $root 'index.html'))
 if ([regex]::Matches($homeHtml, '<meta name="naver-site-verification" content="[a-f0-9]+"').Count -ne 1) { throw 'Missing or duplicate Naver verification token' }
