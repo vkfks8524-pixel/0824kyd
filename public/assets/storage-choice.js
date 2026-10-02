@@ -52,5 +52,7 @@
     [90, 1, 24, 20, 30].forEach((value, i) => { fields[i].value = value; });
     form.requestSubmit();
   });
-  form.hidden = false;
+  // Keep the form's space reserved before JavaScript is ready.
+  form.querySelectorAll('input, button').forEach(control => { control.disabled = false; });
+  form.setAttribute('aria-busy', 'false');
 })();

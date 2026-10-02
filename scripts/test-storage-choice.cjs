@@ -13,6 +13,8 @@ const cases = [
   [[400,0,24,100,12],512,560],
   [[90.5,1.2,24,20.1,30.3],169.7,217.7],
   [[10000,1000,120,10000,10000],150000,150240],
+  [[120,6,36,30,40],406,478],
+  [[120,2,36,30,40],262,334],
 ];
 for (const [values, planned, higher] of cases) {
   const answer = calculate(values);
@@ -27,4 +29,4 @@ const rss = fs.readFileSync(path.join(root,'rss.xml'),'utf8');
 assert(!rss.includes('<form'));
 assert(rss.includes('https://www.kyd.kr/posts/iphone-storage-choice/#storage-calculator'));
 assert(!/fetch\(|XMLHttpRequest|localStorage|sessionStorage|sendBeacon/.test(fs.readFileSync(path.join(root,'assets/storage-choice.js'),'utf8')));
-console.log('PASS: 9 calculation cases, 16 invalid cases, article integration, portable RSS and no network/storage API.');
+console.log(`PASS: ${cases.length} calculation cases, 16 invalid cases, article integration, portable RSS and no network/storage API.`);

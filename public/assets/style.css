@@ -5,7 +5,7 @@
 /* Purchase guides and local-only quote comparison. */
 .hero-visual, .card-visual, .article-visual { margin: 0 0 20px; }
 .article-visual { margin: 24px 0; }
-.hero-visual img, .card-visual img, .article-visual img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 8px; background: #f5eee6; }
+.hero-visual img, .card-visual img, .article-visual img { display: block; width: 100%; height: auto; border-radius: 8px; background: #f5eee6; }
 .hero-visual figcaption, .card-visual figcaption, .article-visual figcaption { margin-top: 8px; color: #5b6673; font-size: 0.8rem; line-height: 1.5; }
 .cost-article { max-width: 100%; }
 .cost-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
@@ -864,7 +864,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .front-copy .lead { font-size: 1rem; line-height: 1.8; }
 .label-date { color: var(--muted); border-left: 1px solid var(--line); margin-left: 10px; padding-left: 10px; font-weight: 400; }
 .feature-visual { margin: 0; }
-.feature-visual img { width: 100%; height: auto; display: block; aspect-ratio: 3/2; background: var(--soft); }
+.feature-visual img { width: 100%; height: auto; display: block; background: var(--soft); }
 .feature-visual figcaption { margin-top: 10px; font-size: .74rem; line-height: 1.6; color: var(--muted); }
 .result-digest { list-style: none; padding: 0; margin: 20px 0 12px; border-top: 1px solid var(--line); }
 .result-digest li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: .82rem; }
@@ -1007,3 +1007,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .article { font-size: 1rem; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Disabled controls retain their final dimensions while scripts initialize. */
+.library-search input:disabled, .library-search button:disabled, .storage-calculator input:disabled, .storage-calculator button:disabled { cursor: wait; opacity: .65; }
+.search-status { min-height: 1.72em; }

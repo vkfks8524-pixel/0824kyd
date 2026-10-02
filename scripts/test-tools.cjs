@@ -209,7 +209,9 @@ const server = http.createServer((req, res) => {
     await noJsPage.route('**/*', route => route.request().url().startsWith(origin + '/') ? route.continue() : route.abort());
     await noJsPage.goto(origin + '/posts/');
     assert.equal(await noJsPage.locator('.post-card:visible').count(), articleSlugs.length);
-    assert(!(await noJsPage.locator('.library-search').isVisible()));
+    assert(await noJsPage.locator('.library-search').isVisible());
+    assert(await noJsPage.locator('#article-search').isDisabled());
+    assert(await noJsPage.locator('#search-reset').isDisabled());
     await noJsContext.close();
     results.push(`LIBRARY all ${articleSlugs.length} article links available without JavaScript`);
     // Check every article, not just the representative responsive routes.

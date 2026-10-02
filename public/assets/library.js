@@ -64,5 +64,8 @@
   window.addEventListener('popstate', () => { readCategory(); render(); });
   readCategory();
   render();
-  document.querySelector('.library-search').hidden = false;
+  // Reserve the search panel in the initial HTML; enabling it does not move articles.
+  search.disabled = false;
+  document.querySelector('#search-reset').disabled = false;
+  document.querySelector('.library-search').setAttribute('aria-busy', 'false');
 })();
