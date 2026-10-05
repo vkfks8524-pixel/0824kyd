@@ -47,7 +47,8 @@ const posts = fs.readdirSync(path.join(root, 'posts'), {withFileTypes:true}).fil
   return {canonical, published, modified, title, body};
 }).sort((a,b)=>b.published.localeCompare(a.published) || b.modified.localeCompare(a.modified) || a.canonical.localeCompare(b.canonical));
 if (!posts.length) throw new Error('Refusing to publish an empty feed');
-const latest = posts.map(post=>post.modified).sort().at(-1);
+// A day-precision adaptation date must not place the feed before a timed publication.
+const latest = posts.flatMap(post=>[post.modified,post.published]).sort().at(-1);
 const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>\n' +
   '<title>KYD Guides</title><link>' + origin + '/</link>\n' +
