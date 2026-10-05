@@ -52,7 +52,7 @@ const latest = posts.flatMap(post=>[post.modified,post.published]).sort().at(-1)
 const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>\n' +
   '<title>KYD Guides</title><link>' + origin + '/</link>\n' +
-  '<description>Practical phone choices, costs, photo preservation and dated official-record sports reports</description>\n' +
+  '<description>Practical web and AI guides, phone choices, costs, photo preservation and dated official-record sports reports</description>\n' +
   '<language>en</language><atom:link href="' + origin + '/rss.xml" rel="self" type="application/rss+xml"/>\n' +
   '<lastBuildDate>' + rssDate(latest) + '</lastBuildDate>\n' +
   posts.map(post=>'<item><title>' + escapeXml(post.title) + '</title><link>' + escapeXml(post.canonical) + '</link>' +

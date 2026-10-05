@@ -19,7 +19,8 @@ assert.equal(facts.oct4.bKorea.result,32);
 assert.equal(facts.oct4.bKorea.round2Penalties,9);
 assert.deepEqual(facts.oct4.bJumpOff.map(r=>r.penalties),[0,8,8]);
 const library=read('posts/index.html'), home=read('index.html'), rss=read('rss.xml');
-assert.match(library,/All 32 articles/);
+const articleCount=fs.readdirSync(path.join(root,'posts'),{withFileTypes:true}).filter(entry=>entry.isDirectory()).length;
+assert(library.includes('All '+articleCount+' articles'));
 assert.match(library,/Sport <span>6<\/span>/);
 for (const slug of slugs) {
   const file=`posts/${slug}/index.html`, html=read(file);

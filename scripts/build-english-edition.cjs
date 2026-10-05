@@ -5,6 +5,8 @@
 const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');
 const root=path.resolve(__dirname,'..');
 const content=require('./english-edition.cjs');
+const newerPosts=fs.readdirSync(path.join(root,'posts'),{withFileTypes:true}).filter(entry=>entry.isDirectory()&&!content[entry.name]);
+if(newerPosts.length)throw new Error('This pinned one-off migration cannot rebuild a library with later publications. Use the publication scripts instead; newer articles are preserved.');
 const ui=require('./english-ui.cjs');
 const baseline='440df81';
 const date='2026-10-05';
