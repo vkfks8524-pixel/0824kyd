@@ -1,0 +1,20 @@
+/* The checklist is a self-report worksheet, not a file scanner. */
+.backup-checks { border: 0; margin: 0; padding: 0; min-width: 0; }
+.backup-checks legend { font-weight: 750; margin-bottom: 12px; }
+.backup-checks label { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.backup-checks input { width: 22px; height: 22px; margin: 3px 0 0; accent-color: var(--brand); }
+.backup-checks small { display: block; color: var(--muted); font-size: .88rem; line-height: 1.7; margin-top: 4px; }
+.backup-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.backup-actions button { min-height: 48px; font: inherit; cursor: pointer; padding: 12px 20px; border: 1px solid var(--brand); border-radius: 4px; color: #fff; background: var(--brand); }
+.backup-actions button:last-child { color: var(--brand); background: #fff; }
+.backup-checks input:disabled, .backup-actions button:disabled { opacity: .65; cursor: wait; }
+#backup-result { margin-top: 24px; padding: 18px 22px; background: var(--soft); border-left: 3px solid var(--brand); min-height: 150px; }
+#backup-status { margin-top: 0; font-weight: 700; }
+#backup-next { padding-left: 20px; line-height: 1.85; }
+.guide-path { padding: 24px; background: var(--soft); border-top: 2px solid var(--brand); margin: 28px 0; }
+.guide-path ol { margin: 0; padding-left: 22px; }
+.guide-path li { padding: 8px 0; line-height: 1.75; }
+.guide-path a { font-weight: 750; }
+.copy-record { background: var(--soft); border-left: 3px solid var(--brand); padding: 18px 22px; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; font-size: .9rem; }
+@media(max-width:760px) { .guide-path, #backup-result { padding: 18px; } }
+@media print { .site-header,.site-footer,.sidebar,.backup-actions { display:none; } .article-layout { display:block; } }
