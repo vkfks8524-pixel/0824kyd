@@ -36,7 +36,7 @@ foreach ($item in $items) {
 }
 foreach ($sportsUrl in @('https://www.kyd.kr/posts/asian-games-2026-10-01-results/', 'https://www.kyd.kr/posts/asian-games-2026-10-02-results/')) {
   $sportsItem = $items | Where-Object { [string]$_.link -eq $sportsUrl }
-  if (-not $sportsItem -or -not $sportsItem.description.InnerText.Contains('CC0 1.0') -or -not $sportsItem.description.InnerText.Contains('2025년 7월 27일') -or -not $sportsItem.description.InnerText.Contains('Tokumeigakarinoaoshima') -or -not $sportsItem.description.InnerText.Contains('경기·시상식 현장 사진이 아닙니다')) { throw "RSS lost sports photo credit or archival caveat: $sportsUrl" }
+  if (-not $sportsItem -or -not $sportsItem.description.InnerText.Contains('CC0 1.0') -or -not $sportsItem.description.InnerText.Contains('July 27, 2025') -or -not $sportsItem.description.InnerText.Contains('Tokumeigakarinoaoshima') -or -not $sportsItem.description.InnerText.Contains('Not a photograph of a 2026 match')) { throw "RSS lost sports photo credit or archival caveat: $sportsUrl" }
 }
 if ((Get-Item 'rss.xml').Length -ge 10MB) { throw 'RSS too large for Naver' }
 $homeHtml = [IO.File]::ReadAllText((Join-Path $root 'index.html'))

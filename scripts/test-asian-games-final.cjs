@@ -19,8 +19,8 @@ assert.equal(facts.oct4.bKorea.result,32);
 assert.equal(facts.oct4.bKorea.round2Penalties,9);
 assert.deepEqual(facts.oct4.bJumpOff.map(r=>r.penalties),[0,8,8]);
 const library=read('posts/index.html'), home=read('index.html'), rss=read('rss.xml');
-assert.match(library,/전체 32개 글/);
-assert.match(library,/스포츠 <span>6<\/span>/);
+assert.match(library,/All 32 articles/);
+assert.match(library,/Sport <span>6<\/span>/);
 for (const slug of slugs) {
   const file=`posts/${slug}/index.html`, html=read(file);
   const url=`https://www.kyd.kr/posts/${slug}/`;
@@ -31,7 +31,7 @@ for (const slug of slugs) {
   assert(html.includes('class="sources"'));
   assert(html.includes('12:48 KST'));
   assert(html.includes('CC0 1.0'));
-  assert(html.includes('현장 사진이 아닙니다'));
+  assert(html.includes('Not a photograph')||html.includes('Not the 2026 Asian Games'));
   assert(library.includes(`/posts/${slug}/`));
   assert(home.includes(`/posts/${slug}/`));
   assert(rss.includes(url));

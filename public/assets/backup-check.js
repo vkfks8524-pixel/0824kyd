@@ -1,12 +1,12 @@
 'use strict';
 (function () {
   const checks = [
-    ['account','백업 계정','사진을 보관한 계정과 확인 중인 계정이 같은지 확인하세요.'],
-    ['upload','업로드 상태','백업 또는 동기화가 진행 중·일시중지가 아닌지 확인하세요.'],
-    ['recent','최근 사진 원본','다른 기기나 웹에서 최근 사진 원본이 열리는지 확인하세요.'],
-    ['video','동영상','다른 기기나 별도 사본에서 중요한 동영상의 재생과 소리를 확인하세요.'],
-    ['folders','빠진 폴더','메신저·다운로드·편집 앱 등 카메라 외 폴더도 확인하세요.'],
-    ['copy','독립 사본','동기화 폴더 밖에 중요한 사진을 복사하고 다시 열어보세요.']
+    ['account','Backup account','Check that the storage account matches the account you are viewing.'],
+    ['upload','Upload state','Check whether backup or sync is pending or paused.'],
+    ['recent','Recent photo originals','Open recent originals on another device or through the service’s web interface.'],
+    ['video','Video','Inspect important video playback and sound on another device or independent copy.'],
+    ['folders','Additional folders','Inspect messenger, download and editing folders as well as the camera folder.'],
+    ['copy','Independent copy','Copy important photos outside the synchronized library and reopen them.']
   ];
   function review(selected) {
     const known = new Set(Array.isArray(selected) ? selected : []);
@@ -15,8 +15,8 @@
       checked: checks.length - remaining.length,
       remaining: remaining.map(([id,label,instruction])=>({id,label,instruction})),
       message: remaining.length
-        ? '자가 확인 '+(checks.length-remaining.length)+'/6. 아직 표시하지 않은 항목부터 확인하세요. 사진 삭제나 기기 초기화를 권하지 않습니다.'
-        : '6개 항목에 직접 확인했다고 표시했습니다. 실제 파일을 검사한 결과나 복구 보증이 아닙니다. 원본을 유지하고 아래 서비스별 삭제 동작을 다시 확인하세요.'
+        ? 'Self-check '+(checks.length-remaining.length)+'/6. Review unmarked items first. This does not recommend deleting photos or resetting a device.'
+        : 'You marked all six items as personally checked. This is not file inspection or a recovery guarantee. Keep originals and review service-specific deletion behavior below.'
     };
   }
   if (typeof module !== 'undefined' && module.exports) module.exports = {review,checks};

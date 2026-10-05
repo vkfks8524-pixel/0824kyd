@@ -13,9 +13,9 @@ assert(/<button id="search-reset"[^>]*\bdisabled\b/.test(library));
 assert(!/<form id="storage-choice-form"[^>]*\bhidden\b/.test(article));
 assert.equal((article.match(/<input id="choice-[^>]*\bdisabled\b/g) || []).length, 5);
 assert(article.includes('120 + 6 × 36 + 30 + 40 = 406GB'));
-assert(article.includes('설명용 가상 기록표'));
+assert(article.includes('Hypothetical usage log'));
 assert(article.includes('content="2026-09-26"'));
-assert(article.includes('"dateModified":"2026-10-02"'));
+assert(article.includes('"dateModified":"2026-10-05"'));
 for (const slug of fs.readdirSync(path.join(root, 'posts')).filter(slug => fs.statSync(path.join(root, 'posts', slug)).isDirectory())) {
   assert(library.includes('href="/posts/' + slug + '/"'), 'Missing static article link: ' + slug);
 }
@@ -33,7 +33,7 @@ function node(text = '') {
 }
 const sections = ['sports', 'buying'].map(id => {
   const section = node(); section.id = id;
-  const card = node(); card.children = [{tagName: 'P', textContent: id === 'sports' ? 'LoL 결과' : '아이폰 용량'}];
+  const card = node(); card.children = [{tagName: 'P', textContent: id === 'sports' ? 'LoL results' : 'iPhone storage'}];
   section.card = card; section.querySelectorAll = () => [card]; return section;
 });
 const links = ['all', 'sports', 'buying'].map(id => {
@@ -50,7 +50,7 @@ assert.equal(search.disabled, false);
 assert.equal(nodes['#search-reset'].disabled, false);
 assert.equal(panel.attributes['aria-busy'], 'false');
 assert(sections.every(section => !section.hidden && !section.card.hidden));
-search.value = '아이폰'; search.events.input();
+search.value = 'IPHONE'; search.events.input();
 assert.equal(sections[0].card.hidden, true);
 assert.equal(sections[1].card.hidden, false);
 nodes['#search-reset'].events.click();

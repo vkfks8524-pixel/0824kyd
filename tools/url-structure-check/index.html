@@ -1,90 +1,90 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-adsense-account" content="ca-pub-7587676721583907">
-  <title>URL 구조 확인 도구 | 링크를 열기 전 주소 점검</title>
-  <meta name="description" content="URL을 외부로 전송하지 않고 호스트 이름, HTTPS, 단축 URL, 숫자 IP, 퓨니코드와 비표준 포트를 확인합니다.">
-  <meta name="author" content="KYD 디지털 가이드 편집팀">
+  <title>URL structure checker | KYD Guides</title>
+  <meta name="description" content="Inspect the host, protocol and visible structural flags without visiting the address.">
+  <meta name="author" content="KYD Editorial">
   <link rel="canonical" href="https://www.kyd.kr/tools/url-structure-check/">
-  <meta property="og:type" content="website"><meta property="og:locale" content="ko_KR"><meta property="og:site_name" content="KYD 디지털 가이드"><meta property="og:title" content="URL 구조 확인 도구"><meta property="og:description" content="링크를 열기 전에 실제 호스트와 주소 구조를 브라우저에서 확인하세요."><meta property="og:url" content="https://www.kyd.kr/tools/url-structure-check/"><meta name="twitter:card" content="summary">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"URL 구조 확인 도구","url":"https://www.kyd.kr/tools/url-structure-check/","applicationCategory":"SecurityApplication","operatingSystem":"Any","browserRequirements":"JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"description":"URL을 외부로 전송하지 않고 호스트 이름과 주의할 구조를 확인하는 도구","author":{"@type":"Organization","name":"KYD 디지털 가이드 편집팀","url":"https://www.kyd.kr/about/"}}</script>
+  <meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:site_name" content="KYD Guides"><meta property="og:title" content="URL structure checker"><meta property="og:description" content="Inspect the host, protocol and visible structural flags without visiting the address."><meta property="og:url" content="https://www.kyd.kr/tools/url-structure-check/"><meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"URL structure checker","url":"https://www.kyd.kr/tools/url-structure-check/","applicationCategory":"SecurityApplication","operatingSystem":"Any","browserRequirements":"JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"description":"Inspect the host, protocol and visible structural flags without visiting the address.","author":{"@type":"Organization","name":"KYD Editorial","url":"https://www.kyd.kr/about/"},"inLanguage":"en"}</script>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/style.css?v=20260929-editorial-1">
-  <script defer src="/assets/tools.js"></script>
+  <link rel="stylesheet" href="/assets/style.css?v=20261005-en-1">
+  <script defer src="/assets/tools.js?v=20261005-en-1"></script>
 <meta name="robots" content="index, follow, max-image-preview:large">
-<link rel="alternate" type="application/rss+xml" title="KYD 디지털 가이드 RSS" href="https://www.kyd.kr/rss.xml">
+<link rel="alternate" type="application/rss+xml" title="KYD Guides RSS" href="https://www.kyd.kr/rss.xml">
 </head>
 <body>
-  <a class="skip-link" href="#main-content">본문으로 바로가기</a>
-  <header class="site-header"><div class="header-inner"><a class="logo" href="/" aria-label="KYD 디지털 가이드 홈"><span class="logo-mark">KYD</span><span class="logo-caption">디지털 가이드<br>생활을 읽는 기준</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/#buying">구매·생활비</a><a href="/posts/#sports">스포츠</a><a href="/tools/" aria-current="page">무료 도구</a><a href="/posts/" class="nav-search">전체 글·검색</a></nav></div></header>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header"><div class="header-inner"><a class="logo" href="/" aria-label="KYD Guides home"><span class="logo-mark">KYD</span><span class="logo-caption">Practical guides<br>Decisions made clearer</span></a><nav class="nav" aria-label="Main navigation"><a href="/">Home</a><a href="/posts/#buying">Buying &amp; costs</a><a href="/posts/#sports">Sport</a><a href="/tools/" aria-current="page">Free tools</a><a href="/posts/" class="nav-search">All articles &amp; search</a></nav></div></header>
   <main id="main-content" class="container article-layout">
     <article class="article">
-      <p class="category">무료 도구 · 링크 확인</p>
-      <h1>URL 구조 확인 도구</h1>
-      <p class="article-meta">도구 및 설명 최종 검토: <time datetime="2026-09-06">2026년 9월 6일</time></p>
-      <p class="lead">문자, QR코드, 이메일이나 PDF에서 발견한 링크를 열기 전에 실제 호스트 이름과 눈에 잘 띄지 않는 구조를 확인합니다. 주소는 현재 브라우저 안에서만 분석하며 KYD 서버나 외부 평판 서비스로 보내지 않습니다.</p>
+      <p class="category">Free tool · Link inspection</p>
+      <h1>URL structure checker</h1>
+      <p class="article-meta">Last tool and explanation review: <time datetime="2026-09-06">September 6, 2026</time></p>
+      <p class="lead">Before opening a link from a message, QR code, email or PDF, inspect its actual host and less-visible structure. The address is analyzed only in this browser, not sent to KYD or an external reputation service.</p>
 
       <section class="tool-shell" aria-labelledby="url-tool-heading">
-        <h2 id="url-tool-heading">확인할 URL 입력</h2>
+        <h2 id="url-tool-heading">Enter a URL to inspect</h2>
         <form id="url-tool-form" class="tool-form" novalidate>
           <div class="form-row">
-            <label for="url-input">웹주소</label>
-            <input id="url-input" name="url" type="text" inputmode="url" autocomplete="off" spellcheck="false" maxlength="2048" placeholder="예: https://accounts.example.com/login" aria-describedby="url-input-help">
-            <p class="form-help" id="url-input-help">비밀번호나 인증번호가 포함된 주소는 입력하지 마세요. 입력값은 네트워크로 전송하지 않습니다.</p>
+            <label for="url-input">Web address</label>
+            <input id="url-input" name="url" type="text" inputmode="url" autocomplete="off" spellcheck="false" maxlength="2048" placeholder="Example: https://accounts.example.com/login" aria-describedby="url-input-help">
+            <p class="form-help" id="url-input-help">Do not enter addresses containing passwords or authentication codes. Inputs are not sent over the network.</p>
           </div>
-          <div class="tool-actions"><button type="submit">주소 구조 확인</button></div>
+          <div class="tool-actions"><button type="submit">Inspect address structure</button></div>
         </form>
         <div id="url-result" class="tool-result" role="status" aria-live="polite" tabindex="-1" hidden>
-          <h2 id="url-result-title">확인 결과</h2>
+          <h2 id="url-result-title">Inspection result</h2>
           <p id="url-result-summary"></p>
           <dl id="url-facts" class="tool-facts"></dl>
-          <h3>확인할 항목</h3>
+          <h3>Items to review</h3>
           <ul id="url-findings" class="finding-list"></ul>
         </div>
       </section>
 
-      <h2>내 주소를 넣기 전에 예시로 비교하세요</h2>
-      <p>버튼을 누르면 교육용 주소를 입력칸에 넣고 분석합니다. 해당 주소를 열지 않습니다. 두 주소의 @가 같은 의미인지 호스트와 결과를 비교해보세요.</p>
+      <h2>Compare examples before entering your address</h2>
+      <p>The buttons fill and analyze educational examples without visiting them. Compare hosts and findings: does @ mean the same thing in both addresses?</p>
       <div class="tool-actions">
-        <button type="button" data-sample-for="url-input" data-sample="https://example.com@files.example.org/form.pdf">@ 앞에 기관처럼 보이는 이름</button>
-        <button type="button" data-sample-for="url-input" data-sample="https://example.com/user@name">경로에 @가 있는 주소</button>
+        <button type="button" data-sample-for="url-input" data-sample="https://example.com@files.example.org/form.pdf">An organization-like name before @</button>
+        <button type="button" data-sample-for="url-input" data-sample="https://example.com/user@name">An @ inside the path</button>
       </div>
-      <p>첫 예시의 호스트는 <code>files.example.org</code>이고 사용자 정보 주의가 표시됩니다. 두 번째의 호스트는 <code>example.com</code>이며 경로의 @를 사용자 정보로 오인하지 않습니다. <a href="/posts/pdf-link-safety/#url-examples">PDF 링크 주소 네 가지 비교</a>와 <a href="/tools/#verification">테스트 기준</a>에서 차이를 더 살펴보세요.</p>
-      <p><code>javascript:</code>, <code>mailto:</code>와 공백·역슬래시가 섞인 입력은 지원하지 않습니다. HTTPS가 없는 일반 도메인에는 분석을 위해 HTTPS를 가정하지만, 실제 접속이 암호화된다는 의미는 아닙니다. 포트까지 적을 때는 <code>https://</code> 또는 <code>http://</code>를 포함하세요.</p>
-      <h2>이 도구가 확인하는 것</h2>
-      <p>URL은 프로토콜, 호스트 이름, 포트, 경로와 검색 조건으로 구성됩니다. 화면에 표시된 서비스 이름이나 문자 발신자가 익숙하더라도 실제 접속 위치는 호스트 이름으로 결정됩니다. 이 도구는 주소를 분해해 각각을 따로 보여주고, 다음과 같은 구조를 눈에 띄게 표시합니다.</p>
+      <p>The first example’s host is <code>files.example.org</code> and a user-information flag is shown. The second host is <code>example.com</code>; its path’s @ is not treated as user information. <a href="/posts/pdf-link-safety/#url-examples">Four PDF-link comparisons</a> and  <a href="/tools/#verification">test criteria</a> explain the differences further.</p>
+      <p><code>javascript:</code>, <code>mailto:</code> and inputs with spaces or backslashes are not supported. A bare domain is parsed with an assumed HTTPS prefix; this does not prove the actual connection is encrypted. When entering a port, include <code>https://</code>  or  <code>http://</code>.</p>
+      <h2>What this tool inspects</h2>
+      <p>A URL has a protocol, host, port, path and query. Familiar service labels or senders do not determine the destination host. This tool shows those components separately and highlights the following structures.</p>
       <ul>
-        <li>암호화되지 않은 HTTP 형식</li>
-        <li>숫자 IP 주소 또는 비표준 포트</li>
-        <li>최종 목적지가 가려진 단축 URL</li>
-        <li>다른 문자 체계를 표현하는 퓨니코드 호스트</li>
-        <li><code>@</code> 앞뒤를 혼동하게 만들 수 있는 사용자 정보</li>
-        <li>지나치게 많은 하위 도메인과 인코딩된 문자</li>
+        <li>Unencrypted HTTP format</li>
+        <li>Numeric IP or nonstandard port</li>
+        <li>Shortened URL hiding its final destination</li>
+        <li>Punycode representing an internationalized domain</li>
+        <li><code>@</code> User information that can obscure the destination</li>
+        <li>Many subdomain labels and encoded characters</li>
       </ul>
 
-      <h2>결과를 읽는 방법</h2>
-      <p><strong>HTTPS 형식</strong>은 기기와 사이트 사이의 전송 구간을 암호화한다는 뜻입니다. 그러나 피싱 사이트도 HTTPS 인증서를 사용할 수 있으므로 자물쇠 표시만으로 운영자를 신뢰하면 안 됩니다. Chrome 공식 안내도 안전한 연결 표시가 있더라도 주소 표시줄의 사이트 이름을 확인하라고 설명합니다.</p>
-      <p><strong>퓨니코드</strong>는 국제화 도메인을 표현하는 정상 기술이지만, 유명 서비스와 비슷한 문자를 섞어 혼동시키는 데 악용될 수도 있습니다. 결과에 퓨니코드가 표시되면 문자나 메일로 받은 링크에서 바로 로그인하지 말고, 평소 사용하던 앱이나 즐겨찾기에서 공식 서비스를 여는 편이 안전합니다.</p>
-      <p><strong>단축 URL</strong>은 주소 길이를 줄이는 정상 용도로도 사용됩니다. 문제는 최종 목적지를 누르기 전에 확인하기 어렵다는 점입니다. 예상하지 못한 결제, 배송, 과태료, 부고 문자에 단축 링크가 있다면 발신자를 다른 수단으로 확인하세요.</p>
+      <h2>Reading the result</h2>
+      <p><strong>HTTPS format</strong> encrypts transport between a device and a site. A phishing site can also use HTTPS; a lock does not authenticate the operator’s trustworthiness. Chrome guidance recommends inspecting the site name even with a secure-connection indicator.</p>
+      <p><strong>Punycode</strong> is a legitimate internationalized-domain technology, but lookalike characters can be misleading. If it appears, verify the operator independently; use your usual official app or saved address instead of signing in from an unexpected message.</p>
+      <p><strong>Shortened URLs</strong> have legitimate uses. Their problem for inspection is a hidden final destination. Verify unexpected payment, delivery, fine or obituary messages through another channel.</p>
 
-      <h2>이 도구가 확인하지 못하는 것</h2>
-      <p>주소의 현재 콘텐츠, 도메인 소유자, 악성코드 배포 여부, 브라우저 세이프 브라우징 목록을 조회하지 않습니다. 구조상 주의 항목이 없더라도 새로 만들어진 피싱 사이트일 수 있고, 반대로 개발·업무용 주소는 비표준 포트를 정상적으로 사용할 수 있습니다. 결과를 “안전 판정”으로 사용하지 마세요.</p>
-      <p>Chrome에서 빨간 경고나 “가짜 사이트 주의” 화면이 표시되면 이 도구의 결과와 관계없이 진행하지 않는 것이 좋습니다. 링크를 이미 눌렀거나 정보를 입력했다면 <a href="/posts/smishing-link-response/">스미싱 의심 링크를 눌렀을 때 대응 순서</a>를 따라 실제 행동별로 조치하세요.</p>
+      <h2>What this tool cannot inspect</h2>
+      <p>It does not query current content, domain ownership, malware distribution or Safe Browsing lists. A new phishing site may have no structural flags; a legitimate work or development address may use a nonstandard port. Do not use the result as a safety verdict.</p>
+      <p>Do not bypass a red or deceptive-site browser warning because of this tool’s result. If you already clicked or submitted information, use the <a href="/posts/smishing-link-response/">response guide for a suspicious message link</a> and act according to what you actually did.</p>
 
       <section class="sources" aria-labelledby="url-tool-sources">
-        <h2 id="url-tool-sources">공식 자료와 기준</h2>
+        <h2 id="url-tool-sources">Official sources and scope</h2>
         <ul>
-          <li><a href="https://support.google.com/chrome/answer/99020?co=GENIE.Platform%3DDesktop&amp;hl=ko" rel="noopener noreferrer">안전하지 않은 사이트 경고와 유사 URL 안내</a> <span class="source-owner">(Google Chrome 공식 자료)</span></li>
-          <li><a href="https://support.google.com/chrome/answer/95617?co=GENIE.Platform%3DDesktop&amp;hl=ko" rel="noopener noreferrer">사이트 연결과 주소 표시줄 확인 방법</a> <span class="source-owner">(Google Chrome 공식 자료)</span></li>
-          <li><a href="https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&amp;categoryCode=&amp;menuNo=205021&amp;nttId=71936&amp;pageIndex=1&amp;searchCnd=&amp;searchWrd=" rel="noopener noreferrer">스미싱 문자 링크 피해 예방·대응 안내</a> <span class="source-owner">(한국인터넷진흥원)</span></li>
+          <li><a href="https://support.google.com/chrome/answer/99020?co=GENIE.Platform%3DDesktop&amp;hl=ko" rel="noopener noreferrer">Unsafe-site warnings and lookalike URLs</a> <span class="source-owner">(official Google Chrome guidance)</span></li>
+          <li><a href="https://support.google.com/chrome/answer/95617?co=GENIE.Platform%3DDesktop&amp;hl=ko" rel="noopener noreferrer">Connection indicators and address-bar inspection</a> <span class="source-owner">(official Google Chrome guidance)</span></li>
+          <li><a href="https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&amp;categoryCode=&amp;menuNo=205021&amp;nttId=71936&amp;pageIndex=1&amp;searchCnd=&amp;searchWrd=" rel="noopener noreferrer">Smishing prevention and response guidance</a> <span class="source-owner">(Korea Internet &amp; Security Agency; Korean reporting route)</span></li>
         </ul>
-        <p class="source-reviewed">자료 최종 확인일: <time datetime="2026-08-23">2026년 8월 23일</time></p>
+        <p class="source-reviewed">Sources last checked: <time datetime="2026-08-23">August 23, 2026</time></p>
       </section>
     </article>
-    <aside class="sidebar"><h2>함께 사용하기</h2><ul><li><a href="/tools/file-extension-check/">파일명·확장자 확인</a></li><li><a href="/posts/qr-code-safety/">QR코드 안전 수칙</a></li><li><a href="/posts/pdf-link-safety/">PDF 링크 확인 방법</a></li><li><a href="/tools/">전체 무료 도구</a></li></ul></aside>
+    <aside class="sidebar"><h2>Related tools and guides</h2><ul><li><a href="/tools/file-extension-check/">Filename and extension check</a></li><li><a href="/posts/qr-code-safety/">QR-code precautions</a></li><li><a href="/posts/pdf-link-safety/">Inspecting PDF links</a></li><li><a href="/tools/">All free tools</a></li></ul></aside>
   </main>
-  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/updates/">업데이트 기록</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></div></div></footer>
+  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD Guides</span><div class="footer-links"><a href="/tools/">Free tools</a><a href="/about/">About</a><a href="/editorial-policy/">Editorial policy</a><a href="/updates/">Updates</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a></div></div></footer>
 </body>
 </html>

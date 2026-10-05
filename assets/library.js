@@ -10,7 +10,7 @@
   const empty = document.querySelector('#search-empty');
   const legacy = document.querySelector('#legacy-guides');
   const groups = new Set(sections.map(section => section.id));
-  const normalize = value => value.normalize('NFKC').toLocaleLowerCase('ko-KR').replace(/\s+/g, ' ').trim();
+  const normalize = value => value.normalize('NFKC').toLocaleLowerCase('en').replace(/\s+/g, ' ').trim();
   const cards = sections.flatMap(section => [...section.querySelectorAll('.post-card')].map(card => {
     // Photo credits are not search keywords; search the visible title and description only.
     const copy = [...card.children].filter(el => el.tagName !== 'FIGURE').map(el => el.textContent).join(' ');
@@ -38,8 +38,8 @@
       else link.removeAttribute('aria-current');
     }
     const selected = links.find(link => link.hash.slice(1) === category);
-    const label = selected ? selected.childNodes[0].textContent.trim() : '기존 생활 가이드';
-    status.textContent = label + ' · ' + total + '개 글' + (words.length ? ' · 검색 결과' : '');
+    const label = selected ? selected.childNodes[0].textContent.trim() : 'Earlier practical guides';
+    status.textContent = label + ' · ' + total + ' articles' + (words.length ? ' · search results' : '');
     empty.hidden = total !== 0;
   }
   function reset() {

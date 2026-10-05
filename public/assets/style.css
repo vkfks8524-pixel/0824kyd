@@ -39,9 +39,10 @@ body {
   margin: 0;
   color: var(--ink);
   background: var(--paper);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   line-height: 1.72;
-  word-break: keep-all;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 a {
@@ -1011,3 +1012,34 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* Disabled controls retain their final dimensions while scripts initialize. */
 .library-search input:disabled, .library-search button:disabled, .storage-calculator input:disabled, .storage-calculator button:disabled { cursor: wait; opacity: .65; }
 .search-status { min-height: 1.72em; }
+
+/* English edition: readable text widths and wrap-safe navigation. */
+.home-intro { max-width: 850px; padding: 40px 0 32px; }
+.home-intro h1 { font-size: clamp(2rem, 4.2vw, 3.35rem); line-height: 1.14; letter-spacing: -.025em; margin: 12px 0 20px; }
+.home-intro > p:not(.eyebrow) { max-width: 680px; color: var(--muted); font-size: 1.08rem; }
+.home-intro nav { display: flex; flex-wrap: wrap; gap: 12px 24px; padding-top: 8px; }
+.home-intro nav a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 4px; }
+.workflow-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; padding-left: 24px; }
+.workflow-list li { padding-left: 4px; color: var(--muted); font-size: .92rem; }
+.workflow-list a { font-weight: 700; }
+.tool-banner { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 30px; background: var(--soft); }
+.tool-banner h2 { margin: 6px 0 12px; }
+.tool-banner p { margin-bottom: 0; }
+.tool-banner > a { flex-shrink: 0; }
+.page-heading { max-width: 780px; margin: 32px 0 24px; }
+.library-filters { margin-bottom: 24px; }
+.table-wrap { max-width: 100%; }
+.source-reviewed { overflow-wrap: anywhere; }
+html[lang="en"] .article h1 { line-height: 1.22; letter-spacing: -.02em; }
+html[lang="en"] .nav { flex-wrap: wrap; }
+@media (max-width: 820px) {
+  .workflow-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tool-banner { flex-direction: column; align-items: start; padding: 24px; }
+  html[lang="en"] .nav { overflow-x: visible; gap: 0 18px; }
+}
+@media (max-width: 480px) {
+  .workflow-list { grid-template-columns: 1fr; gap: 20px; }
+  .search-row { flex-wrap: wrap; }
+  .search-row input { flex-basis: 100%; }
+  .home-intro { padding-top: 28px; }
+}

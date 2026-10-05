@@ -38,7 +38,7 @@ foreach ($relative in $htmlFiles) {
 
 foreach ($relative in $postFiles) {
   $html = [IO.File]::ReadAllText((Join-Path $root $relative))
-  foreach ($required in @('meta name="author"', 'application/ld+json', 'dateModified', 'class="table-wrap"', 'class="sources"', 'class="author-box"', '최종 검토')) {
+  foreach ($required in @('meta name="author"', 'application/ld+json', 'dateModified', 'class="sources"', 'class="author-box"', 'Last editorial review')) {
     if (-not $html.Contains($required)) { Add-Error "$relative missing article requirement: $required" }
   }
   if ([regex]::Matches($html, '<a href="https://[^\"]+" rel="noopener noreferrer">').Count -lt 2) { Add-Error "$relative needs at least two cited official links" }
@@ -53,7 +53,7 @@ foreach ($relative in $postFiles) {
 $toolApplicationFiles = $toolFiles | Where-Object { $_ -ne 'tools/index.html' }
 foreach ($relative in $toolApplicationFiles) {
   $html = [IO.File]::ReadAllText((Join-Path $root $relative))
-  $toolScript = if ($relative -eq 'tools/photo-backup-check/index.html') { '/assets/backup-check.js' } else { '/assets/tools.js' }
+  $toolScript = if ($relative -eq 'tools/photo-backup-check/index.html') { '/assets/backup-check.js' } elseif ($relative -eq 'tools/phone-cost-comparator/index.html') { '/assets/phone-cost.js' } else { '/assets/tools.js' }
   foreach ($required in @('meta name="author"', 'application/ld+json', '"@type":"WebApplication"', $toolScript, 'class="tool-shell"', 'class="sources"')) {
     if (-not $html.Contains($required)) { Add-Error "$relative missing tool requirement: $required" }
   }

@@ -1,115 +1,35 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7587676721583907" crossorigin="anonymous"></script>
   <meta name="google-adsense-account" content="ca-pub-7587676721583907">
-  <title>Google Drive 공유 권한을 잘못 열지 않게 확인하는 방법 | KYD 디지털 가이드</title>
-  <meta name="description" content="Google Drive에서 링크 공유, 보기 권한, 편집 권한, 공개 범위를 안전하게 설정하는 방법을 초보자 기준으로 설명합니다.">
+  <title>Google Drive sharing: check who can open, comment or edit | KYD Guides</title>
+  <meta name="description" content="Choose the narrowest sharing scope, distinguish viewer and editor roles, review inherited folder access and close temporary sharing after collaboration.">
   <link rel="canonical" href="https://www.kyd.kr/posts/google-drive-sharing-permission/">
-  <meta name="author" content="KYD 디지털 가이드 편집팀">
+  <meta name="author" content="KYD Editorial">
   <meta property="og:type" content="article">
-  <meta property="og:locale" content="ko_KR">
-  <meta property="og:site_name" content="KYD 디지털 가이드">
-  <meta property="og:title" content="Google Drive 공유 권한을 잘못 열지 않게 확인하는 방법">
-  <meta property="og:description" content="Google Drive에서 링크 공유, 보기 권한, 편집 권한, 공개 범위를 안전하게 설정하는 방법을 초보자 기준으로 설명합니다.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="KYD Guides">
+  <meta property="og:title" content="Google Drive sharing: check who can open, comment or edit">
+  <meta property="og:description" content="Choose the narrowest sharing scope, distinguish viewer and editor roles, review inherited folder access and close temporary sharing after collaboration.">
   <meta property="og:url" content="https://www.kyd.kr/posts/google-drive-sharing-permission/">
   <meta property="article:published_time" content="2026-07-12">
-  <meta property="article:modified_time" content="2026-08-22">
+  <meta property="article:modified_time" content="2026-10-05">
   <meta name="twitter:card" content="summary">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Google Drive 공유 권한을 잘못 열지 않게 확인하는 방법","description":"Google Drive에서 링크 공유, 보기 권한, 편집 권한, 공개 범위를 안전하게 설정하는 방법을 초보자 기준으로 설명합니다.","inLanguage":"ko-KR","datePublished":"2026-07-12","dateModified":"2026-08-22","mainEntityOfPage":"https://www.kyd.kr/posts/google-drive-sharing-permission/","author":{"@type":"Organization","name":"KYD 디지털 가이드 편집팀","url":"https://www.kyd.kr/about/"},"publisher":{"@type":"Organization","name":"KYD 디지털 가이드","url":"https://www.kyd.kr/"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Google Drive sharing: check who can open, comment or edit","description":"Choose the narrowest sharing scope, distinguish viewer and editor roles, review inherited folder access and close temporary sharing after collaboration.","inLanguage":"en","datePublished":"2026-07-12","dateModified":"2026-10-05","mainEntityOfPage":"https://www.kyd.kr/posts/google-drive-sharing-permission/","author":{"@type":"Organization","name":"KYD Editorial","url":"https://www.kyd.kr/about/"},"publisher":{"@type":"Organization","name":"KYD Guides","url":"https://www.kyd.kr/"}}</script>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/style.css?v=20260929-editorial-1">
+  <link rel="stylesheet" href="/assets/style.css?v=20261005-en-1">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://www.kyd.kr/"},{"@type":"ListItem","position":2,"name":"전체 글","item":"https://www.kyd.kr/posts/"},{"@type":"ListItem","position":3,"name":"Google Drive 공유 권한을 잘못 열지 않게 확인하는 방법","item":"https://www.kyd.kr/posts/google-drive-sharing-permission/"}]}</script>
-<link rel="alternate" type="application/rss+xml" title="KYD 디지털 가이드 RSS" href="https://www.kyd.kr/rss.xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.kyd.kr/"},{"@type":"ListItem","position":2,"name":"All articles","item":"https://www.kyd.kr/posts/"},{"@type":"ListItem","position":3,"name":"Google Drive sharing: check who can open, comment or edit","item":"https://www.kyd.kr/posts/google-drive-sharing-permission/"}]}</script>
+<link rel="alternate" type="application/rss+xml" title="KYD Guides RSS" href="https://www.kyd.kr/rss.xml">
 </head>
 <body>
-  <a class="skip-link" href="#main-content">본문으로 바로가기</a>
-  <header class="site-header"><div class="header-inner"><a class="logo" href="/" aria-label="KYD 디지털 가이드 홈"><span class="logo-mark">KYD</span><span class="logo-caption">디지털 가이드<br>생활을 읽는 기준</span></a><nav class="nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/posts/#buying">구매·생활비</a><a href="/posts/#sports">스포츠</a><a href="/tools/">무료 도구</a><a href="/posts/" class="nav-search">전체 글·검색</a></nav></div></header>  <main id="main-content" class="container article-layout">
-    <article class="article">
-<nav class="breadcrumb" aria-label="현재 위치"><a href="/">홈</a><span aria-hidden="true">/</span><a href="/posts/#security">보안·개인정보</a><span aria-hidden="true">/</span><span aria-current="page">Google Drive 공유 권한을 잘못 열지 않게 확인하는 방법</span></nav>
-      <p class="category">구글 서비스</p>
-      <h1>Google Drive 공유 권한을 잘못 열지 않게 확인하는 방법</h1>
-      <p class="article-meta">작성: KYD 디지털 가이드 편집팀 · 게시 <time datetime="2026-07-12">2026년 7월 12일</time> · 최종 검토 <time datetime="2026-08-22">2026년 8월 22일</time> · 예상 읽기 시간: 8분</p>
-      <p class="lead">Google Drive는 파일을 쉽게 공유할 수 있어 편리하지만, 권한을 잘못 설정하면 의도하지 않은 사람이 문서를 보거나 수정할 수 있습니다. 공유 전에는 링크 공개 범위와 역할을 반드시 확인해야 합니다.</p>
-<details class="reading-toc"><summary>이 글에서 확인할 내용 (13)</summary><nav aria-label="본문 목차"><ol><li><a href="#read-section-1">1. 제한됨과 링크가 있는 모든 사용자의 차이</a></li><li><a href="#read-section-2">2. 보기, 댓글, 편집 권한 구분하기</a></li><li><a href="#read-section-3">3. 공유 후 접근 가능한 사람 확인하기</a></li><li><a href="#read-section-4">4. 링크를 메신저에 보낼 때 주의하기</a></li><li><a href="#read-section-5">5. 공유를 끝낸 뒤 권한 닫기</a></li><li><a href="#read-section-6">공유 권한이 중요한 이유</a></li><li><a href="#read-section-7">공유 전 확인 순서</a></li><li><a href="#read-section-8">공유 후 관리</a></li><li><a href="#read-section-9">공유 범위 선택 예시</a></li><li><a href="#read-section-10">공유 문서 점검 루틴</a></li><li><a href="#read-section-11">공유를 끝낸 뒤 다시 확인할 항목</a></li><li><a href="#quick-check-google-drive-sharing-permission">상황별 빠른 판단표</a></li><li><a href="#sources-google-drive-sharing-permission">공식 자료와 확인 기준</a></li></ol></nav></details>
-<h2 id="read-section-1">1. 제한됨과 링크가 있는 모든 사용자의 차이</h2>
-      <p>공유 설정에서 “제한됨”은 초대한 사람만 접근할 수 있는 상태입니다. 반대로 “링크가 있는 모든 사용자”는 링크를 받은 사람이면 접근할 수 있으므로 더 넓게 공개됩니다.</p>
-      <p>민감한 파일이나 내부 문서는 기본적으로 제한됨 상태를 유지하는 것이 좋습니다.</p>
-
-      <h2 id="read-section-2">2. 보기, 댓글, 편집 권한 구분하기</h2>
-      <p>보기 권한은 문서를 읽을 수만 있습니다. 댓글 권한은 의견을 남길 수 있고, 편집 권한은 문서 내용을 직접 바꿀 수 있습니다.</p>
-      <p>자료 배포만 목적이라면 보기 권한으로 충분한 경우가 많습니다. 편집 권한은 함께 작성해야 하는 사람에게만 부여합니다.</p>
-
-      <h2 id="read-section-3">3. 공유 후 접근 가능한 사람 확인하기</h2>
-      <p>공유 창에서 현재 접근 권한이 있는 사람 목록을 확인할 수 있습니다. 더 이상 필요 없는 사람은 접근 권한을 제거하고, 역할이 너무 높게 설정된 사람은 보기 권한으로 낮춥니다.</p>
-
-      <h2 id="read-section-4">4. 링크를 메신저에 보낼 때 주의하기</h2>
-      <p>링크가 있는 모든 사용자에게 공개된 파일은 메신저에서 다른 사람에게 전달될 수 있습니다. 외부 유출이 걱정되는 파일은 특정 사용자만 접근하도록 이메일 기반 공유를 사용합니다.</p>
-
-      <h2 id="read-section-5">5. 공유를 끝낸 뒤 권한 닫기</h2>
-      <p>일시적으로 파일을 공유했다면 작업이 끝난 뒤 권한을 다시 제한됨으로 바꿉니다. 오래된 공유 링크가 남아 있으면 나중에 예상치 못한 접근이 생길 수 있습니다.</p>
-
-      <h2 id="read-section-6">공유 권한이 중요한 이유</h2>
-      <p>Google Drive는 링크 하나로 문서를 쉽게 공유할 수 있어 편리하지만, 권한을 잘못 설정하면 원하지 않는 사람이 문서를 보거나 수정할 수 있습니다. 특히 학교, 업무, 개인정보가 들어간 문서는 공유 전 확인이 꼭 필요합니다.</p>
-      <p>보기 권한과 편집 권한의 차이도 중요합니다. 보기만 허용하려던 문서가 편집 가능 상태라면 내용이 바뀌거나 삭제될 수 있습니다.</p>
-      <h2 id="read-section-7">공유 전 확인 순서</h2>
-      <p>먼저 문서에 개인정보가 들어 있는지 확인합니다. 이름, 전화번호, 이메일, 학생 정보, 주소, 평가 자료가 있다면 링크 공유 대신 특정 사용자만 초대하는 방식이 안전합니다.</p>
-      <p>다음으로 링크가 있는 모든 사용자에게 공개인지, 조직 내부만 가능한지, 특정 사용자만 가능한지 확인합니다. 외부 공개가 필요하지 않다면 가장 좁은 범위로 설정합니다.</p>
-      <h2 id="read-section-8">공유 후 관리</h2>
-      <p>공유가 끝난 뒤에도 권한은 그대로 남습니다. 일시적으로 자료를 보여준 것이라면 기간이 지난 뒤 링크 공유를 끄거나 사용자를 제거해야 합니다.</p>
-      <p>문서를 복사해 배포할 때도 원본 권한이 함께 남아 있는지 확인합니다. 원본 문서와 사본 문서의 공유 범위가 다를 수 있으므로 중요한 문서는 공유 기록을 따로 점검하는 습관이 좋습니다.</p>
-
-      <h2 id="read-section-9">공유 범위 선택 예시</h2>
-      <p>회의 자료처럼 외부 사람이 볼 필요가 없는 문서는 특정 사용자만 초대하는 것이 좋습니다. 반대로 공개 안내문처럼 누구나 봐도 되는 자료는 링크가 있는 모든 사용자에게 보기 권한을 줄 수 있습니다. 문서 성격에 따라 권한을 다르게 선택해야 합니다.</p>
-      <p>편집 권한은 정말 함께 수정해야 하는 사람에게만 줍니다. 단순 확인이나 제출 안내라면 보기 권한 또는 댓글 권한으로 충분한 경우가 많습니다. 권한을 좁게 시작하고 필요할 때 넓히는 방식이 더 안전합니다.</p>
-      <h2 id="read-section-10">공유 문서 점검 루틴</h2>
-      <p>한 달에 한 번 정도 중요한 폴더의 공유 상태를 확인하면 오래된 공개 링크를 정리할 수 있습니다. 특히 학기, 프로젝트, 행사처럼 기간이 끝난 자료는 공유를 끄거나 접근자를 줄이는 것이 좋습니다.</p>
-      <p>공유 링크를 다른 문서나 게시판에 붙여넣었다면 원본 권한을 바꿔도 사용자 경험이 달라질 수 있습니다. 권한을 변경한 뒤 실제로 다른 계정이나 시크릿 창에서 열어보며 의도대로 작동하는지 확인합니다.</p>
-      <h2 id="read-section-11">공유를 끝낸 뒤 다시 확인할 항목</h2>
-      <p>협업이 끝났다면 링크 공개 범위와 편집자 목록을 다시 확인합니다. 특히 임시로 초대한 외부 계정, 더 이상 참여하지 않는 사람, 링크를 전달받은 사람이 남아 있지 않은지 점검하세요. 중요한 문서는 사본을 만든 뒤 공유를 종료하고, 조직 계정이라면 관리자가 정한 보존·외부 공유 정책을 우선해야 합니다.</p>
-      <!-- adsense-readiness:start -->
-      <section class="decision-section" aria-labelledby="quick-check-google-drive-sharing-permission">
-        <h2 id="quick-check-google-drive-sharing-permission">상황별 빠른 판단표</h2>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th scope="col">상황</th><th scope="col">먼저 할 일</th><th scope="col">주의할 점</th></tr></thead>
-            <tbody>
-          <tr><td>한 사람에게만 전달</td><td>제한됨 + 특정 사용자 추가</td><td>업무&#183;개인 계정을 정확히 구분</td></tr>
-          <tr><td>링크가 있는 사람 모두 열람</td><td>뷰어 권한으로 시작</td><td>링크 재전달 가능성을 전제로 판단</td></tr>
-          <tr><td>공동 편집 필요</td><td>필요한 사람에게만 편집자</td><td>편집자는 이동&#183;삭제&#183;재공유가 가능할 수 있음</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="editor-note"><strong>편집팀 메모:</strong> 폴더 권한은 안쪽 파일에 상속됩니다. 일부 파일만 더 제한해야 한다면 제한된 별도 폴더로 분리하는 편이 안전합니다.</p>
-      </section>
-      <section class="sources" aria-labelledby="sources-google-drive-sharing-permission">
-        <h2 id="sources-google-drive-sharing-permission">공식 자료와 확인 기준</h2>
-        <p>아래 1차 자료의 현재 안내를 기준으로 핵심 절차와 주의사항을 교차 확인했습니다. 제품 버전이나 기기 제조사에 따라 메뉴 이름은 달라질 수 있습니다.</p>
-        <ul>
-        <li><a href="https://support.google.com/drive/answer/2494822?hl=ko" rel="noopener noreferrer">Google Drive 파일 공유와 권한</a> <span class="source-owner">(공식 자료)</span></li>
-        <li><a href="https://support.google.com/drive/answer/7166529?hl=ko" rel="noopener noreferrer">Google Drive 폴더 권한 상속</a> <span class="source-owner">(공식 자료)</span></li>
-        </ul>
-        <p class="source-reviewed">자료 최종 확인일: <time datetime="2026-08-22">2026년 8월 22일</time></p>
-      </section>
-      <aside class="author-box" aria-label="작성자와 편집 기준">
-        <p class="author-label">작성·검토</p>
-        <h2 id="read-section-12">KYD 디지털 가이드 편집팀</h2>
-        <p>초보자가 안전하게 따라 할 수 있도록 공식 문서와 실제 화면에서 확인 가능한 메뉴를 기준으로 설명합니다. 사실 오류나 변경된 메뉴는 <a href="/contact/">오류 제보</a>로 알려주세요.</p>
-        <p><a href="/editorial-policy/">편집 원칙과 수정 정책 보기</a></p>
-      </aside>
-      <!-- adsense-readiness:end -->
-    <section class="next-reads"><h2>이어서 확인하기</h2><ul><li><a href="/posts/smishing-link-response/">스미싱 의심 링크를 눌렀을 때 상황별 대응 순서</a></li><li><a href="/posts/browser-password-save-safety/">브라우저 비밀번호 저장 기능을 안전하게 사용하는 방법</a></li><li><a href="/tools/account-security-check/">계정 보안 준비 점검</a></li></ul><a class="text-link" href="/posts/">전체 글에서 다른 주제 찾기 →</a></section></article>
-    <aside class="sidebar">
-      <h2>관련 글</h2>
-      <ul>        <li><a href="/posts/google-account-security/">구글 계정을 안전하게 쓰기 위한 기본 보안 점검</a></li>
-        <li><a href="/posts/gmail-attachment-check/">이메일 첨부파일을 열기 전에 확인해야 할 7가지</a></li>
-        <li><a href="/posts/password-manager-start/">비밀번호 관리자를 처음 쓸 때 알아야 할 것</a></li>
-        <li><a href="/posts/">전체 글 보기</a></li>
-      </ul>
-    </aside>
-  </main>  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD 디지털 가이드</span><div class="footer-links"><a href="/tools/">무료 도구</a><a href="/about/">사이트 소개</a><a href="/editorial-policy/">편집 원칙</a><a href="/updates/">업데이트 기록</a><a href="/contact/">문의</a><a href="/privacy/">개인정보처리방침</a></div></div></footer>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header"><div class="header-inner"><a class="logo" href="/" aria-label="KYD Guides home"><span class="logo-mark">KYD</span><span class="logo-caption">Practical guides<br>Decisions made clearer</span></a><nav class="nav" aria-label="Main navigation"><a href="/">Home</a><a href="/posts/#buying">Buying &amp; costs</a><a href="/posts/#sports">Sport</a><a href="/tools/">Free tools</a><a href="/posts/" class="nav-search">All articles &amp; search</a></nav></div></header>  <main id="main-content" class="container article-layout">
+    <article class="article"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/posts/#security">Security & privacy</a><span aria-hidden="true">/</span><span aria-current="page">Google Drive sharing: check who can open, comment or edit</span></nav><p class="category">Google services</p><h1>Google Drive sharing: check who can open, comment or edit</h1><p class="article-meta">By KYD Editorial · First published <time datetime="2026-07-12">2026-07-12</time> · Last editorial review <time datetime="2026-10-05">2026-10-05</time></p><p class="editor-note">English edition adapted on 2026-10-05. The original source-check date is retained below; this is not a fresh product or match investigation.</p><p class="lead">Before sending a Drive link, decide who should access the file and what they should be able to do. A link’s convenience can conceal a broader sharing scope than you intended.</p><details class="reading-toc"><summary>In this article (8)</summary><nav aria-label="Article contents"><ol><li><a href="#read-section-1">Restricted and anyone with the link are different</a></li><li><a href="#read-section-2">Match the role to the task</a></li><li><a href="#read-section-3">Inspect the file before sharing</a></li><li><a href="#read-section-4">Watch folder inheritance</a></li><li><a href="#read-section-5">Review access after sending</a></li><li><a href="#read-section-6">Close temporary access</a></li><li><a href="#read-section-7">Changing permissions is not recalling copies</a></li><li><a href="#read-section-8">Related tools</a></li></ol></nav></details><h2 id="read-section-1">Restricted and anyone with the link are different</h2><p>Restricted sharing grants access to authorized people rather than everyone who receives a link. Anyone-with-the-link access can extend beyond the original message because the link can be forwarded. For personal information, internal records or sensitive school and work documents, start with the narrowest appropriate scope.</p><h2 id="read-section-2">Match the role to the task</h2><p>A viewer reads the file; a commenter can leave feedback; an editor can change content. Distribution alone often needs only viewing. Give editing access only to people who actually need to collaborate. Available permissions and organizational restrictions depend on the file and account.</p><div class="table-wrap"><table><thead><tr><th>Purpose</th><th>Starting choice</th><th>Check</th></tr></thead><tbody><tr><td>Send to one person</td><td>Restricted plus that specific account</td><td>Personal and work email addresses are not interchangeable</td></tr><tr><td>Publish a non-sensitive notice</td><td>Consider link access with viewer permissions</td><td>Assume the link may be forwarded</td></tr><tr><td>Collaborate on editing</td><td>Editor access only for required participants</td><td>Review capabilities such as moving, deleting or resharing</td></tr></tbody></table></div><h2 id="read-section-3">Inspect the file before sharing</h2><p>Look for names, phone numbers, email addresses, student records, addresses or evaluations. Decide whether each recipient needs that information. Then inspect general access and the people list. Do not infer permissions from the message in which the link will be sent.</p><h2 id="read-section-4">Watch folder inheritance</h2><p>Folder permissions can affect files inside it. If one document needs a narrower audience, review inherited access and consider a separate restricted location. Do not assume changing one visible setting overrides every inherited or organizational rule.</p><h2 id="read-section-5">Review access after sending</h2><p>Check that the intended recipient can open the file and that an unintended account cannot. A private-window test can help inspect general link access, but it does not simulate every organizational role. When distributing a copy, inspect the original and copy separately: their sharing states may differ.</p><h2 id="read-section-6">Close temporary access</h2><p>At the end of a project, event or term, remove unnecessary external accounts, reduce excess editor roles and disable public link access where no longer needed. A periodic review of important folders helps uncover old links. Follow organizational retention and external-sharing rules before moving, copying or deleting records.</p><h2 id="read-section-7">Changing permissions is not recalling copies</h2><p>Test the access experience after a change and update links in related documents or boards if necessary. Restricting the original does not undo information that someone already downloaded or copied. Choose the audience carefully before the first share, not just at cleanup time.</p><section class="related-tools"><h2 id="read-section-8">Related tools</h2><ul><li><a href="/tools/account-security-check/">Account security self-check</a></li></ul></section><section class="sources" id="sources-google-drive-sharing-permission"><h2>Sources and review scope</h2><ul><li><a href="https://support.google.com/drive/answer/2494822?hl=ko" rel="noopener noreferrer">Google Drive: sharing files and roles</a></li><li><a href="https://support.google.com/drive/answer/7166529?hl=ko" rel="noopener noreferrer">Google Drive: folder permissions and inheritance</a></li></ul><p class="source-reviewed">Source information last checked: <time datetime="2026-08-22">2026-08-22</time>. English adaptation: 2026-10-05. Translation does not renew the source check. Official records, hypothetical examples and KYD calculations are distinguished above. Linked documentation may be in Korean.</p></section><aside class="author-box" aria-label="Author and editorial approach"><p class="author-label">Writing and adaptation</p><h2>KYD Editorial</h2><p>KYD Editorial is the site’s publishing name, not a claim of multiple expert reviewers. Automation-assisted drafting and editing are disclosed in our <a href="/editorial-policy/">editorial policy</a>. This article does not claim hands-on testing unless explicitly stated. Report changed instructions or factual errors through <a href="/contact/">corrections</a>. <a href="https://github.com/vkfks8524-pixel/0824kyd" rel="noopener noreferrer">Public site code</a>.</p></aside><section class="next-reads"><h2>Continue reading</h2><ul><li><a href="/posts/smishing-link-response/">Clicked a suspicious text-message link? Respond to what you actually did</a></li><li><a href="/posts/browser-password-save-safety/">Saving passwords in your browser: personal and shared-device rules</a></li><li><a href="/posts/google-account-security/">Google Account security: recovery details, devices and connected apps</a></li><li><a href="/posts/gmail-attachment-check/">Email attachments: seven checks before you open a file</a></li></ul><a class="text-link" href="/posts/">Browse all articles →</a></section></article>
+    <aside class="sidebar"><h2>Explore KYD</h2><ul><li><a href="/posts/#security">Security & privacy</a></li><li><a href="/tools/">Free local-only tools</a></li><li><a href="/editorial-policy/">Sources and corrections policy</a></li></ul></aside>
+  </main>  <footer class="site-footer"><div class="footer-inner"><span>© 2026 KYD Guides</span><div class="footer-links"><a href="/tools/">Free tools</a><a href="/about/">About</a><a href="/editorial-policy/">Editorial policy</a><a href="/updates/">Updates</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a></div></div></footer>
 </body>
 </html>

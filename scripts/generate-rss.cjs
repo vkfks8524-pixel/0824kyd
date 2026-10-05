@@ -17,6 +17,17 @@ function extract(html, regex, label) {
   if (!value) throw new Error('Missing ' + label);
   return value;
 }
+function replaceCalculator(body, canonical) {
+  const start=body.indexOf('<section class="storage-calculator"');
+  if(start<0)return body;
+  const tokens=/<\/?section\b[^>]*>/g;tokens.lastIndex=start;
+  let depth=0,token;
+  while((token=tokens.exec(body))){
+    depth+=token[0].startsWith('</')?-1:1;
+    if(depth===0)return body.slice(0,start)+'<p>The personal-use calculator is available <a href="'+canonical+'#storage-calculator">in the original article</a>. The formula and hypothetical examples remain in this feed.</p>'+body.slice(tokens.lastIndex);
+  }
+  throw new Error('Unclosed calculator section: '+canonical);
+}
 const posts = fs.readdirSync(path.join(root, 'posts'), {withFileTypes:true}).filter(entry=>entry.isDirectory()).map(entry=> {
   const html = fs.readFileSync(path.join(root, 'posts', entry.name, 'index.html'), 'utf8');
   const canonical = extract(html, /<link rel="canonical" href="([^"]+)"/, 'canonical');
@@ -25,9 +36,7 @@ const posts = fs.readdirSync(path.join(root, 'posts'), {withFileTypes:true}).fil
   const modified = extract(html, /<meta property="article:modified_time" content="([^"]+)"/, 'modification date');
   const title = extract(html, /<h1[^>]*>([\s\S]*?)<\/h1>/, 'heading').replace(/<[^>]*>/g, '');
   let body = extract(html, /<article class="article">([\s\S]*?)<\/article>/, 'complete article');
-  body = body.replace(/<details class="reading-toc">[\s\S]*?<\/details>/g,'')
-    .replace(/<section class="storage-calculator"[\s\S]*?<\/section>/g,
-      '<p>내 사용량 계산기는 <a href="' + canonical + '#storage-calculator">원문에서 사용할 수 있습니다</a>. 계산식과 가상 사례는 이 피드에서도 확인할 수 있습니다.</p>')
+  body = replaceCalculator(body,canonical).replace(/<details class="reading-toc">[\s\S]*?<\/details>/g,'')
     .replace(/<nav\b[\s\S]*?<\/nav>/g,'')
     .replace(/<section class="next-reads">[\s\S]*?<\/section>/g,'')
     .replace(/<script\b[\s\S]*?<\/script>/g,'')
@@ -41,9 +50,9 @@ if (!posts.length) throw new Error('Refusing to publish an empty feed');
 const latest = posts.map(post=>post.modified).sort().at(-1);
 const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>\n' +
-  '<title>KYD 디지털 가이드</title><link>' + origin + '/</link>\n' +
-  '<description>공식 기록으로 읽는 스포츠 소식과 내 조건으로 비교하는 구매·생활 정보</description>\n' +
-  '<language>ko-KR</language><atom:link href="' + origin + '/rss.xml" rel="self" type="application/rss+xml"/>\n' +
+  '<title>KYD Guides</title><link>' + origin + '/</link>\n' +
+  '<description>Practical phone choices, costs, photo preservation and dated official-record sports reports</description>\n' +
+  '<language>en</language><atom:link href="' + origin + '/rss.xml" rel="self" type="application/rss+xml"/>\n' +
   '<lastBuildDate>' + rssDate(latest) + '</lastBuildDate>\n' +
   posts.map(post=>'<item><title>' + escapeXml(post.title) + '</title><link>' + escapeXml(post.canonical) + '</link>' +
     '<guid isPermaLink="true">' + escapeXml(post.canonical) + '</guid><pubDate>' + rssDate(post.published) + '</pubDate>' +

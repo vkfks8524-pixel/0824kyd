@@ -13,8 +13,8 @@ for(let mask=0;mask<64;mask++){
  assert.equal(result.checked+result.remaining.length,6);
  assert(!('safe' in result));
  assert(!('verified' in result));
- assert(!/백업 성공|복구 가능합니다|삭제해도/.test(result.message));
- if(mask===63) assert(result.message.includes('복구 보증이 아닙니다'));
+ assert(!/backup success rate|recovery is guaranteed|safe to delete/i.test(result.message));
+ if(mask===63) assert(result.message.includes('not file inspection or a recovery guarantee'));
  combinations++;
 }
 assert.equal(review(['account','account','unknown']).checked,1);
@@ -52,8 +52,8 @@ assert(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|document\
 for(const slug of ['smartphone-photo-backup','used-phone-reset-check','cloud-storage-cleanup']){
  const h=read('posts/'+slug+'/index.html');
  assert(h.includes('"dateModified":"2026-10-05"'));
- assert(h.includes('자료')&&h.includes('가상'));
- assert(h.includes('공식 자료 최종 확인'));
+ assert(h.includes('Sources and review scope')&&/hypothetical/i.test(h));
+ assert(h.includes('Source information last checked'));
  assert(h.includes('/tools/photo-backup-check/'));
  assert.equal((h.match(/<h1>/g)||[]).length,1);
  const toc=h.match(/<details class="reading-toc">([\s\S]*?)<\/details>/)[1];

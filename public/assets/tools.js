@@ -44,10 +44,10 @@
       result.hidden = true;
       facts.replaceChildren();
       findings.replaceChildren();
-      setText('#url-result-summary', '주소 구조만 확인하며 해당 주소에 접속하거나 악성 여부를 조회하지 않습니다.');
+      setText('#url-result-summary', 'Only the address structure is checked. The tool does not visit it or query whether it is malicious.');
 
       if (!raw) {
-        input.setCustomValidity('확인할 주소를 입력해 주세요.');
+        input.setCustomValidity('Enter an address to inspect.');
         input.reportValidity();
         return;
       }
@@ -55,8 +55,8 @@
 
       const suppliedScheme = /^[a-z][a-z0-9+.-]*:/i.test(raw);
       if ((suppliedScheme && !/^https?:\/\//i.test(raw)) || /[\s\\\u0000-\u001f\u007f]/.test(raw)) {
-        setText('#url-result-title', '분석할 수 없는 주소 형식입니다.');
-        findings.append(makeFinding('danger', 'HTTP·HTTPS 웹주소만 지원', '앱 실행 주소, 파일 주소, 스크립트 주소 또는 공백·역슬래시가 있는 입력은 웹주소로 바꿔 해석하지 않습니다. 원래 주소를 확인하세요.'));
+        setText('#url-result-title', 'This address format cannot be analyzed.');
+        findings.append(makeFinding('danger', 'HTTP and HTTPS web addresses only', 'App, file and script addresses, or inputs containing spaces or backslashes, are not reinterpreted as web addresses. Check the original input.'));
         showResult(result);
         return;
       }
@@ -65,18 +65,18 @@
       try {
         parsed = new URL(normalized);
       } catch {
-        setText('#url-result-title', '주소 형식을 해석하지 못했습니다.');
-        findings.append(makeFinding('danger', '형식 확인 필요', '공백이나 잘못된 기호가 섞였는지 확인하고 주소 전체를 다시 입력하세요.'));
+        setText('#url-result-title', 'Unable to interpret the address format.');
+        findings.append(makeFinding('danger', 'Check the format', 'Check for spaces or invalid symbols and enter the complete address again.'));
         showResult(result);
         return;
       }
 
       const factValues = [
-        ['프로토콜', parsed.protocol.replace(':', '') || '없음'],
-        ['호스트 이름', parsed.hostname || '없음'],
-        ['포트', parsed.port || '기본 포트'],
-        ['경로', parsed.pathname || '/'],
-        ['검색 조건', parsed.search ? `${new URLSearchParams(parsed.search).size}개` : '없음']
+        ['Protocol', parsed.protocol.replace(':', '') || 'None'],
+        ['Host', parsed.hostname || 'None'],
+        ['Port', parsed.port || 'Default port'],
+        ['Path', parsed.pathname || '/'],
+        ['Query parameters', parsed.search ? `${new URLSearchParams(parsed.search).size} parameters` : 'None']
       ];
       factValues.forEach(([label, value]) => {
         const row = document.createElement('div');
@@ -94,21 +94,21 @@
         if (tone !== 'ok') cautionCount += 1;
       };
 
-      if (!suppliedScheme) add('note', '프로토콜이 생략됨', '분석을 위해 https://를 임시로 붙였습니다. 실제 링크의 프로토콜을 다시 확인하세요.');
-      if (parsed.protocol === 'https:') add('ok', 'HTTPS 형식', '전송 구간 암호화 형식입니다. HTTPS만으로 사이트 운영자를 신뢰할 수 있다는 뜻은 아닙니다.');
-      else add('danger', 'HTTPS가 아님', '로그인·결제·개인정보 입력을 중단하고 공식 주소를 직접 찾아가세요.');
+      if (!suppliedScheme) add('note', 'Protocol omitted', 'https:// was added only for parsing. Check the original link’s actual protocol.');
+      if (parsed.protocol === 'https:') add('ok', 'HTTPS format', 'The connection uses an encrypted-transport format. HTTPS alone does not verify the site operator.');
+      else add('danger', 'Not HTTPS', 'Do not enter login, payment or private information; find the official address independently.');
 
-      if (parsed.username || parsed.password) add('danger', '@ 앞의 사용자 정보', '호스트 앞의 @는 실제 접속 호스트를 혼동하게 만들 수 있습니다. 경로·검색 조건에 들어 있는 @와는 다릅니다.');
-      if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(parsed.hostname) || /^\[[0-9a-f:]+\]$/i.test(parsed.hostname)) add('danger', '숫자 IP 주소 사용', '일반 서비스 이름 대신 IP 주소가 보입니다. 공식 안내에서 확인된 주소가 아니라면 정보를 입력하지 마세요.');
-      if (parsed.hostname.includes('xn--')) add('danger', '퓨니코드 호스트', '다른 문자 체계를 도메인으로 표현한 주소입니다. 유명 사이트와 비슷하게 보이도록 악용될 수 있어 실제 운영자를 따로 확인해야 합니다.');
-      if (shorteners.has(parsed.hostname.replace(/^www\./, ''))) add('note', '단축 URL', '최종 목적지가 가려져 있습니다. 발신자에게 확인하거나 브라우저 경고와 최종 주소를 다시 점검하세요.');
-      if (parsed.port && !['80', '443'].includes(parsed.port)) add('note', '비표준 포트', `:${parsed.port} 포트를 사용합니다. 업무·개발용 주소가 아니라면 서비스 운영자에게 확인하세요.`);
-      if (parsed.hostname.split('.').length >= 5) add('note', '하위 도메인이 많음', '주소가 길어 실제 등록 도메인을 놓치기 쉽습니다. 호스트 이름을 오른쪽부터 천천히 읽어보세요.');
-      if (/%[0-9a-f]{2}/i.test(raw)) add('note', '인코딩된 문자 포함', '주소 일부가 % 기호로 표현되어 있습니다. 인코딩 자체가 위험 신호는 아니지만 눈으로 확인하기 어렵습니다.');
-      if (!parsed.pathname || parsed.pathname === '/') add('ok', '단순한 경로', '추가 경로가 없거나 루트 경로입니다. 호스트 이름과 발신 경로를 중심으로 확인하세요.');
+      if (parsed.username || parsed.password) add('danger', 'User information before @', 'An @ before the host can make the destination confusing. This differs from an @ inside a path or query.');
+      if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(parsed.hostname) || /^\[[0-9a-f:]+\]$/i.test(parsed.hostname)) add('danger', 'Numeric IP address', 'An IP address appears instead of a usual service name. Do not submit information unless it is independently verified.');
+      if (parsed.hostname.includes('xn--')) add('danger', 'Punycode host', 'The host encodes an internationalized domain. Verify the operator independently; lookalike names can be misleading.');
+      if (shorteners.has(parsed.hostname.replace(/^www\./, ''))) add('note', 'Shortened URL', 'The final destination is hidden. Confirm the sender, browser warnings and final address before proceeding.');
+      if (parsed.port && !['80', '443'].includes(parsed.port)) add('note', 'Nonstandard port', `:${parsed.port} is the specified port. Confirm its purpose with the operator if you were not expecting it.`);
+      if (parsed.hostname.split('.').length >= 5) add('note', 'Many subdomain labels', 'A long hostname can obscure its relevant domain. Read the labels carefully from the right.');
+      if (/%[0-9a-f]{2}/i.test(raw)) add('note', 'Encoded characters', 'Parts of the address use percent encoding. Encoding is not itself a threat, but can make inspection harder.');
+      if (!parsed.pathname || parsed.pathname === '/') add('ok', 'Root path', 'No additional path is present. Inspect the host and the source of the link.');
 
-      setText('#url-result-title', cautionCount ? `추가 확인 항목 ${cautionCount}개가 있습니다.` : '구조상 뚜렷한 주의 신호는 적습니다.');
-      setText('#url-result-summary', '이 결과는 주소의 모양만 분석하며 악성 여부, 소유자, 현재 콘텐츠를 조회하지 않습니다. 브라우저 경고와 공식 사이트의 안내를 함께 확인하세요.');
+      setText('#url-result-title', cautionCount ? `${cautionCount} additional checks are flagged.` : 'Few obvious structural flags were found.');
+      setText('#url-result-summary', 'This analyzes appearance only, not maliciousness, ownership or current content. Use browser warnings and official guidance too.');
       showResult(result);
     });
   }
@@ -133,7 +133,7 @@
       result.hidden = true;
       findings.replaceChildren();
       if (!raw) {
-        input.setCustomValidity('확인할 파일 이름을 입력해 주세요.');
+        input.setCustomValidity('Enter a filename to inspect.');
         input.reportValidity();
         return;
       }
@@ -153,28 +153,28 @@
       };
 
       setText('#file-base-name', baseName.replace(/[\u202a-\u202e\u2066-\u2069]/g, (char) => `[U+${char.charCodeAt(0).toString(16).toUpperCase()}]`));
-      setText('#file-extension', extension ? `.${extension}` : '확장자 없음');
+      setText('#file-extension', extension ? `.${extension}` : 'No extension');
 
-      if (hasRlo) add('danger', '문자 표시 방향 제어 기호', '파일 끝부분을 다른 확장자처럼 보이게 만드는 제어 문자가 포함되어 있습니다. 열지 말고 출처를 확인하세요.');
-      if (/\.$/.test(baseName)) add('note', '파일명 끝의 점', 'Windows와 전송 서비스가 끝부분을 다르게 처리할 수 있습니다. 이 도구는 끝의 점을 임의로 없애 다른 확장자로 추정하지 않습니다.');
-      if (['doc', 'xls', 'ppt', 'rtf'].includes(extension)) add('note', '오래된 Office·문서 형식', '매크로 또는 삽입된 개체의 유무를 파일명만으로 알 수 없습니다. .docm 같은 이름이 아니어도 보안 경고를 우회하지 마세요.');
-      if (!extension) add('note', '확장자를 확인할 수 없음', 'Windows에서 파일 확장자 표시를 켠 뒤 전체 파일 이름을 다시 확인하세요.');
-      else if (executable.has(extension)) add('danger', '실행·설치 가능 형식', `.${extension} 파일은 프로그램이나 명령을 실행할 수 있습니다. 공식 배포처와 디지털 서명을 확인하기 전에는 열지 마세요.`);
-      else if (shortcuts.has(extension)) add('danger', '바로가기 형식', `.${extension} 파일은 다른 프로그램, 명령 또는 웹주소를 열 수 있습니다. 문서처럼 보여도 실제 대상을 확인해야 합니다.`);
-      else if (macro.has(extension)) add('danger', '매크로 사용 문서', `.${extension} 파일은 자동화 코드를 포함할 수 있습니다. 예상한 발신자와 업무 파일이 아니라면 매크로를 허용하지 마세요.`);
-      else if (archives.has(extension)) add('note', '압축·디스크 이미지 형식', '내부 파일이 가려져 있으므로 압축을 푼 뒤 각 파일의 최종 확장자를 다시 확인하세요. 비밀번호가 적힌 수상한 첨부파일은 특히 주의하세요.');
-      else if (documents.has(extension)) add('note', '문서 형식', '문서 확장자만으로 안전을 보장할 수 없습니다. 브라우저·Office의 보안 경고를 우회하지 마세요.');
-      else if (media.has(extension)) add('ok', '일반적인 미디어 형식', '사진·음성·영상에 흔한 확장자입니다. 이름을 바꾸는 것만으로 실제 파일 형식이 바뀌지는 않으므로 출처도 확인하세요.');
-      else add('note', '분류표에 없는 확장자', `.${extension} 형식의 용도와 연결 프로그램을 공식 문서에서 확인한 뒤 여세요.`);
+      if (hasRlo) add('danger', 'Text-direction control character', 'A control character can make the filename ending appear different. Verify the source without opening the file.');
+      if (/\.$/.test(baseName)) add('note', 'Trailing dot', 'Windows and transfer services may handle the ending differently. This tool does not silently remove the dot to infer another extension.');
+      if (['doc', 'xls', 'ppt', 'rtf'].includes(extension)) add('note', 'Legacy Office or document format', 'A filename cannot reveal macros or embedded objects. Do not bypass security warnings just because the ending is not .docm.');
+      if (!extension) add('note', 'Extension cannot be identified', 'Enable file-extension display in Windows and inspect the complete filename.');
+      else if (executable.has(extension)) add('danger', 'Executable or installer format', `.${extension} can run a program or command. Verify the official source and available publisher information before opening.`);
+      else if (shortcuts.has(extension)) add('danger', 'Shortcut format', `.${extension} may open a program, command or web address. Inspect the actual target even if the name resembles a document.`);
+      else if (macro.has(extension)) add('danger', 'Macro-enabled document', `.${extension} may contain automation code. Do not enable macros for an unexpected file or sender.`);
+      else if (archives.has(extension)) add('note', 'Archive or disk-image format', 'The contained files are not shown by the outer name. Inspect their final extensions without executing them, especially in unexpected encrypted attachments.');
+      else if (documents.has(extension)) add('note', 'Document format', 'A document extension does not guarantee safety. Do not bypass browser or Office warnings.');
+      else if (media.has(extension)) add('ok', 'Common media extension', 'This ending is commonly used for images, audio or video. Renaming does not convert contents; inspect the source too.');
+      else add('note', 'Unclassified extension', `Check the purpose and associated app for .${extension} in official documentation.`);
 
       if (priorExtension && (documents.has(priorExtension) || media.has(priorExtension)) && (executable.has(extension) || shortcuts.has(extension))) {
-        add('danger', '이중 확장자 위장 가능성', `중간의 .${priorExtension} 때문에 문서나 미디어처럼 보이지만 실제 최종 확장자는 .${extension}입니다.`);
+        add('danger', 'Possible double-extension disguise', `The middle .${priorExtension} can resemble a document or media type, but the final extension is .${extension}.`);
       } else if (parts.length >= 3) {
-        add('note', '점이 여러 개인 파일명', '점이 여러 개 있어도 실제 동작은 마지막 확장자를 기준으로 결정되는 경우가 많습니다. 마지막 부분을 우선 확인하세요.');
+        add('note', 'Several dots in the name', 'Several dots are not proof of danger. Inspect the last extension first; it is often used for app association.');
       }
 
-      setText('#file-result-title', cautionCount ? `주의·확인 항목 ${cautionCount}개가 있습니다.` : '이름에서 즉시 드러나는 강한 경고는 적습니다.');
-      setText('#file-result-summary', '파일 이름만 분석한 결과입니다. 파일 내용, 디지털 서명, 악성코드 여부는 검사하지 않으므로 실제 파일을 열기 전 운영체제 보안 경고와 출처를 확인하세요.');
+      setText('#file-result-title', cautionCount ? `${cautionCount} caution or review items are flagged.` : 'Few strong warnings are visible in the name.');
+      setText('#file-result-summary', 'Only the name was inspected, not contents, signatures or malware. Check the source and operating-system warnings before opening a file.');
       showResult(result);
     });
   }
@@ -194,7 +194,7 @@
       findings.replaceChildren();
 
       if (!Number.isFinite(total) || !Number.isFinite(free) || total <= 0 || free < 0 || free > total) {
-        setText('#storage-error', '전체 용량은 0보다 커야 하며, 남은 용량은 전체 용량보다 클 수 없습니다.');
+        setText('#storage-error', 'Total capacity must be greater than zero; free capacity cannot exceed the total.');
         $('#storage-error').hidden = false;
         return;
       }
@@ -208,20 +208,20 @@
       setText('#storage-used-value', `${used.toFixed(1)} GB`);
       setText('#storage-free-value', `${free.toFixed(1)} GB (${currentPercent.toFixed(1)}%)`);
       setText('#storage-target-value', `${targetFree.toFixed(1)} GB (${targetPercent}%)`);
-      setText('#storage-cleanup-value', cleanup > 0 ? `${cleanup.toFixed(1)} GB` : '추가 정리 불필요');
+      setText('#storage-cleanup-value', cleanup > 0 ? `${cleanup.toFixed(1)} GB` : 'No extra cleanup for this target');
       $('#storage-meter-fill').style.width = `${Math.min(100, Math.max(0, currentPercent))}%`;
       $('#storage-meter-fill').setAttribute('aria-valuenow', currentPercent.toFixed(1));
 
       if (cleanup <= 0) {
-        findings.append(makeFinding('ok', '목표 여유 공간 확보', '현재 남은 용량이 선택한 목표보다 많습니다. 큰 파일을 무리하게 지우기보다 백업 상태와 불필요한 다운로드만 정기적으로 확인하세요.'));
+        findings.append(makeFinding('ok', 'Selected target met', 'Current free space meets the selected target. Review backups and unneeded downloads rather than deleting large files unnecessarily.'));
       } else {
-        findings.append(makeFinding('note', '정리 목표', `${cleanup.toFixed(1)} GB를 확보하면 남은 공간이 약 ${targetPercent}%가 됩니다. 한 번에 삭제하지 말고 아래 순서로 확인하세요.`));
-        if (cleanup < 2) findings.append(makeFinding('ok', '작은 정리로 가능', '다운로드 폴더, 휴지통, 오프라인 저장 파일과 앱 캐시만 확인해도 목표에 도달할 가능성이 큽니다.'));
-        else if (cleanup < 10) findings.append(makeFinding('note', '중간 규모 정리', '큰 동영상, 메신저 미디어, 사용하지 않는 앱을 용량순으로 확인하세요. 사진은 백업 완료 표시를 확인한 뒤 정리합니다.'));
-        else findings.append(makeFinding('danger', '대용량 정리 필요', '사진·동영상을 바로 대량 삭제하지 말고 외부 저장장치나 클라우드 백업을 먼저 검증하세요. 여러 단계로 나눠 정리하는 편이 안전합니다.'));
+        findings.append(makeFinding('note', 'Planning target', `Freeing ${cleanup.toFixed(1)} GB would reach approximately ${targetPercent}% free. Review candidates in stages, not one bulk deletion.`));
+        if (cleanup < 2) findings.append(makeFinding('ok', 'Small planning gap', 'Review replaceable downloads, trash contents, offline copies and app cache first. The calculated gap does not prove those items are disposable.'));
+        else if (cleanup < 10) findings.append(makeFinding('note', 'Medium planning gap', 'Inspect large videos, messenger media and unused apps by size. Verify actual photo copies and deletion scope before cleanup.'));
+        else findings.append(makeFinding('danger', 'Large planning gap', 'Do not immediately delete photos or videos in bulk. Inspect independent copies and cloud behavior, then review cleanup in stages.'));
       }
-      findings.append(makeFinding('note', '저장용량과 메모리는 다름', '이 계산은 파일을 보관하는 저장용량 기준입니다. 앱 실행에 쓰는 메모리(RAM) 부족 문제와는 다릅니다.'));
-      setText('#storage-result-title', cleanup > 0 ? `${cleanup.toFixed(1)} GB 정리를 목표로 하세요.` : '현재 선택한 여유 공간 목표를 충족합니다.');
+      findings.append(makeFinding('note', 'Storage is not RAM', 'This calculation concerns file storage, not memory (RAM) used to run apps.'));
+      setText('#storage-result-title', cleanup > 0 ? `Your selected target requires ${cleanup.toFixed(1)} GB more free space.` : 'The currently selected free-space target is met.');
       showResult(result);
     });
   }
@@ -242,21 +242,21 @@
       unchecked.forEach((item) => {
         const label = form.querySelector(`label[for="${item.id}"]`);
         const li = document.createElement('li');
-        li.textContent = label ? label.dataset.action : '선택하지 않은 보안 항목을 확인하세요.';
+        li.textContent = label ? label.dataset.action : 'Review the unchecked security item.';
         missing.append(li);
       });
 
       let band;
       let summary;
       if (score >= 85) {
-        band = '선택한 기본 점검 항목이 많습니다.';
-        summary = '점수가 높아도 계정이 안전하다고 보장되지는 않습니다. 최근 로그인 기록과 복구 수단을 정기적으로 다시 확인하세요.';
+        band = 'You marked many basic checks.';
+        summary = 'A high score does not certify account safety. Revisit recent activity and recovery methods regularly.';
       } else if (score >= 60) {
-        band = '중요한 보강 항목이 남아 있습니다.';
-        summary = '아래 미완료 항목 중 비밀번호·2단계 인증·복구 수단을 먼저 보완하세요.';
+        band = 'Important checks remain.';
+        summary = 'Prioritize unique passwords, two-step verification and recovery methods among the remaining items.';
       } else {
-        band = '우선순위가 높은 보안 항목부터 설정하세요.';
-        summary = '한 번에 모두 바꾸기보다 중요한 이메일 계정부터 고유 비밀번호, 2단계 인증, 복구 수단 순서로 진행하세요.';
+        band = 'Start with the higher-priority account checks.';
+        summary = 'Work gradually, starting with important email: unique passwords, two-step verification and recovery access.';
       }
 
       setText('#account-score', `${score} / 100`);
