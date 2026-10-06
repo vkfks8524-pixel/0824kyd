@@ -26,20 +26,20 @@
     let total = 0;
     for (const card of cards) {
       const inCategory = category === 'all' || category === card.section.id ||
-        (category === 'legacy-guides' && !['sports', 'buying', 'web-ai'].includes(card.section.id));
+        (category === 'legacy-guides' && !['sports', 'buying', 'web-ai', 'everyday'].includes(card.section.id));
       const matches = inCategory && words.every(word => card.text.includes(word));
       card.element.hidden = !matches;
       if (matches) total++;
     }
     for (const section of sections) section.hidden = !cards.some(card => card.section === section && !card.element.hidden);
-    legacy.hidden = !sections.some(section => !['sports', 'buying', 'web-ai'].includes(section.id) && !section.hidden);
+    legacy.hidden = !sections.some(section => !['sports', 'buying', 'web-ai', 'everyday'].includes(section.id) && !section.hidden);
     for (const link of links) {
       if (link.hash.slice(1) === category) link.setAttribute('aria-current', 'true');
       else link.removeAttribute('aria-current');
     }
     const selected = links.find(link => link.hash.slice(1) === category);
     const label = selected ? selected.childNodes[0].textContent.trim() : 'Earlier practical guides';
-    status.textContent = label + ' · ' + total + ' articles' + (words.length ? ' · search results' : '');
+    status.textContent = label + ' · ' + total + (total === 1 ? ' article' : ' articles') + (words.length ? ' · search results' : '');
     empty.hidden = total !== 0;
   }
   function reset() {
