@@ -42,13 +42,24 @@
   const $ = id => document.getElementById(id);
   const format = n => n.toLocaleString('en-US',{maximumFractionDigits:2});
   function report(id,text) { $(id).textContent=text; }
+  function clearReportPreview() { if($('report-preview'))$('report-preview').remove(); }
   function download(text,name) {
+    clearReportPreview();
+    // An on-page fallback remains usable in browsers that suppress blob downloads.
+    const box=document.createElement('section');box.id='report-preview';box.className='tool-panel report-panel';
+    const heading=document.createElement('h2');heading.textContent='Your text report';
+    const message=document.createElement('p');message.className='micro';message.textContent='If a download does not start, select and copy the text below. Keep this report private.';
+    const label=document.createElement('label');label.htmlFor='report-text';label.textContent='Report text';
+    const textarea=document.createElement('textarea');textarea.id='report-text';textarea.readOnly=true;textarea.rows=12;textarea.value=text;
+    box.append(heading,message,label,textarea);$('main-content').append(box);
     const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));
-    const a=document.createElement('a'); a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    const a=document.createElement('a'); a.href=url;a.download=name;a.hidden=true;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    textarea.focus();
   }
   if ($('backup-form')) {
     let currentReport='';
     function renderReview() {
+      clearReportPreview();
       const result=review(Array.from($('backup-form').querySelectorAll('input:checked'),i=>i.value));
       const headline=result.remaining.length ? `${result.completed} of 6 checks marked. ${result.remaining.length} still need evidence.` : 'All 6 checks marked by you. This is not a verification of your files.';
       report('backup-status',headline);
@@ -65,6 +76,7 @@
     let currentReport='';
     const ids=['current','growth','months','versions','reserve','free'];
     function calculate() {
+      clearReportPreview();
       try {
         const r=plan(Object.fromEntries(ids.map(id=>[id,$('space-'+id).value])));
         report('space-error',''); $('space-result').hidden=false; $('space-save').disabled=false;
@@ -76,7 +88,7 @@
       } catch(error) { report('space-error',error.message); $('space-result').hidden=true; $('space-save').disabled=true; currentReport=''; }
     }
     $('space-form').addEventListener('submit',e=>{e.preventDefault();calculate();});
-    $('space-form').addEventListener('input',()=>{ $('space-result').hidden=true; $('space-save').disabled=true; report('space-error','Inputs changed. Calculate again for an updated result.'); });
+    $('space-form').addEventListener('input',()=>{ clearReportPreview(); $('space-result').hidden=true; $('space-save').disabled=true; report('space-error','Inputs changed. Calculate again for an updated result.'); });
     $('space-example').addEventListener('click',()=>{ [120,4,12,30,20,200].forEach((v,i)=>$('space-'+ids[i]).value=v);calculate(); });
     $('space-save').addEventListener('click',()=>{if(currentReport)download(currentReport,'kyd-space-plan.txt');});
     $('unit-form').addEventListener('submit',e=>{e.preventDefault();try{report('unit-result',`${format(gibToGb($('unit-gib').value))} GB`);}catch{report('unit-result','Enter a GiB value from 0 to 10,000,000.');}});
@@ -84,7 +96,7 @@
   if ($('file-form')) {
     let busy=false, currentReport='';
     const buttons=['file-run','file-demo','file-clear'];
-    const invalidate=()=>{currentReport='';$('file-output').hidden=true;$('file-save').disabled=true;report('file-status','Selection changed. Compare again.');};
+    const invalidate=()=>{clearReportPreview();currentReport='';$('file-output').hidden=true;$('file-save').disabled=true;report('file-status','Selection changed. Compare again.');};
     $('file-a').addEventListener('change',invalidate);$('file-b').addEventListener('change',invalidate);
     const draw = (result,label) => {
       $('file-output').hidden=false;
