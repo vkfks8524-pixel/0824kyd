@@ -1,8 +1,10 @@
 'use strict';
-// A repeatable, scoped publisher for the dated weather/shopping batch.
+// Render the newest dated batch; retain earlier articles and aggregate their library cards.
 const fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'..'),origin='https://www.kyd.kr';
-const {checked,ranking,posts}=require('./everyday-guides-20261006.cjs');
+const batches=fs.readdirSync(__dirname).filter(name=>/^everyday-guides-\d{8}\.cjs$/.test(name)).sort().reverse().map(name=>require('./'+name));
+const batch=batches[0],{checked,posts}=batch;
+const displayDate=new Date(checked+'T12:00:00Z').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric',timeZone:'UTC'});
 const read=file=>fs.readFileSync(path.join(root,file),'utf8');
 const escape=value=>value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const json=value=>JSON.stringify(value).replace(/</g,'\\u003c');
@@ -50,7 +52,7 @@ ${header}
 ${figure(data.photo)}
 <aside class="review-callout"><strong>Scope and evidence</strong><p>${escape(data.scope)}</p></aside>
 ${toc}${body}
-<section class="sources" id="sources-${slug}"><h2>Sources and review scope</h2><ul>${data.sources.map(([url,label])=>'<li>'+link(url,label)+'</li>').join('')}</ul><p class="source-reviewed">Source information last checked: <time datetime="${checked}">${checked}</time>. KYD’s worked examples, tables and message templates are original editorial aids, not recorded forecasts, customer cases or hands-on tests. Official guidance may change after this review.</p><p>Photo credit and reuse terms appear below the image. <a href="/posts/#everyday-selection">Topic selection and search-ranking source</a>.</p></section>
+<section class="sources" id="sources-${slug}"><h2>Sources and review scope</h2><ul>${data.sources.map(([url,label])=>'<li>'+link(url,label)+'</li>').join('')}</ul><p class="source-reviewed">Source information last checked: <time datetime="${checked}">${checked}</time>. KYD’s worked examples, comparison tables and worksheets are original editorial aids, not records of customer accounts or hands-on product tests. Official guidance may change after this review.</p><p>Photo credit and reuse terms appear below the image. <a href="/posts/#everyday-selection">Topic selection and search-ranking source</a>.</p></section>
 ${author}
 <section class="next-reads"><h2>Continue reading</h2><ul>${data.related.map(([other,title])=>`<li><a href="/posts/${other}/">${escape(title)}</a></li>`).join('')}</ul><a class="text-link" href="/posts/#everyday">Everyday decisions →</a></section>
 </article><aside class="sidebar"><h2>Explore KYD</h2><ul><li><a href="/posts/#everyday">Everyday decisions</a></li><li><a href="/posts/#web-ai">Web &amp; AI guides</a></li><li><a href="/editorial-policy/">Sources and corrections policy</a></li></ul></aside></main>
@@ -58,8 +60,10 @@ ${footer}</body></html>\n`;
  mirror('posts/'+slug+'/index.html',html);
 }
 const total=fs.readdirSync(path.join(root,'posts'),{withFileTypes:true}).filter(entry=>entry.isDirectory()&&fs.existsSync(path.join(root,'posts',entry.name,'index.html'))).length;
-const card=([slug,data])=>`<article class="post-card">${figure(data.photo,true)}<p class="category">${escape(data.category)}</p><h3><a href="/posts/${slug}/">${escape(data.title)}</a></h3><p>${escape(data.description)}</p><p class="article-meta">Published ${checked} · Sources checked ${checked}</p></article>`;
-const cards=Object.entries(posts).map(card).join('');
+const card=([slug,data],date)=>`<article class="post-card">${figure(data.photo,true)}<p class="category">${escape(data.category)}</p><h3><a href="/posts/${slug}/">${escape(data.title)}</a></h3><p>${escape(data.description)}</p><p class="article-meta">Published ${date} · Sources checked ${date}</p></article>`;
+const cards=Object.entries(posts).map(entry=>card(entry,checked)).join('');
+const libraryCards=batches.flatMap(item=>Object.entries(item.posts).map(entry=>card(entry,item.checked))).join('');
+const everydayCount=batches.reduce((sum,item)=>sum+Object.keys(item.posts).length,0);
 function block(html,name,replacement,anchor){
  const re=new RegExp('<!-- '+name+' START -->[\\s\\S]*?<!-- '+name+' END -->');
  const value='<!-- '+name+' START -->'+replacement+'<!-- '+name+' END -->';
@@ -69,19 +73,20 @@ function block(html,name,replacement,anchor){
 }
 function styles(html){return html.includes('/assets/everyday-guides.css')?html:html.replace('</head>','<link rel="stylesheet" href="/assets/everyday-guides.css?v=20261006-1">\n</head>');}
 let home=read('index.html').replace(/Browse all \d+ articles/g,'Browse all '+total+' articles');
-home=block(home,'EVERYDAY HOME','<section class="home-section everyday-features" aria-labelledby="everyday-title"><div class="section-heading"><div><p class="eyebrow">NEW · OCTOBER 6, 2026</p><h2 id="everyday-title">A clearer plan for rain and missing deliveries</h2></div><a class="text-link" href="/posts/#everyday">Everyday decisions →</a></div><p class="section-intro">Read a rain percentage correctly, or work out the next step when tracking and your doorstep disagree. Official guidance, practical examples and credited photographs.</p><div class="post-list">'+cards+'</div></section>','<!-- WEB AI HOME START -->');
+home=block(home,'EVERYDAY HOME','<section class="home-section everyday-features" aria-labelledby="everyday-title"><div class="section-heading"><div><p class="eyebrow">NEW · '+displayDate.toUpperCase()+'</p><h2 id="everyday-title">'+escape(batch.sectionTitle||'A clearer plan for rain and missing deliveries')+'</h2></div><a class="text-link" href="/posts/#everyday">Everyday decisions →</a></div><p class="section-intro">'+escape(batch.sectionIntro||'Read a rain percentage correctly, or work out the next step when tracking and your doorstep disagree. Official guidance, practical examples and credited photographs.')+'</p><div class="post-list">'+cards+'</div></section>','<!-- WEB AI HOME START -->');
 mirror('index.html',styles(home));
 let library=read('posts/index.html').replace(/All \d+ articles/g,'All '+total+' articles').replace(/<a href="#all">All <span>\d+<\/span><\/a>/,`<a href="#all">All <span>${total}</span></a>`);
 if(!library.includes('href="#everyday"'))library=library.replace('<a href="#web-ai">','<a href="#everyday">Everyday decisions <span>2</span></a><a href="#web-ai">');
+library=library.replace(/<a href="#everyday">Everyday decisions <span>\d+<\/span><\/a>/,`<a href="#everyday">Everyday decisions <span>${everydayCount}</span></a>`);
 library=library.replace(/\/assets\/library\.js\?v=[^"]+/, '/assets/library.js?v=20261006-everyday-1');
-const details=`<details class="reading-toc" id="everyday-selection"><summary>Why these topics? Search data and scope</summary><p>Selected from ${link(ranking.url,'Ahrefs’ September 2026 global Google-search table')}, updated ${ranking.updated}, checked ${checked}: <strong>weather</strong> is #6 (${ranking.rows[0].volume.toLocaleString('en-US')} estimated searches per month); <strong>amazon</strong> is #7 (${ranking.rows[1].volume.toLocaleString('en-US')}). These follow the five queries used in our <a href="/posts/#web-ai">October 5 series</a>.</p><p>These are broad-query estimates, not today’s live trends, visitor counts or measured demand for the exact article titles. The articles answer narrower practical questions. Amazon’s policies below are scoped to its US storefront; weather definitions are attributed to their providers.</p></details>`;
-library=block(library,'EVERYDAY LIBRARY','<section class="topic-section" id="everyday"><div class="section-heading"><h2>Everyday decisions</h2><span class="section-count">2 articles</span></div><p class="section-intro">Weather, deliveries and the details that change your next step.</p>'+details+'<div class="post-list">'+cards+'</div></section>','<!-- WEB AI LIBRARY START -->');
+const details=`<details class="reading-toc" id="everyday-selection"><summary>Why these topics? Search data and scope</summary>${batches.map(item=>`<p>Batch ${item.checked}: selected from ${link(item.ranking.url,'Ahrefs’ '+item.ranking.edition+' global Google-search table')}, updated ${item.ranking.updated}, checked ${item.checked}. ${item.ranking.rows.map(row=>`<strong>${escape(row.query)}</strong>: #${row.rank}, ${row.volume.toLocaleString('en-US')} estimated monthly searches`).join('; ')}.</p>`).join('')}<p>These are broad-query estimates, not today’s live trends, visitor counts or measured demand for these exact article titles. Selection is thematic, not a consecutive ranking countdown. Each guide answers a narrower practical question and states its product or geographic scope. See also the <a href="/posts/#web-ai">October 5 web and AI series</a>.</p></details>`;
+library=block(library,'EVERYDAY LIBRARY','<section class="topic-section" id="everyday"><div class="section-heading"><h2>Everyday decisions</h2><span class="section-count">'+everydayCount+' articles</span></div><p class="section-intro">Design, email, weather and deliveries: the details that change your next step.</p>'+details+'<div class="post-list">'+libraryCards+'</div></section>','<!-- WEB AI LIBRARY START -->');
 library=library.replace('All '+total+' articles: web, AI, phone choices and sport','All '+total+' articles: everyday decisions, web, phones and sport');
 library=library.replaceAll('Search KYD’s English guides about ChatGPT, WhatsApp Web, YouTube, translation, phone choices, photos, security and dated sports results.','Search English guides to weather, deliveries, everyday web services, phone choices, security and dated sports results.');
 mirror('posts/index.html',styles(library));
 let updates=read('updates/index.html');
-updates=block(updates,'EVERYDAY UPDATE','<section class="update-entry"><p class="article-meta">October 6, 2026</p><h2>Two illustrated guides to weather and missing deliveries</h2><p>Added <a href="/posts/what-does-40-percent-chance-of-rain-mean/">rain-probability interpretation</a> with US/UK definitions and a fictional planning exercise, and <a href="/posts/amazon-delivered-but-not-received/">Amazon.com missing-delivery guidance</a> with a factual evidence log and support-message template. Both include licensed archive photographs, visible credits, review dates and <a href="/posts/#everyday-selection">topic-selection provenance</a>.</p></section>','<!-- WEB AI UPDATE START -->');
+if(batch.updateHtml)updates=block(updates,'EVERYDAY UPDATE '+checked.replaceAll('-',''),'<section class="update-entry"><p class="article-meta">'+displayDate+'</p>'+batch.updateHtml+'</section>','<!-- EVERYDAY UPDATE START -->');
 mirror('updates/index.html',updates);
 mirror('assets/everyday-guides.css',read('assets/everyday-guides.css'));
 mirror('assets/editorial/PHOTOS.md',read('assets/editorial/PHOTOS.md'));
-console.log('Published 2 illustrated everyday guides; '+total+' articles in the library.');
+console.log('Published '+Object.keys(posts).length+' illustrated guides dated '+checked+'; '+total+' articles in the library.');

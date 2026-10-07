@@ -5,7 +5,9 @@ const root=path.resolve(__dirname,'..'),content=require('./english-edition.cjs')
 const read=file=>fs.readFileSync(path.join(root,file),'utf8');
 const original=file=>cp.execFileSync('git',['show','440df81:'+file],{cwd:root,encoding:'utf8',maxBuffer:8*1024*1024});
 const paths=[...read('sitemap.xml').matchAll(/<loc>https:\/\/www\.kyd\.kr\/([^<]*)<\/loc>/g)].map(m=>m[1]+'index.html');
-const newPosts={...require('./global-search-guides.cjs').posts,...require('./everyday-guides-20261006.cjs').posts};
+const batches=[require('./global-search-guides.cjs'),...fs.readdirSync(__dirname).filter(name=>/^everyday-guides-\d{8}\.cjs$/.test(name)).map(name=>require('./'+name))];
+const newPosts=Object.assign({},...batches.map(batch=>batch.posts));
+const newDates=Object.assign({},...batches.map(batch=>Object.fromEntries(Object.keys(batch.posts).map(slug=>[slug,batch.checked]))));
 const baselinePaths=[...original('sitemap.xml').matchAll(/<loc>https:\/\/www\.kyd\.kr\/([^<]*)<\/loc>/g)].map(m=>m[1]+'index.html');
 assert.equal(paths.length,baselinePaths.length+Object.keys(newPosts).length);
 for(const file of baselinePaths)assert(paths.includes(file),file+' original canonical page remains');
@@ -26,7 +28,7 @@ for(const file of [...paths,'404.html']){
   const schema=JSON.parse(json);if(schema.inLanguage)assert.equal(schema.inLanguage,'en',file+' schema language');
  }
  if(/^posts\/[^/]+\/index\.html$/.test(file)){
-  if(isNew){assert.equal(published(html),require('./everyday-guides-20261006.cjs').posts[file.split('/')[1]]?'2026-10-06':'2026-10-05');assert(html.includes('Source information last checked:'));continue;}
+  if(isNew){assert.equal(published(html),newDates[file.split('/')[1]]);assert(html.includes('Source information last checked:'));continue;}
   const slug=file.split('/')[1];assert.equal(published(html),published(before),file+' original publication date');
   assert.equal(html.match(/property="article:modified_time" content="([^"]+)"/)[1],'2026-10-05');
   assert.deepEqual(sourceUrls(html),sourceUrls(before),file+' source URLs');

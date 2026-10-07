@@ -1,5 +1,29 @@
 # Current editorial photographs
 
+## October 7, 2026 additions
+
+Two real archive photographs provide context for the Canva and Gmail guides. They are not software screenshots, KYD photographs, export comparisons or account evidence. Source-file descriptions and CC0 declarations checked on 2026-10-07. Captions state the archival/illustrative scope and retain credit, source and license links.
+
+### artist-desk
+
+- Photographer: Ella Jardim
+- Source: https://commons.wikimedia.org/wiki/File:Artist%27s_Desk_(Unsplash).jpg
+- Original: https://upload.wikimedia.org/wikipedia/commons/1/15/Artist%27s_Desk_%28Unsplash%29.jpg
+- License: CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/
+- Commons records Unsplash publication on March 22, 2017, before the June 5, 2017 license change. Its file description explicitly provides the CC0 dedication. The legacy Unsplash record could not be fetched in this review; this provenance relies on the Commons file record. EXIF capture date is June 1, 2016; the caption uses publication year, not capture year.
+- Files: artist-desk-480.webp (480 × 355), artist-desk-1200.webp (1200 × 886).
+
+### mail-workspace
+
+- Photographer: Oliur Rahman
+- Source: https://commons.wikimedia.org/wiki/File:Black_and_white_computer_desk_(Unsplash).jpg
+- Original: https://upload.wikimedia.org/wikipedia/commons/c/c6/Black_and_white_computer_desk_%28Unsplash%29.jpg
+- License: CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/
+- Commons explicitly records the historical CC0 dedication. Original Unsplash page also confirms publication August 14, 2016: https://unsplash.com/photos/rM7fqrIQb94 . EXIF capture date is October 12, 2015. The caption identifies publication year, not capture year. Visible device brands do not imply sponsorship.
+- Files: mail-workspace-480.webp (480 × 384), mail-workspace-1200.webp (1200 × 962).
+
+Both original JPEGs were visually inspected. Processing with `scripts/prepare-everyday-photos.cjs --named` was limited to orientation normalization, proportional resizing and WebP encoding. No cropping, retouching, compositing or generative edits. The original JPEGs remain in the temporary download directory; only optimized derivatives are published.
+
 ## October 6, 2026 additions
 
 These two archival photographs illustrate the new weather and delivery guides. They are not live weather, KYD photography, a customer case or evidence of brand endorsement. Source pages and reuse declarations checked on 2026-10-06. Visible image captions retain source and license links on the home page, article library, articles and RSS.
