@@ -1,0 +1,33 @@
+{
+  "edition": "photo-file-care",
+  "reviewed": "2026-10-07",
+  "urls": [
+    "/",
+    "/guides/",
+    "/guides/before-deleting-photos/",
+    "/guides/verify-a-file-copy/",
+    "/guides/plan-photo-backup-space/",
+    "/guides/photo-recovery-drill/",
+    "/tools/",
+    "/tools/photo-backup-check/",
+    "/tools/file-copy-check/",
+    "/tools/storage-planner/",
+    "/methods/",
+    "/about/",
+    "/editorial-policy/",
+    "/contact/",
+    "/privacy/",
+    "/updates/"
+  ],
+  "guides": [
+    "/guides/before-deleting-photos/",
+    "/guides/verify-a-file-copy/",
+    "/guides/plan-photo-backup-space/",
+    "/guides/photo-recovery-drill/"
+  ],
+  "tools": [
+    "/tools/photo-backup-check/",
+    "/tools/file-copy-check/",
+    "/tools/storage-planner/"
+  ]
+}

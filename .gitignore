@@ -1,2 +1,6 @@
 # Local editorial audit; may contain account metrics supplied by the owner.
 CONTENT_PIVOT_2026-09-26.md
+
+# Reversible local snapshots. Never serve or commit withdrawn articles.
+.archive/
+.audit/

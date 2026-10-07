@@ -1,4 +1,6 @@
 /public / 301
 /public/* /:splat 301
-/blog /posts/ 301
-/blog/ /posts/ 301
+/blog /guides/ 301
+/blog/ /guides/ 301
+/posts /guides/ 301
+/posts/ /guides/ 301
