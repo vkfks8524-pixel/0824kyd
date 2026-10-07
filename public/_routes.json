@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "include": [
+    "/posts/*",
+    "/tools/account-security-check",
+    "/tools/account-security-check/*",
+    "/tools/file-extension-check",
+    "/tools/file-extension-check/*",
+    "/tools/phone-cost-comparator",
+    "/tools/phone-cost-comparator/*",
+    "/tools/url-structure-check",
+    "/tools/url-structure-check/*"
+  ],
+  "exclude": [
+    "/posts/"
+  ]
+}

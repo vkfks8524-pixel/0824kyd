@@ -25,6 +25,12 @@ The complete previous tracked site is recoverable at Git commit `12f61443a337d04
 
 These archives are not served by the website. The old content remains in public Git history; withdrawal is not a claim of erasure from the Internet. Restore selected material into a separate temporary directory for review first. Do not blindly restore the old feed, sitemap or navigation. Legacy publishing scripts were archived to prevent accidental re-publication.
 
+### Withdrawal response guard
+
+Some custom-domain responses continued to return old HTML after a successful Cloudflare zone cache purge, even though the current Pages deployment returned 404. Generated `_worker.js` returns a non-cacheable 404 directly for retired article and tool routes. `_routes.json` limits invocation to those routes; all 16 current pages, feeds, assets and collection redirects remain static. The guard does not read request bodies, save data or call outside services. HEAD has no body; unsupported methods return 405.
+
+These limited requests use the existing Workers Free daily allowance (shared 100,000 requests as documented on 2026-10-07); no paid plan was enabled. Static requests do not consume that allowance. If Functions cannot run, the deployment still contains no old article files and has a static 404 fallback. Removing this guard should require normal, cache-enabled production checks confirming that withdrawn content cannot reappear. Sources: [Pages routing](https://developers.cloudflare.com/pages/functions/routing/), [Pages pricing](https://developers.cloudflare.com/pages/functions/pricing/).
+
 ## Advertising boundary
 
 The publisher meta tag, ads.txt and ownership verification are preserved. This edition deliberately loads no advertising JavaScript. Before enabling ads, verify the AdSense decision and configure applicable consent requirements in the account. Do not put ads on tools, error pages, navigation-only pages or worksheets. Do not claim approval simply because technical checks pass.

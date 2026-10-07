@@ -52,6 +52,24 @@ async function test(){
  assert.deepEqual(publicHtml.sort(),[...files,'google50fae352e2643cab.html'].sort());checks++;
  for(const p of publicFiles){const rel=path.relative(path.join(root,'public'),p);ok(!/(?:^|[\\/])(?:\.archive|scripts|docs)(?:[\\/])/.test(rel),'private material excluded');ok(fs.readFileSync(p).equals(fs.readFileSync(path.join(root,rel))),rel+' exact mirror');}
  ok(!fs.existsSync(path.join(root,'public/posts')),'no old article bodies served');
+ const routes=JSON.parse(fs.readFileSync(path.join(root,'_routes.json'),'utf8'));
+ const matches=(rule,url)=>rule.endsWith('*')?url.startsWith(rule.slice(0,-1)):url===rule;
+ const invokes=url=>routes.include.some(rule=>matches(rule,url))&&!routes.exclude.some(rule=>matches(rule,url));
+ for(const url of manifest.urls.concat('/posts/','/posts','/blog','/ads.txt','/sitemap.xml','/rss.xml','/assets/focus-tools.js','/assets/focus.css'))ok(!invokes(url),url+' uses static serving, not Functions quota');
+ ok(routes.include.length+routes.exclude.length<=100&&routes.include.every(rule=>rule.length<=100),'Pages route limits');
+ const workerSource=fs.readFileSync(path.join(root,'_worker.js'),'utf8');
+ const worker=(await import('data:text/javascript;base64,'+Buffer.from(workerSource).toString('base64'))).default;
+ const oldFiles=require('node:child_process').execFileSync('git',['ls-tree','-r','--name-only','12f6144','posts/','tools/'],{cwd:root,encoding:'utf8'}).trim().split(/\r?\n/).filter(p=>/^(posts|tools)\/[^/]+\/index\.html$/.test(p));
+ const retiredUrls=oldFiles.map(p=>'/'+p.replace(/index\.html$/,'')).filter(url=>!manifest.urls.includes(url));
+ for(const url of retiredUrls){
+  ok(invokes(url),url+' withdrawal route included');
+  const response=await worker.fetch(new Request(origin+url),{ASSETS:{fetch(){throw Error('Retired route must not read a stale static asset');}}});
+  ok(response.status===404&&response.headers.get('x-robots-tag').includes('noindex')&&response.headers.get('cache-control').includes('no-store'),url+' real non-cacheable 404');
+  assert.equal(await response.text(),fs.readFileSync(path.join(root,'404.html'),'utf8'));checks++;
+ }
+ for(const method of ['HEAD','POST']){const response=await worker.fetch(new Request(origin+retiredUrls[0],{method}),{});assert.equal(response.status,method==='HEAD'?404:405);assert.equal(await response.text(),'');checks+=2;}
+ const passthrough=await worker.fetch(new Request(origin+'/guides/'),{ASSETS:{fetch:()=>new Response('static passthrough')}});assert.equal(await passthrough.text(),'static passthrough');checks++;
+ for(const url of ['/tools/account-security-check','/posts/withdrawn/index.html','/posts/withdrawn/?a=%3Cscript%3E']){const response=await worker.fetch(new Request(origin+url),{});assert.equal(response.status,404);checks++;}
  const home=fs.readFileSync(path.join(root,'index.html'),'utf8');ok(home.includes('eb364159212d145f765c1e6e519e267074bedf03'),'Naver verification');
  ok(home.includes('ca-pub-7587676721583907'),'AdSense metadata');
  assert.equal(fs.readFileSync(path.join(root,'ads.txt'),'utf8').trim(),'google.com, pub-7587676721583907, DIRECT, f08c47fec0942fa0');checks++;
