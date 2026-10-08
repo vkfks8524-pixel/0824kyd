@@ -1,0 +1,65 @@
+KYD - THREE-ITEM PHOTO EXPORT REVIEW
+Template version: 2026-10-08
+Guide: https://www.kyd.kr/guides/google-photos-takeout-json-dates/
+
+Original KYD worksheet. You may save, adapt and print this template for
+your own archive. This is not a Google export parser or a recovery guarantee.
+Complete this file locally. KYD does not receive your notes.
+Keep filled records private. Never record passwords or recovery codes.
+
+EXPORT RECORD
+Request date:
+Download date:
+Archive parts listed / downloaded:
+Extraction errors or overwrite prompts (if any):
+Untouched download location:
+Untouched extraction location:
+Independent recovery copy location / still needed:
+Working sample location:
+Review date:
+
+SAMPLE A - OLDER CAMERA PHOTO
+Archive part / original relative media path:
+Media opens locally? What did you check?
+Viewer and version:
+File-system date: exact label / value:
+Embedded date: exact label / value / not shown:
+Candidate companion relative path:
+Evidence for association / unresolved:
+Context wanted (keep private):
+Destination app / version / sample import observation:
+Decision / next action:
+
+SAMPLE B - SCREENSHOT OR EDITED IMAGE
+Archive part / original relative media path:
+Media opens locally? What did you check?
+Viewer and version:
+File-system date: exact label / value:
+Embedded date: exact label / value / not shown:
+Candidate companion relative path:
+Evidence for association / unresolved:
+Context wanted (keep private):
+Destination app / version / sample import observation:
+Decision / next action:
+
+SAMPLE C - VIDEO
+Archive part / original relative media path:
+Beginning / middle / end / audio checked:
+Viewer and version:
+File-system date: exact label / value:
+Embedded date: exact label / value / not shown:
+Candidate companion relative path:
+Evidence for association / unresolved:
+Context wanted (keep private):
+Destination app / version / sample import observation:
+Decision / next action:
+
+SESSION CONCLUSION
+Observed facts:
+Remaining unknowns:
+Next action and planned check date:
+
+STOP if archive extraction is incomplete, candidate associations are
+ambiguous, or a proposed repair would overwrite your only copy.
+Do not flatten folders or apply guessed dates to resolve uncertainty.
+A working sample is not a complete-library audit or permission to delete.

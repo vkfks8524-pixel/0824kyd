@@ -8,6 +8,7 @@
     "/guides/verify-a-file-copy/",
     "/guides/plan-photo-backup-space/",
     "/guides/photo-recovery-drill/",
+    "/guides/google-photos-takeout-json-dates/",
     "/tools/",
     "/tools/photo-backup-check/",
     "/tools/file-copy-check/",
@@ -23,7 +24,8 @@
     "/guides/before-deleting-photos/",
     "/guides/verify-a-file-copy/",
     "/guides/plan-photo-backup-space/",
-    "/guides/photo-recovery-drill/"
+    "/guides/photo-recovery-drill/",
+    "/guides/google-photos-takeout-json-dates/"
   ],
   "tools": [
     "/tools/photo-backup-check/",

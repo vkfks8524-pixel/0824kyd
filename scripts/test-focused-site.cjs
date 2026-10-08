@@ -26,6 +26,23 @@ async function test(){
  const sitemap=fs.readFileSync(path.join(root,'sitemap.xml'),'utf8'),rss=fs.readFileSync(path.join(root,'rss.xml'),'utf8');
  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]).sort(),manifest.urls.map(u=>origin+u).sort());checks++;
  assert.equal((rss.match(/<item>/g)||[]).length,guides.length);checks++;
+ for(const guide of guides){
+  const article=fs.readFileSync(path.join(root,'guides',guide.slug,'index.html'),'utf8');
+  const schema=JSON.parse(article.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(schema.datePublished,guide.published);assert.equal(schema.dateModified,guide.reviewed);checks+=2;
+  ok(article.includes(`property="article:published_time" content="${guide.published}"`)&&article.includes(`property="article:modified_time" content="${guide.reviewed}"`),guide.slug+' social dates');
+  ok(sitemap.includes(`<loc>${origin}/guides/${guide.slug}/</loc><lastmod>${guide.reviewed}</lastmod>`),guide.slug+' sitemap date');
+  const item=[...rss.matchAll(/<item>([\s\S]*?)<\/item>/g)].find(m=>m[1].includes(`<link>${origin}/guides/${guide.slug}/</link>`))[1];
+  ok(item.includes(`<pubDate>${new Date(guide.published+'T00:00:00Z').toUTCString()}</pubDate>`),guide.slug+' RSS date');
+ }
+ for(const slug of ['before-deleting-photos','verify-a-file-copy','plan-photo-backup-space','photo-recovery-drill']){
+  const guide=guides.find(g=>g.slug===slug);ok(guide.published==='2026-10-07'&&guide.reviewed==='2026-10-07',slug+' original dates not refreshed by new publication');
+ }
+ const takeout=guides.find(g=>g.slug==='google-photos-takeout-json-dates');
+ ok(takeout.published==='2026-10-08'&&takeout.reviewed==='2026-10-08','new guide actual publication day');
+ ok(rss.indexOf('<link>'+origin+'/guides/google-photos-takeout-json-dates/</link>')<rss.indexOf('<link>'+origin+'/guides/before-deleting-photos/</link>'),'new publication first in RSS');
+ const worksheet=fs.readFileSync(path.join(root,'assets/worksheets/takeout-review.txt'),'utf8');
+ ok(worksheet.includes('SAMPLE A')&&worksheet.includes('SAMPLE B')&&worksheet.includes('SAMPLE C')&&worksheet.includes('Remaining unknowns:'),'three-item worksheet complete');
  ok(!rss.includes('/posts/')&&!sitemap.includes('/posts/'),'retired articles excluded');
  const titles=new Set(),descriptions=new Set();
  const files=manifest.urls.map(u=>u.slice(1)+'index.html').concat('404.html');

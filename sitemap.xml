@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://www.kyd.kr/</loc><lastmod>2026-10-07</lastmod></url>
-<url><loc>https://www.kyd.kr/guides/</loc><lastmod>2026-10-07</lastmod></url>
+<url><loc>https://www.kyd.kr/</loc><lastmod>2026-10-08</lastmod></url>
+<url><loc>https://www.kyd.kr/guides/</loc><lastmod>2026-10-08</lastmod></url>
 <url><loc>https://www.kyd.kr/guides/before-deleting-photos/</loc><lastmod>2026-10-07</lastmod></url>
 <url><loc>https://www.kyd.kr/guides/verify-a-file-copy/</loc><lastmod>2026-10-07</lastmod></url>
 <url><loc>https://www.kyd.kr/guides/plan-photo-backup-space/</loc><lastmod>2026-10-07</lastmod></url>
 <url><loc>https://www.kyd.kr/guides/photo-recovery-drill/</loc><lastmod>2026-10-07</lastmod></url>
+<url><loc>https://www.kyd.kr/guides/google-photos-takeout-json-dates/</loc><lastmod>2026-10-08</lastmod></url>
 <url><loc>https://www.kyd.kr/tools/</loc><lastmod>2026-10-07</lastmod></url>
 <url><loc>https://www.kyd.kr/tools/photo-backup-check/</loc><lastmod>2026-10-07</lastmod></url>
 <url><loc>https://www.kyd.kr/tools/file-copy-check/</loc><lastmod>2026-10-07</lastmod></url>
@@ -15,5 +16,5 @@
 <url><loc>https://www.kyd.kr/editorial-policy/</loc><lastmod>2026-10-07</lastmod></url>
 <url><loc>https://www.kyd.kr/contact/</loc><lastmod>2026-10-07</lastmod></url>
 <url><loc>https://www.kyd.kr/privacy/</loc><lastmod>2026-10-07</lastmod></url>
-<url><loc>https://www.kyd.kr/updates/</loc><lastmod>2026-10-07</lastmod></url>
+<url><loc>https://www.kyd.kr/updates/</loc><lastmod>2026-10-08</lastmod></url>
 </urlset>

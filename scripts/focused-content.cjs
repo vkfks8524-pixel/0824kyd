@@ -8,7 +8,9 @@ const sources = {
   googleDelete: ['Google Photos: deleting photos and videos', 'https://support.google.com/photos/answer/6128858?hl=en'],
   googleFree: ['Google Photos: free up space on an Android device', 'https://support.google.com/photos/answer/6128843?hl=en'],
   googleQuality: ['Google Photos: backup quality and compression', 'https://support.google.com/photos/answer/6220791?hl=en'],
-  digest: ['MDN: the browser digest API and its memory limitation', 'https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest']
+  digest: ['MDN: the browser digest API and its memory limitation', 'https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest'],
+  googleTakeout: ['Google: download your data — archives and photo metadata', 'https://support.google.com/accounts/answer/3024190?hl=en'],
+  locPhotoContext: ['Library of Congress: keep descriptions with photographs', 'https://blogs.loc.gov/thesignal/2011/09/remember-when-we-had-photographs/']
 };
 const guides = [
 {
@@ -60,4 +62,6 @@ const guides = [
  ]
 }
 ];
+guides.push(require('./takeout-guide.cjs'));
+for(const guide of guides){guide.published ||= reviewed;guide.reviewed ||= reviewed;}
 module.exports = {reviewed,sources,guides};

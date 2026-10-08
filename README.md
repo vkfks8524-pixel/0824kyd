@@ -10,12 +10,14 @@ node scripts/test-focused-site.cjs
 ```
 
 - Guide source: `scripts/focused-content.cjs`.
+- The October 8 export-context guide is maintained in `scripts/takeout-guide.cjs`; its downloadable blank worksheet is `assets/worksheets/takeout-review.txt`.
 - Page templates, trust pages and explicit publication manifest: `scripts/build-focused-site.cjs`.
 - Tool implementation: `assets/focus-tools.js`.
 - Design: `assets/focus.css`.
 - Commit generated HTML, RSS, sitemap and `public/` mirrors together.
 - Only substantively reviewed pages should receive a new `reviewed` date. Do not automatically bump dates daily.
-- The four guides are not an AdSense minimum-page threshold. Approval and indexing are external decisions.
+- Every guide has separate `published` and `reviewed` dates. Generated article metadata, RSS and sitemap use these dates; adding a guide must not redate older guides.
+- The number of guides is not an AdSense minimum-page threshold. Approval and indexing are external decisions.
 
 ## Withdrawal and recovery
 
@@ -27,7 +29,7 @@ These archives are not served by the website. The old content remains in public 
 
 ### Withdrawal response guard
 
-Some custom-domain responses continued to return old HTML after a successful Cloudflare zone cache purge, even though the current Pages deployment returned 404. Generated `_worker.js` returns a non-cacheable 404 directly for retired article and tool routes. `_routes.json` limits invocation to those routes; all 16 current pages, feeds, assets and collection redirects remain static. The guard does not read request bodies, save data or call outside services. HEAD has no body; unsupported methods return 405.
+Some custom-domain responses continued to return old HTML after a successful Cloudflare zone cache purge, even though the current Pages deployment returned 404. Generated `_worker.js` returns a non-cacheable 404 directly for retired article and tool routes. `_routes.json` limits invocation to those routes; all current pages, feeds, assets and collection redirects remain static. The guard does not read request bodies, save data or call outside services. HEAD has no body; unsupported methods return 405.
 
 These limited requests use the existing Workers Free daily allowance (shared 100,000 requests as documented on 2026-10-07); no paid plan was enabled. Static requests do not consume that allowance. If Functions cannot run, the deployment still contains no old article files and has a static 404 fallback. Removing this guard should require normal, cache-enabled production checks confirming that withdrawn content cannot reappear. Sources: [Pages routing](https://developers.cloudflare.com/pages/functions/routing/), [Pages pricing](https://developers.cloudflare.com/pages/functions/pricing/).
 
