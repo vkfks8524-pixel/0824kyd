@@ -11,6 +11,7 @@ node scripts/test-focused-site.cjs
 
 - Guide source: `scripts/focused-content.cjs`.
 - The October 8 export-context guide is maintained in `scripts/takeout-guide.cjs`; its downloadable blank worksheet is `assets/worksheets/takeout-review.txt`.
+- The October 12 Live Photo component guide is maintained in `scripts/live-photos-guide.cjs`; its blank ledger is `assets/worksheets/live-photo-ledger.txt`. Its count example uses synthetic labels, not a real library test.
 - Page templates, trust pages and explicit publication manifest: `scripts/build-focused-site.cjs`.
 - Tool implementation: `assets/focus-tools.js`.
 - Design: `assets/focus.css`.

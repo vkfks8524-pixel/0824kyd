@@ -40,9 +40,19 @@ async function test(){
  }
  const takeout=guides.find(g=>g.slug==='google-photos-takeout-json-dates');
  ok(takeout.published==='2026-10-08'&&takeout.reviewed==='2026-10-08','new guide actual publication day');
- ok(rss.indexOf('<link>'+origin+'/guides/google-photos-takeout-json-dates/</link>')<rss.indexOf('<link>'+origin+'/guides/before-deleting-photos/</link>'),'new publication first in RSS');
+ const rssGuideOrder=[...rss.matchAll(/<item>[\s\S]*?<link>(.*?)<\/link>/g)].map(m=>m[1]);
+ assert.deepEqual(rssGuideOrder,[...guides].sort((a,b)=>b.published.localeCompare(a.published)).map(g=>origin+'/guides/'+g.slug+'/'));checks++;
  const worksheet=fs.readFileSync(path.join(root,'assets/worksheets/takeout-review.txt'),'utf8');
  ok(worksheet.includes('SAMPLE A')&&worksheet.includes('SAMPLE B')&&worksheet.includes('SAMPLE C')&&worksheet.includes('Remaining unknowns:'),'three-item worksheet complete');
+ const livePhotos=guides.find(g=>g.slug==='back-up-live-photos');
+ ok(livePhotos.published==='2026-10-12'&&livePhotos.reviewed==='2026-10-12','Live Photo guide actual publication date');
+ const example=livePhotos.inventoryExample;
+ assert.equal(example.length*2,6);assert.equal(example.reduce((sum,row)=>sum+row.observed.length+row.extra.length,0),6);assert.equal(example.reduce((sum,row)=>sum+row.observed.length,0),5);checks+=3;
+ assert.deepEqual(example.filter(row=>!row.observed.includes('motion')).map(row=>row.label),['B']);checks++;
+ const ledger=fs.readFileSync(path.join(root,'assets/worksheets/live-photo-ledger.txt'),'utf8');
+ ok(ledger.includes('Still component relative path:')&&ledger.includes('Motion component relative path:')&&ledger.includes('Destination result')&&ledger.includes('Missing or ambiguous components:'),'component ledger includes distinct evidence fields');
+ const liveBody=livePhotos.sections.map(s=>s[2]).join('');
+ ok(liveBody.includes('Fictional inventory')&&liveBody.includes('five of the six expected original components'),'synthetic inventory clearly labelled');
  ok(!rss.includes('/posts/')&&!sitemap.includes('/posts/'),'retired articles excluded');
  const titles=new Set(),descriptions=new Set();
  const files=manifest.urls.map(u=>u.slice(1)+'index.html').concat('404.html');

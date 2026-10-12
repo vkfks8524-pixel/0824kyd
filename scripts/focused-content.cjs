@@ -10,7 +10,9 @@ const sources = {
   googleQuality: ['Google Photos: backup quality and compression', 'https://support.google.com/photos/answer/6220791?hl=en'],
   digest: ['MDN: the browser digest API and its memory limitation', 'https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest'],
   googleTakeout: ['Google: download your data — archives and photo metadata', 'https://support.google.com/accounts/answer/3024190?hl=en'],
-  locPhotoContext: ['Library of Congress: keep descriptions with photographs', 'https://blogs.loc.gov/thesignal/2011/09/remember-when-we-had-photographs/']
+  locPhotoContext: ['Library of Congress: keep descriptions with photographs', 'https://blogs.loc.gov/thesignal/2011/09/remember-when-we-had-photographs/'],
+  applePhotosExport: ['Apple Photos: original-file export and Live Photo components', 'https://support.apple.com/guide/photos/export-photos-videos-slideshows-and-memories-pht6e157c5f/mac'],
+  appleDownloads: ['Apple: photo download routes and format choices', 'https://support.apple.com/en-us/111762']
 };
 const guides = [
 {
@@ -63,5 +65,6 @@ const guides = [
 }
 ];
 guides.push(require('./takeout-guide.cjs'));
+guides.push(require('./live-photos-guide.cjs'));
 for(const guide of guides){guide.published ||= reviewed;guide.reviewed ||= reviewed;}
 module.exports = {reviewed,sources,guides};

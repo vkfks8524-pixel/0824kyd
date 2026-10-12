@@ -1,0 +1,46 @@
+KYD - LIVE PHOTO COMPONENT LEDGER
+Template version: 2026-10-12
+Guide: https://www.kyd.kr/guides/back-up-live-photos/
+
+Original KYD template. Save, adapt and print for your own archive.
+Complete locally; KYD does not receive your notes. Keep completed records
+private. Never include passwords, recovery codes or private account IDs.
+This is not a file scanner, pairing tool or recovery guarantee.
+
+SESSION
+Date:
+Device / operating system / app version:
+Export route and exact options:
+Selected source items (use private labels):
+Destination and its sync/account dependencies:
+Untouched export location:
+Working-copy location:
+Export errors or replacement prompts:
+
+ITEM RECORD - duplicate this block for each selected item
+Source item label:
+What must survive (original / edited appearance / motion / other):
+Still component relative path:
+Still opened? Viewer/version and observed result:
+Motion component relative path:
+Motion played? Player/version and observed result:
+Audio expected? Observed result / not checked:
+Evidence connecting these components / unresolved:
+Sidecar paths and purpose, if known:
+Extra edited or sharing versions (identify separately):
+Plain-copy integrity comparison, if performed (not a pairing test):
+Destination app/version and test-library setup:
+Destination result (one motion-enabled item / separate items / other):
+Remaining limitation and next action:
+
+SESSION CONCLUSION
+Expected components for this particular sample and export route:
+Expected components actually accounted for:
+Extra versions / sidecars (do not count as missing components):
+Missing or ambiguous components:
+Untested source items and untested behaviors:
+Independent retrieval route still to check:
+Next action and review date:
+
+Keep originals. Equal file counts do not prove completeness.
+A successful small sample is not permission to delete the source library.
