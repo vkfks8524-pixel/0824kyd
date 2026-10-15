@@ -10,6 +10,7 @@ node scripts/test-focused-site.cjs
 ```
 
 - Guide source: `scripts/focused-content.cjs`.
+- The revised copy-verification guide is `scripts/copy-check-guide.cjs`. `scripts/build-copy-fixtures.cjs` reproducibly builds five original SVG software fixtures, the digest manifest and the embedded browser examples; the main build runs it automatically. The fixtures are not camera photos or a cloud-recovery test.
 - The October 8 export-context guide is maintained in `scripts/takeout-guide.cjs`; its downloadable blank worksheet is `assets/worksheets/takeout-review.txt`.
 - The October 12 Live Photo component guide is maintained in `scripts/live-photos-guide.cjs`; its blank ledger is `assets/worksheets/live-photo-ledger.txt`. Its count example uses synthetic labels, not a real library test.
 - Page templates, trust pages and explicit publication manifest: `scripts/build-focused-site.cjs`.

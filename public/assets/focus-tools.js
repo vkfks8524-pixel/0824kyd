@@ -28,6 +28,12 @@
   }
   function gibToGb(value) { return number(value,0,10000000)*2**30/1e9; }
   function validateSize(size) { if (!Number.isInteger(size) || size < 0 || size > MAX_BYTES) throw new Error('Choose files no larger than 32 MiB each. No comparison completed.'); }
+  function interpretation(result) {
+    if(result.sizeA===0&&result.sizeB===0)return 'Both files are empty. Matching zero bytes is not a usable photo backup.';
+    if(result.equal)return 'The selected contents match. Next, open the copied media in a trusted viewer and check that the destination is independent of the source.';
+    if(result.sizeA!==result.sizeB)return 'The byte counts differ. Check original versus export/edited version, then retry a plain copy into a new folder without overwriting either input.';
+    return 'The sizes match but the bytes differ. Metadata or image data may have changed; this tool cannot identify the cause. Keep both inputs and inspect their origin.';
+  }
   async function compareBytes(a,b,cryptoApi) {
     validateSize(a.byteLength); validateSize(b.byteLength);
     if (!cryptoApi?.subtle) throw new Error('This browser needs Web Crypto on HTTPS (or localhost). No comparison completed.');
@@ -37,7 +43,7 @@
     const hashA = await hash(a), hashB = await hash(b);
     return {equal,sizeA:a.byteLength,sizeB:b.byteLength,hashA,hashB};
   }
-  if (typeof module !== 'undefined') module.exports = {MAX_BYTES,steps,review,plan,gibToGb,validateSize,compareBytes};
+  if (typeof module !== 'undefined') module.exports = {MAX_BYTES,steps,review,plan,gibToGb,validateSize,compareBytes,interpretation};
   if (typeof document === 'undefined') return;
   const $ = id => document.getElementById(id);
   const format = n => n.toLocaleString('en-US',{maximumFractionDigits:2});
@@ -102,8 +108,9 @@
       $('file-output').hidden=false;
       report('file-verdict',`${label}: ${result.equal?'Byte-identical':'Different contents'}`);
       report('file-sizes',`File A: ${format(result.sizeA)} bytes. File B: ${format(result.sizeB)} bytes.`);
+      report('file-next',interpretation(result));
       report('file-hash-a',result.hashA);report('file-hash-b',result.hashB);
-      currentReport=`KYD local file comparison\n${new Date().toISOString()}\n${$('file-verdict').textContent}\n${$('file-sizes').textContent}\nSHA-256 A: ${result.hashA}\nSHA-256 B: ${result.hashB}\n\nNo filenames included. One pair only; not proof of media health, provenance or a complete backup. https://www.kyd.kr/tools/file-copy-check/`;
+      currentReport=`KYD local file comparison\n${new Date().toISOString()}\n${$('file-verdict').textContent}\n${$('file-sizes').textContent}\nSHA-256 A: ${result.hashA}\nSHA-256 B: ${result.hashB}\nNext: ${interpretation(result)}\n\nNo filenames included. One pair only; not proof of media health, provenance or a complete backup. https://www.kyd.kr/tools/file-copy-check/`;
       $('file-save').disabled=false;
     };
     async function run(demo) {
@@ -128,6 +135,27 @@
     $('file-demo').addEventListener('click',()=>run(true));
     $('file-clear').addEventListener('click',()=>{ $('file-form').reset();invalidate();report('file-status','Selections and results cleared.'); });
     $('file-save').addEventListener('click',()=>{if(currentReport)download(currentReport,'kyd-file-comparison.txt');});
+  }
+  if($('image-lab')) {
+    const controls=Array.from(document.querySelectorAll('[data-image-case]'));
+    controls.forEach(button=>button.addEventListener('click',async()=>{
+      controls.forEach(b=>b.disabled=true);$('image-lab-result').hidden=false;
+      report('image-lab-title','Running the synthetic image comparison…');
+      for(const id of ['image-lab-pair','image-lab-check','image-lab-lesson','image-lab-hashes'])report(id,'');
+      try {
+        const fixture=window.KYDCopyFixtures,chosen=fixture?.cases.find(c=>c.id===button.dataset.imageCase);
+        if(!chosen)throw new Error('Fixture data unavailable. Reload the page or download the reference files.');
+        const a=fixture.files.find(f=>f.name===chosen.a),b=fixture.files.find(f=>f.name===chosen.b),encoder=new TextEncoder();
+        const result=await compareBytes(encoder.encode(a.text),encoder.encode(b.text),globalThis.crypto);
+        const passed=result.equal===chosen.equal&&result.hashA===a.sha256&&result.hashB===b.sha256&&result.sizeA===a.size&&result.sizeB===b.size;
+        report('image-lab-title',`${chosen.label}: ${result.equal?'Byte-identical':'Different contents'}`);
+        report('image-lab-pair',`${a.name} (${result.sizeA} bytes) / ${b.name} (${result.sizeB} bytes)`);
+        report('image-lab-check',passed?'Matches the published expected outcome and both reference fingerprints.':'Unexpected result. Do not rely on this session; report the public fixture case.');
+        report('image-lab-lesson',chosen.lesson+' No personal files were read.');
+        report('image-lab-hashes',`A: ${result.hashA}\nB: ${result.hashB}`);
+      }catch(error){report('image-lab-title','Experiment not completed');report('image-lab-check',error.message);}
+      finally{controls.forEach(b=>b.disabled=false);}
+    }));
   }
   if ($('print-sheet')) $('print-sheet').addEventListener('click',()=>window.print());
 })();

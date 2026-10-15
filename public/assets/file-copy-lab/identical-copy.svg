@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400">
+<title>KYD synthetic copy-check chart</title>
+<metadata>KYD-record=A</metadata>
+<rect width="640" height="400" fill="#f6f5ef"/>
+<rect x="32" y="32" width="576" height="336" rx="18" fill="#155746"/>
+<circle cx="170" cy="170" r="72" fill="#e5b964"/>
+<path d="M300 285 L400 105 L520 285 Z" fill="#ffffff"/>
+<path d="M70 320 H570" stroke="#ffffff" stroke-width="4"/>
+</svg>

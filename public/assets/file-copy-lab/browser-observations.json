@@ -1,0 +1,27 @@
+{
+  "observedOn": "2026-10-15",
+  "environment": "Windows, Codex in-app browser; local preview of the KYD build",
+  "scope": "Public synthetic SVG fixtures only. Not a personal-photo, cloud-export, JPEG/HEIC or recovery test. Observed by browser automation; not independent certification.",
+  "referenceSha256": "e07762ee42804677d7ebefe867a4fda1a75ab24202c83b00f2cf0a60ff69cf5c",
+  "cases": [
+    {"case": "Identical copy", "sizeA": 458, "sizeB": 458, "equal": true, "bothReferenceHashesMatched": true},
+    {"case": "Metadata-only change", "sizeA": 458, "sizeB": 458, "equal": false, "bothReferenceHashesMatched": true},
+    {"case": "Same size, different drawing", "sizeA": 458, "sizeB": 458, "equal": false, "bothReferenceHashesMatched": true},
+    {"case": "Truncated file", "sizeA": 458, "sizeB": 200, "equal": false, "bothReferenceHashesMatched": true},
+    {"case": "Two identical broken inputs", "sizeA": 200, "sizeB": 200, "equal": true, "bothReferenceHashesMatched": true}
+  ],
+  "filePickerChecks": [
+    "No selections: Select File A and File B first.",
+    "reference.svg / identical-copy.svg: Byte-identical; 458 / 458 bytes; hashes matched reference.",
+    "Changing File B hid the previous result and disabled saving until a new comparison.",
+    "reference.svg / metadata-change.svg: Different contents; 458 / 458 bytes; hashes matched reference.",
+    "Clear hid the result and disabled saving.",
+    "Existing abc / abc and abc / abd text demonstration passed."
+  ],
+  "rendering": {
+    "threePreviews": "Loaded at 640 by 400 intrinsic pixels. Reference and metadata previews appeared the same; color variant visibly differed.",
+    "truncatedSvg": "Direct opening displayed an XML error: error on line 4 at column 33: Specification mandates value for attribute f"
+  },
+  "screenshot": "/assets/evidence/copy-experiment-20261015.png",
+  "limitations": ["Generated local files were selected through the file pickers; a browser download-and-reselect round trip was not tested.", "No cross-browser or operating-system compatibility claim."]
+}

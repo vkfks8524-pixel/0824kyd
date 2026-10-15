@@ -1,7 +1,7 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'..'),origin='https://www.kyd.kr';
-const {steps,review,plan,gibToGb,validateSize,compareBytes,MAX_BYTES}=require('../assets/focus-tools.js');
+const {steps,review,plan,gibToGb,validateSize,compareBytes,MAX_BYTES,interpretation}=require('../assets/focus-tools.js');
 const {guides}=require('./focused-content.cjs');
 let checks=0;const ok=(condition,message)=>{assert.ok(condition,message);checks++;};
 async function test(){
@@ -35,9 +35,25 @@ async function test(){
   const item=[...rss.matchAll(/<item>([\s\S]*?)<\/item>/g)].find(m=>m[1].includes(`<link>${origin}/guides/${guide.slug}/</link>`))[1];
   ok(item.includes(`<pubDate>${new Date(guide.published+'T00:00:00Z').toUTCString()}</pubDate>`),guide.slug+' RSS date');
  }
- for(const slug of ['before-deleting-photos','verify-a-file-copy','plan-photo-backup-space','photo-recovery-drill']){
+ for(const slug of ['before-deleting-photos','plan-photo-backup-space','photo-recovery-drill']){
   const guide=guides.find(g=>g.slug===slug);ok(guide.published==='2026-10-07'&&guide.reviewed==='2026-10-07',slug+' original dates not refreshed by new publication');
  }
+ const revised=guides.find(g=>g.slug==='verify-a-file-copy');ok(revised.published==='2026-10-07'&&revised.reviewed==='2026-10-15','substantive revision retains original publication date');
+ const fixtures=require('./build-copy-fixtures.cjs');
+ for(const file of fixtures.files){
+  const bytes=fs.readFileSync(path.join(root,'assets/file-copy-lab',file.name));assert.equal(bytes.length,file.size);assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),file.sha256);checks+=2;
+  ok(!/<script|\bon\w+=|href=/i.test(file.text),'controlled SVG contains no script, events or linked resources');
+ }
+ for(const pair of fixtures.cases){const a=fixtures.files.find(f=>f.name===pair.a),b=fixtures.files.find(f=>f.name===pair.b),result=await compareBytes(e.encode(a.text),e.encode(b.text),crypto.webcrypto);assert.equal(result.equal,pair.equal);assert.equal(result.hashA,a.sha256);assert.equal(result.hashB,b.sha256);checks+=3;}
+ ok(interpretation(empty).includes('empty')&&interpretation(same).includes('match')&&interpretation(different).includes('sizes match'),'result-specific explanations including empty inputs');
+ ok(interpretation({equal:false,sizeA:1,sizeB:2}).includes('counts differ'),'different-size next step');
+ const observation=JSON.parse(fs.readFileSync(path.join(root,'assets/file-copy-lab/browser-observations.json'),'utf8'));
+ ok(observation.cases.length===5&&observation.cases.every(c=>c.bothReferenceHashesMatched),'five recorded browser observations');
+ const strengthenedGuide=guides.find(g=>g.slug==='verify-a-file-copy');
+ const strengthenedBody=strengthenedGuide.sections.map(s=>s[2]).join('');
+ ok(strengthenedBody.includes('Get-FileHash -Algorithm SHA256 -LiteralPath ./reference.svg'),'usable PowerShell command');
+ ok(strengthenedBody.includes('local preview')&&strengthenedBody.includes('not a browser download-and-reselect round trip'),'observational scope not overstated');
+ ok(strengthenedGuide.sections.some(s=>s[0]==='procedure'),'existing procedure anchor preserved');
  const takeout=guides.find(g=>g.slug==='google-photos-takeout-json-dates');
  ok(takeout.published==='2026-10-08'&&takeout.reviewed==='2026-10-08','new guide actual publication day');
  const rssGuideOrder=[...rss.matchAll(/<item>[\s\S]*?<link>(.*?)<\/link>/g)].map(m=>m[1]);
