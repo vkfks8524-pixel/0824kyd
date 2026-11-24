@@ -1,6 +1,6 @@
 KYD - LIVE PHOTO COMPONENT LEDGER
 Template version: 2026-10-12
-Guide: https://www.kyd.kr/guides/back-up-live-photos/
+Guide: https://www.kyd.kr/en/guides/back-up-live-photos/
 
 Original KYD template. Save, adapt and print for your own archive.
 Complete locally; KYD does not receive your notes. Keep completed records

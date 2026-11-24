@@ -70,7 +70,7 @@
       const headline=result.remaining.length ? `${result.completed} of 6 checks marked. ${result.remaining.length} still need evidence.` : 'All 6 checks marked by you. This is not a verification of your files.';
       report('backup-status',headline);
       $('backup-next').replaceChildren(...result.remaining.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));
-      currentReport=`KYD photo backup self-check\n${new Date().toISOString().slice(0,10)}\n${headline}\n\n${result.remaining.map(t=>'- '+t).join('\n')}\n\nSelf-reported checklist only. Not a recovery guarantee or permission to delete. https://www.kyd.kr/tools/photo-backup-check/`;
+      currentReport=`KYD photo backup self-check\n${new Date().toISOString().slice(0,10)}\n${headline}\n\n${result.remaining.map(t=>'- '+t).join('\n')}\n\nSelf-reported checklist only. Not a recovery guarantee or permission to delete. https://www.kyd.kr/en/tools/photo-backup-check/`;
     }
     $('backup-form').addEventListener('submit',e=>{e.preventDefault();renderReview();});
     $('backup-form').addEventListener('change',renderReview);
@@ -90,7 +90,7 @@
         report('space-equation',`(${format(r.current)} + ${format(r.growth)} × ${r.months} + ${format(r.versions)}) ÷ (1 − ${r.reserve}/100) = ${format(r.budget)} GB`);
         report('space-gap',r.gap>0?`Your entered free space is ${format(r.gap)} GB below this budget.`:`Your entered free space meets this budget, with ${format(r.headroom)} GB beyond it.`);
         report('space-units',`Same byte amount: ${format(r.gib)} GiB. With double monthly growth: ${format(r.stress)} GB.`);
-        currentReport=`KYD new-copy space plan\n${new Date().toISOString().slice(0,10)}\n${$('space-equation').textContent}\nEntered free space: ${r.free} GB\n${$('space-gap').textContent}\n${$('space-units').textContent}\n\nEstimate for one new full copy. Not a device recommendation or backup guarantee. https://www.kyd.kr/tools/storage-planner/`;
+        currentReport=`KYD new-copy space plan\n${new Date().toISOString().slice(0,10)}\n${$('space-equation').textContent}\nEntered free space: ${r.free} GB\n${$('space-gap').textContent}\n${$('space-units').textContent}\n\nEstimate for one new full copy. Not a device recommendation or backup guarantee. https://www.kyd.kr/en/tools/storage-planner/`;
       } catch(error) { report('space-error',error.message); $('space-result').hidden=true; $('space-save').disabled=true; currentReport=''; }
     }
     $('space-form').addEventListener('submit',e=>{e.preventDefault();calculate();});
@@ -110,7 +110,7 @@
       report('file-sizes',`File A: ${format(result.sizeA)} bytes. File B: ${format(result.sizeB)} bytes.`);
       report('file-next',interpretation(result));
       report('file-hash-a',result.hashA);report('file-hash-b',result.hashB);
-      currentReport=`KYD local file comparison\n${new Date().toISOString()}\n${$('file-verdict').textContent}\n${$('file-sizes').textContent}\nSHA-256 A: ${result.hashA}\nSHA-256 B: ${result.hashB}\nNext: ${interpretation(result)}\n\nNo filenames included. One pair only; not proof of media health, provenance or a complete backup. https://www.kyd.kr/tools/file-copy-check/`;
+      currentReport=`KYD local file comparison\n${new Date().toISOString()}\n${$('file-verdict').textContent}\n${$('file-sizes').textContent}\nSHA-256 A: ${result.hashA}\nSHA-256 B: ${result.hashB}\nNext: ${interpretation(result)}\n\nNo filenames included. One pair only; not proof of media health, provenance or a complete backup. https://www.kyd.kr/en/tools/file-copy-check/`;
       $('file-save').disabled=false;
     };
     async function run(demo) {

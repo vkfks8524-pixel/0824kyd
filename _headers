@@ -3,6 +3,8 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
 /tools/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; connect-src 'none'; img-src 'self' data: blob:; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'
+/en/tools/*
   Content-Security-Policy: default-src 'self'; script-src 'self'; connect-src 'none'; img-src 'self' data:; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'
 /404.html
   X-Robots-Tag: noindex

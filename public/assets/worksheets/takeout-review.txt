@@ -1,6 +1,6 @@
 KYD - THREE-ITEM PHOTO EXPORT REVIEW
 Template version: 2026-10-08
-Guide: https://www.kyd.kr/guides/google-photos-takeout-json-dates/
+Guide: https://www.kyd.kr/en/guides/google-photos-takeout-json-dates/
 
 Original KYD worksheet. You may save, adapt and print this template for
 your own archive. This is not a Google export parser or a recovery guarantee.

@@ -1,0 +1,70 @@
+{
+ "date": "2026-11-24",
+ "note": "합성 파일로 만든 재현 시험입니다. 실제 개인 사진 보관함을 시험한 결과가 아닙니다.",
+ "duplicate": {
+  "files": 10,
+  "groups": [
+   [
+    "photo.jpg",
+    "photo (1).jpg"
+   ],
+   [
+    "reference.svg",
+    "identical-copy.svg"
+   ]
+  ],
+  "extra": 2,
+  "empty": 2
+ },
+ "folder": {
+  "source": [
+   "원본/2024/여행/a.jpg",
+   "원본/2024/여행/b.jpg",
+   "원본/2024/가족/c.jpg",
+   "원본/2025/d.jpg",
+   "원본/2025/e.mp4",
+   "원본/2025/f.jpg"
+  ],
+  "backup": [
+   "백업/2024/여행/a.jpg",
+   "백업/2024/여행/b.jpg",
+   "백업/정리전/c.jpg",
+   "백업/2025/d.jpg",
+   "백업/2025/f.jpg",
+   "백업/옛날/z.jpg"
+  ],
+  "quick": {
+   "same": [
+    "2024/여행/a.jpg",
+    "2024/여행/b.jpg",
+    "2025/f.jpg"
+   ],
+   "missing": [
+    "2024/가족/c.jpg",
+    "2025/e.mp4"
+   ],
+   "different": [
+    "2025/d.jpg"
+   ],
+   "moved": [],
+   "extra": 2
+  },
+  "exact": {
+   "same": [
+    "2024/여행/a.jpg",
+    "2025/f.jpg"
+   ],
+   "missing": [
+    "2025/e.mp4"
+   ],
+   "different": [
+    "2024/여행/b.jpg",
+    "2025/d.jpg"
+   ],
+   "moved": [
+    "2024/가족/c.jpg → 정리전/c.jpg"
+   ],
+   "extra": 2
+  }
+ }
+}

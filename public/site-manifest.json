@@ -1,37 +1,106 @@
 {
-  "edition": "photo-file-care",
-  "reviewed": "2026-10-07",
+  "edition": "ko-photo-file-tools",
+  "date": "2026-11-24",
   "urls": [
     "/",
     "/guides/",
-    "/guides/before-deleting-photos/",
-    "/guides/verify-a-file-copy/",
-    "/guides/plan-photo-backup-space/",
+    "/guides/photo-size-quality-test/",
+    "/guides/remove-photo-location/",
+    "/guides/check-missing-backup-files/",
+    "/guides/exact-duplicate-photos/",
+    "/guides/passport-photo-file/",
+    "/guides/heic-to-jpg/",
+    "/guides/photo-sync-vs-backup/",
+    "/guides/verify-copied-photo/",
+    "/guides/google-takeout-photo-dates/",
+    "/guides/live-photo-backup/",
+    "/guides/backup-space-plan/",
     "/guides/photo-recovery-drill/",
-    "/guides/google-photos-takeout-json-dates/",
-    "/guides/back-up-live-photos/",
     "/tools/",
-    "/tools/photo-backup-check/",
+    "/tools/photo-compress/",
+    "/tools/photo-location/",
+    "/tools/duplicate-finder/",
+    "/tools/folder-compare/",
+    "/tools/id-photo/",
     "/tools/file-copy-check/",
     "/tools/storage-planner/",
+    "/tools/photo-backup-check/",
     "/methods/",
     "/about/",
     "/editorial-policy/",
     "/contact/",
     "/privacy/",
-    "/updates/"
+    "/terms/",
+    "/updates/",
+    "/en/about/",
+    "/en/contact/",
+    "/en/editorial-policy/",
+    "/en/guides/back-up-live-photos/",
+    "/en/guides/before-deleting-photos/",
+    "/en/guides/google-photos-takeout-json-dates/",
+    "/en/guides/",
+    "/en/guides/photo-recovery-drill/",
+    "/en/guides/plan-photo-backup-space/",
+    "/en/guides/verify-a-file-copy/",
+    "/en/",
+    "/en/methods/",
+    "/en/privacy/",
+    "/en/tools/file-copy-check/",
+    "/en/tools/",
+    "/en/tools/photo-backup-check/",
+    "/en/tools/storage-planner/",
+    "/en/updates/"
   ],
   "guides": [
-    "/guides/before-deleting-photos/",
-    "/guides/verify-a-file-copy/",
-    "/guides/plan-photo-backup-space/",
-    "/guides/photo-recovery-drill/",
-    "/guides/google-photos-takeout-json-dates/",
-    "/guides/back-up-live-photos/"
+    "/guides/photo-size-quality-test/",
+    "/guides/remove-photo-location/",
+    "/guides/check-missing-backup-files/",
+    "/guides/exact-duplicate-photos/",
+    "/guides/passport-photo-file/",
+    "/guides/heic-to-jpg/",
+    "/guides/photo-sync-vs-backup/",
+    "/guides/verify-copied-photo/",
+    "/guides/google-takeout-photo-dates/",
+    "/guides/live-photo-backup/",
+    "/guides/backup-space-plan/",
+    "/guides/photo-recovery-drill/"
   ],
   "tools": [
-    "/tools/photo-backup-check/",
+    "/tools/photo-compress/",
+    "/tools/photo-location/",
+    "/tools/duplicate-finder/",
+    "/tools/folder-compare/",
+    "/tools/id-photo/",
     "/tools/file-copy-check/",
-    "/tools/storage-planner/"
+    "/tools/storage-planner/",
+    "/tools/photo-backup-check/"
+  ],
+  "redirects": [
+    [
+      "/guides/before-deleting-photos/",
+      "/en/guides/before-deleting-photos/"
+    ],
+    [
+      "/guides/verify-a-file-copy/",
+      "/en/guides/verify-a-file-copy/"
+    ],
+    [
+      "/guides/plan-photo-backup-space/",
+      "/en/guides/plan-photo-backup-space/"
+    ],
+    [
+      "/guides/google-photos-takeout-json-dates/",
+      "/en/guides/google-photos-takeout-json-dates/"
+    ],
+    [
+      "/guides/back-up-live-photos/",
+      "/en/guides/back-up-live-photos/"
+    ]
+  ],
+  "retired": [
+    "/tools/account-security-check/",
+    "/tools/file-extension-check/",
+    "/tools/phone-cost-comparator/",
+    "/tools/url-structure-check/"
   ]
 }

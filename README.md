@@ -1,44 +1,24 @@
-# KYD: photo backup and file care
+# KYD: 사진·파일 관리 도구
 
-The live site is a focused English-language guide and tool library. Cloudflare Pages serves `public/`; repository-root copies remain mirrored for compatibility. Do not deploy the repository root or `.archive/`.
+https://www.kyd.kr 의 소스입니다. Cloudflare Pages가 `public/`을 제공하며 루트의 같은 파일은 사본입니다.
 
-## Edit and verify
+## 빌드와 검사
 
 ```powershell
-node scripts/build-focused-site.cjs
-node scripts/test-focused-site.cjs
+node scripts/build-site.cjs
+node scripts/test-site.cjs
+node scripts/verify-live.cjs   # 배포 후 공개 사이트 점검
 ```
 
-- Guide source: `scripts/focused-content.cjs`.
-- The revised copy-verification guide is `scripts/copy-check-guide.cjs`. `scripts/build-copy-fixtures.cjs` reproducibly builds five original SVG software fixtures, the digest manifest and the embedded browser examples; the main build runs it automatically. The fixtures are not camera photos or a cloud-recovery test.
-- The October 8 export-context guide is maintained in `scripts/takeout-guide.cjs`; its downloadable blank worksheet is `assets/worksheets/takeout-review.txt`.
-- The October 12 Live Photo component guide is maintained in `scripts/live-photos-guide.cjs`; its blank ledger is `assets/worksheets/live-photo-ledger.txt`. Its count example uses synthetic labels, not a real library test.
-- Page templates, trust pages and explicit publication manifest: `scripts/build-focused-site.cjs`.
-- Tool implementation: `assets/focus-tools.js`.
-- Design: `assets/focus.css`.
-- Commit generated HTML, RSS, sitemap and `public/` mirrors together.
-- Only substantively reviewed pages should receive a new `reviewed` date. Do not automatically bump dates daily.
-- Every guide has separate `published` and `reviewed` dates. Generated article metadata, RSS and sitemap use these dates; adding a guide must not redate older guides.
-- The number of guides is not an AdSense minimum-page threshold. Approval and indexing are external decisions.
+- 한국어 가이드: `scripts/ko-guides.cjs`, 질문: `scripts/ko-faq.cjs`, 도구와 안내 페이지: `scripts/ko-pages.cjs`
+- 도구 로직: `assets/ko/core.js`, 화면: `assets/ko/tools.js`, 모양: `assets/ko/ko.css`
+- 실험 자료: `assets/evidence/`. `node scripts/fixtures.cjs`로 폴더·중복 시험 자료를 다시 만듭니다.
+- 영어판 원본: `content/en/`(보존본). 빌드할 때 `/en/` 주소로 바뀝니다.
+- 문의 이메일을 정하면 `scripts/build-site.cjs`의 `CONTACT_EMAIL`에 넣습니다.
 
-## Withdrawal and recovery
+## 원칙
 
-On 2026-10-07 the owner requested temporary withdrawal of all 41 legacy articles. Their old URLs now intentionally return HTTP 404, not a homepage redirect. `/posts/` and `/blog/` are collection aliases for `/guides/`; individual retired URLs are not redirected to unrelated guides. Four unrelated tools were also withdrawn to maintain the new focus.
-
-The complete previous tracked site is recoverable at Git commit `12f61443a337d04f43666d0708f07ac615d1d8ad`. The operator additionally has an ignored local archive at `.archive/site-before-focus-12f6144.zip`, SHA-256 `11CAB53BB02C61FAD2B2851B922616346274A051E5E0DA46EA5C229BE9301121`, and moved original working directories in `.archive/withdrawn-20261007/`.
-
-These archives are not served by the website. The old content remains in public Git history; withdrawal is not a claim of erasure from the Internet. Restore selected material into a separate temporary directory for review first. Do not blindly restore the old feed, sitemap or navigation. Legacy publishing scripts were archived to prevent accidental re-publication.
-
-### Withdrawal response guard
-
-Some custom-domain responses continued to return old HTML after a successful Cloudflare zone cache purge, even though the current Pages deployment returned 404. Generated `_worker.js` returns a non-cacheable 404 directly for retired article and tool routes. `_routes.json` limits invocation to those routes; all current pages, feeds, assets and collection redirects remain static. The guard does not read request bodies, save data or call outside services. HEAD has no body; unsupported methods return 405.
-
-These limited requests use the existing Workers Free daily allowance (shared 100,000 requests as documented on 2026-10-07); no paid plan was enabled. Static requests do not consume that allowance. If Functions cannot run, the deployment still contains no old article files and has a static 404 fallback. Removing this guard should require normal, cache-enabled production checks confirming that withdrawn content cannot reappear. Sources: [Pages routing](https://developers.cloudflare.com/pages/functions/routing/), [Pages pricing](https://developers.cloudflare.com/pages/functions/pricing/).
-
-## Advertising boundary
-
-The publisher meta tag, ads.txt and ownership verification are preserved. This edition deliberately loads no advertising JavaScript. Before enabling ads, verify the AdSense decision and configure applicable consent requirements in the account. Do not put ads on tools, error pages, navigation-only pages or worksheets. Do not claim approval simply because technical checks pass.
-
-## Test interpretation
-
-Automated tests verify deterministic code and generated site structure. Browser checks cover displayed layouts and interactive states. Neither is a real-world cloud recovery test, an independent expert review, a guarantee that every browser works, or a proof of media health. Do not broaden those claims in future copy.
+- 날짜는 실제로 다시 확인한 글만 바꿉니다.
+- 하지 않은 실험, 후기, 전문가 이름을 만들지 않습니다.
+- 도구 페이지에는 외부 스크립트와 광고를 넣지 않습니다(`_headers`의 보안 정책).
+- 2026-10-07에 내린 글과 도구 주소는 `_worker.js`가 404로 응답합니다.
